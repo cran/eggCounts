@@ -1,0 +1,24 @@
+\name{update_Y}
+\alias{update_Y}
+\title{Update latent egg counts \eqn{y_1,\ldots,y_n} based on a truncated Poisson distribution}
+\usage{
+update_Y(mui, n, propC, fec)
+}
+\arguments{
+  \item{mui}{mean}
+
+  \item{n}{number of samples}
+
+  \item{propC}{1 minus 1/f where f is the dilution factor}
+
+  \item{fec}{observed number of eggs (on the McMaster
+  slide)}
+}
+\value{
+  updated parameter vector \eqn{y}
+}
+\description{
+  Update latent egg counts \eqn{y_1,\ldots,y_n} based on a
+  truncated Poisson distribution
+}
+\keyword{internal}

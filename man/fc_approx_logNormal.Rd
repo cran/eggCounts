@@ -1,0 +1,20 @@
+\name{fc_approx_logNormal}
+\alias{fc_approx_logNormal}
+\title{Approximate a full conditional with given mode and curvature by a log normal distribution}
+\usage{
+fc_approx_logNormal(mode, curvature)
+}
+\arguments{
+  \item{mode}{mode of the full conditional}
+
+  \item{curvature}{curvature at the mode}
+}
+\value{
+  mean and standard deviation (on log-scale) of the
+  approximating log normal distribution
+}
+\description{
+  Approximate a full conditional with given mode and
+  curvature by a log normal distribution
+}
+\keyword{internal}

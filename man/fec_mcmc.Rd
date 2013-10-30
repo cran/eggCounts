@@ -1,0 +1,70 @@
+\name{fec_mcmc}
+\alias{fec_mcmc}
+\title{Modelling of Faecal Egg Count data (one-sample case)}
+\usage{
+fec_mcmc(fec, rawCounts = FALSE, f = 50, model = c("PoGa", 
+    "ZIPoGa")[1], priors.mu = list(hyperpars = c(1, 0.001), proposalDist = "kl"), 
+    priors.phi = list(hyperpars = c(1, 0.1), proposalDist = "unif", 
+        v = 0.5), priors.psi = list(hyperpars = c(1, 1)), maxiter.pilot = 10, 
+    nburnin = 1000, nsamples = 10000, thin = 1, initials = NULL, 
+    verbose = TRUE, ...)
+}
+\arguments{
+  \item{fec}{vector with faecal egg counts}
+
+  \item{rawCounts}{logical indicating whether \code{fec}
+  corresponds to raw counts (as counted on the McMaster
+  slide), or to calculated EpGs (raw counts times
+  correction factor).  Defaults to \code{FALSE}.}
+
+  \item{f}{correction factor for the McMaster technique
+  (e.g. 50). Either a number or a vector with different
+  correction factors for each FEC}
+
+  \item{model}{either "PoGa" or "ZIPoGa"}
+
+  \item{priors.mu}{list with hyper-prior/proposal
+  information for \eqn{\mu}{mu}}
+
+  \item{priors.phi}{list with hyper-prior/proposal
+  information for \eqn{\phi}{phi}}
+
+  \item{priors.psi}{list with hyper-prior information for
+  \eqn{\psi}{psi}}
+
+  \item{maxiter.pilot}{maximal number of tries to determine
+  a good tuning value for the proposal distribution for
+  \eqn{\phi}{phi}}
+
+  \item{nburnin}{number of burn-in iterations}
+
+  \item{nsamples}{number of desired samples}
+
+  \item{thin}{thinning parameter}
+
+  \item{initials}{named list with starting values for the
+  parameters \code{mu}, \code{phi}, \code{mui},
+  \code{y},\code{psi}}
+
+  \item{verbose}{print progress information}
+
+  \item{\dots}{extra arguments (not used)}
+}
+\value{
+  a named list with \item{samples}{ list with samples and
+  acceptance rates} \item{priors}{ list with prior
+  specifications} \item{v.phi}{ tuning parameter for
+  \eqn{phi}} \item{initials}{ list with initial values}
+  \item{model}{ name of the specified model}
+  \item{nburnin}{ number of burnin iterations}
+  \item{nsamples}{ number of returned samples} \item{thin}{
+  used thinning factor}
+}
+\description{
+  Modelling of Faecal Egg Count data in a one-sample case
+  using either a Poisson gamma or a zero-inflated Poisson
+  gamma model formulation.
+}
+\seealso{
+  \code{demo("fecm", package = "eggCounts")}
+}

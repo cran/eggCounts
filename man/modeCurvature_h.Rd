@@ -1,0 +1,23 @@
+\name{modeCurvature_h}
+\alias{modeCurvature_h}
+\title{Compute mode and curvature at the mode of a full conditional of form
+\eqn{h(x) = x^{-a} \exp(-bx -c/x)}{h(x) = x^(-a) exp(-bx -c/x)}}
+\usage{
+modeCurvature_h(a, b, c)
+}
+\arguments{
+  \item{a}{a}
+
+  \item{b}{b}
+
+  \item{c}{c}
+}
+\value{
+  vector with mode and curvature at the mode
+}
+\description{
+  Compute mode and curvature at the mode of a full
+  conditional of form \eqn{h(x) = x^{-a} \exp(-bx
+  -c/x)}{h(x) = x^(-a) exp(-bx -c/x)}
+}
+\keyword{internal}

@@ -1,0 +1,22 @@
+\name{update_theta_gamma}
+\alias{update_theta_gamma}
+\title{Update a parameter vector theta \eqn{theta_1,\ldots,theta_n} based on a gamma distribution}
+\usage{
+update_theta_gamma(s, r, n)
+}
+\arguments{
+  \item{s}{shape}
+
+  \item{r}{rate}
+
+  \item{n}{length of theta}
+}
+\value{
+  updated parameter \eqn{theta}
+}
+\description{
+  Update a parameter vector theta
+  \eqn{theta_1,\ldots,theta_n} based on a gamma
+  distribution
+}
+\keyword{internal}

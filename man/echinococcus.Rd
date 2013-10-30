@@ -1,0 +1,14 @@
+\docType{data}
+\name{echinococcus}
+\alias{echinococcus}
+\title{Faecal egg count sample}
+\description{
+  This is an example data set containing 24 eggs per gram
+  (epg) values of Taenia parasites (Echinococcus) in dogs.
+  The correction factor of the diagnostic technique was 50.
+}
+\examples{
+data(echinococcus)
+table(echinococcus)
+}
+\keyword{datasets}

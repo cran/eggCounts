@@ -1,0 +1,22 @@
+\name{setUpdates_ZIPoGa_mu}
+\alias{setUpdates_ZIPoGa_mu}
+\title{Specify parameter updates for PoGa (1-sample) model}
+\usage{
+setUpdates_ZIPoGa_mu(priors, fec, f)
+}
+\arguments{
+  \item{priors}{list with priors for \eqn{\mu}{mu},
+  \eqn{\phi}{phi} and \eqn{\psi}{psi}}
+
+  \item{fec}{vector with faecal egg counts}
+
+  \item{f}{correction factor (e.g. 50 for the McMaster
+  technique)}
+}
+\value{
+  a named list with update functions
+}
+\description{
+  Specify parameter updates for PoGa (1-sample) model
+}
+\keyword{internal}
