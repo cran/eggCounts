@@ -1,0 +1,14 @@
+
+eggCounts 0.3:  
+
+* Updated package structure: NEWS, ChangeLog and CITATION files.
+
+* Bug fix: all "zero" draws from rgamma are captured and
+    set to `minrgamma=.Machine$double.eps`.
+    Thus numerical results are likely to change.
+
+
+
+eggCounts 0.2:  2013-11-05
+
+* stable release on CRAN

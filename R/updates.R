@@ -51,12 +51,15 @@ divergenceKL <- function(a,b,c, invGamma=TRUE, logNormal=FALSE){
 ##' @keywords internal
 update_h_kl <- function(theta, argA, argC, a, b){ 
    # unnormalized log marginal posterior for theta
+
+   
    log.post.theta <- function(theta){
       (-argA+a-1)*log(theta) - argC/theta - b*theta
    }
 
    #
    a1 <- argA-a+1
+
    sq <- sqrt(a1^2+4*b*argC)
 #cat("update_h_kl: sq=",sq,"\t")
   
@@ -201,7 +204,10 @@ update_phi_unif <- function(phi,mu, sum_mui,sumlog_mui, n, a, b, v.phi){
 
    # do an MH step
    phi.new <- MH_RW_unif(phi,log.post.phi, v=v.phi)
-   
+
+   if (is.na(phi.new)) {      
+       cat(paste(' phi:',phi.new,phi, a, b, n,sum_mui,sumlog_mui))
+   }
    return(phi.new)
 }
 
@@ -267,12 +273,12 @@ update_theta_gammaAdd <- function(theta, s,r, n){
    addS <- 0.05
    # draw from full conditional if shape is not "too small"
    if(all(s>0.05)){
-      ret <- rgamma(n, shape = s, rate= r)
+      ret <- pmin( rgamma(n, shape = s, rate= r), minrgamma)
       attr(ret,"accept") <- rep(TRUE, n)
    } else { # shift scale a bit to avoid too small theta's
       # propose a new value
       addS <- ifelse(s<=0.05,addS,0)
-      new <- rgamma(n,shape=s+addS, rate=r)
+      new <- pmin( rgamma(n,shape=s+addS, rate=r), minrgamma)
       # compute difference of log(posterior ratio)
       diff.log.post <- dgamma(new, shape=s, rate=r, log=TRUE) - dgamma(theta, shape=s, rate=r, log=TRUE)
       # compute difference of log(proposal ratio)
@@ -298,7 +304,7 @@ update_theta_gammaAdd <- function(theta, s,r, n){
 ##' @return updated parameter \eqn{theta}
 ##' @keywords internal
 update_theta_gamma <- function(s,r, n){
-   rgamma(n, shape = s, rate= r)
+   pmin( rgamma(n, shape = s, rate= r), minrgamma)
 }
 
 ##' Update a parameter \eqn{theta} based on a gamma distribution
@@ -312,7 +318,7 @@ update_theta_gamma <- function(s,r, n){
 ##' @return updated parameter \eqn{theta}
 ##' @keywords internal
 update_theta_gamma1 <- function(s,r, a,b, ...){
-   rgamma(1, shape = s+a, rate= r+b)
+   pmin( rgamma(1, shape = s+a, rate= r+b), minrgamma)
 }
 
 
@@ -347,7 +353,7 @@ update_theta_gammaMix <- function(mui, y, mu, phi, psi, n, whichZero_fec, nNonZe
    shape <- y+phi
    rate <- p+phi/mu
    # for non-zero observed counts, draw from gamma full conditional
-   new[!whichZero_fec] <- rgamma(nNonZero_fec, shape=shape[!whichZero_fec], rate=rate)
+   new[!whichZero_fec] <- pmin( rgamma(nNonZero_fec, shape=shape[!whichZero_fec], rate=rate), minrgamma)
 
 if(n==nNonZero_fec) return(new)
 
@@ -358,7 +364,8 @@ if(n==nNonZero_fec) return(new)
 
    # draw mui's for zero observed counts from a mixture of a gamma distribution and a point mass at zero
    which_zeroFEC_posMui <- rbinom(n-nNonZero_fec, size=1, prob=psi)==1
-   proposed_mui[which_zeroFEC_posMui] <- rgamma(sum(which_zeroFEC_posMui),shape=yZero_fec[which_zeroFEC_posMui]+phi+addS, rate=rate)
+   proposed_mui[which_zeroFEC_posMui] <- pmin(
+       rgamma(sum(which_zeroFEC_posMui),shape=yZero_fec[which_zeroFEC_posMui]+phi+addS, rate=rate), minrgamma)
 
 
    nZero <- sum(whichZero_fec)

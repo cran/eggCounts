@@ -1,0 +1,20 @@
+citHeader("To cite `eggCounts` in publications use:")
+
+citEntry(entry = "Article",
+  title        = "Evaluating faecal egg count reduction using a specifically designed package `eggCounts` in R and a user friendly web interface",
+  author       = personList(as.person("Paul R. Torgerson"),
+      as.person("Michaela Paul"), as.person("Reinhard Furrer")),
+  journal      = "International Journal of Parasitology",
+  year         = "2014",
+  volume       = "44",
+  doi          = "10.1016/j.ijpara.2014.01.005",
+  pmid         = "24556564", 
+  number       = "5",
+  pages        = "299--303",
+
+  textVersion  =
+  paste("Torgerson, P. R., Paul, M. and Furrer, R. (2014). Evaluating faecal egg count reduction ",
+        "using a specifically designed package `eggCounts` in R and a user friendly web interface.",
+        "International Journal for Parasitology, 44(5), 299-303."),
+)
+

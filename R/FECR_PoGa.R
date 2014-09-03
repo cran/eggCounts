@@ -285,6 +285,7 @@ fecr_mcmc <- function(
    ########################################################################
    # update parameters
    time.start <- Sys.time()
+
    samples <- runMCMC(start,nsamples=nsamples,nburnin=nburnin,thin=thin, v.phi=v.phi, time.start=time.start, verbose=verbose)
 
    #return results
@@ -410,13 +411,14 @@ setUpdates_PoGa_p <- function(priors, fec.pre, fec.post, f.pre, f.post){
       for (i in (-nburnin):niter){
 	 # update mean
 	 mu <- update_mu(mu, n*phi, phi*sum_muiPre)  
-	 
+
+         
 	 # update latent epg counts
 	 yPre <- update_yPre(muiPre)
 	 yPost <- update_yPost(muiPre*delta)
 
 	 # update true latent means
-	 muiPre <- update_muiPre(s=yPre+yPost+phi, r=1+delta+phi/mu) 
+	 muiPre <- update_muiPre(s=yPre+yPost+phi, r=1+delta+phi/mu)
 	 sum_muiPre <- sum(muiPre)
 	 sumlog_muiPre <- sum(log(muiPre))
 

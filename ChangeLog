@@ -1,0 +1,17 @@
+commit 90c6ceb1eeed5e29b62edf49ae82e09acdd41372
+Author: Reinhard Furrer <reinhard.furrer@math.uzh.ch>
+Date:   Sat Sep 6 22:13:31 2014 +0200
+
+    Getting toward CRAN release
+
+commit e41ed480661097daa2f65b6a4d0dcf7346df7671
+Author: Reinhard Furrer <reinhard.furrer@math.uzh.ch>
+Date:   Thu Sep 4 10:59:54 2014 +0200
+
+    v0.3 mainly bugfix
+
+commit 55b95fcaaa1ab2db03cce4b443a153ef79f89f0f
+Author: Reinhard Furrer <reinhard.furrer@math.uzh.ch>
+Date:   Wed Sep 3 22:25:30 2014 +0200
+
+    First push, essentially version 0.2
