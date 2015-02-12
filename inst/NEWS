@@ -1,3 +1,16 @@
+eggCounts 0.4, 0.4-1:  
+
+* Bug fixes introduced since version 0.1.
+
+* Further improved bug fix of version 0.3.
+
+* Alerts the user in case of atypical data through 'NOTE'.
+
+* Added verboselevel functionality for detailed debugging. 
+
+* Improved help and added tests.
+
+
 
 eggCounts 0.3:  
 

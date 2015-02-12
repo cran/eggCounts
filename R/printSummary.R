@@ -3,7 +3,7 @@
 ##' @param x result of a call to \code{fec_mcmc} or \code{fecr_mcmc}
 ##' @return list with \code{mcmc} objects
 
-# @keywords internal
+##' @keywords internal
 ##' @export
 samples2mcmc <- function(x){
    model <- x$model
@@ -110,6 +110,9 @@ samples2mcmc <- function(x){
 	 muiT <- mcmc(muiPost, start=start, thin=thin)
 	 
       }
+
+      if ((model!="paired")&(min(muiBar.pre) <= .Machine$double.eps))
+          cat("NOTE: zero before treatment means appear.\n      You need to expect additional warnings/errors.\n") 
       
       return(list(fecr=FECR, all1=all1,muiControl=muiC,muiTreated=muiT, yControl=yC,yTreated=yT))
 
@@ -120,33 +123,37 @@ samples2mcmc <- function(x){
 ##' Print information about mcmc run
 ##'
 ##' @param x result of a call to \code{fec_mcmc}
+##' @param digits digits passed to printing function
+##' @param quantiles a vector of quantiles to evaluate for each variable
 ##' @return x
 
 ##' @keywords internal
 ##' @method print fecm
-##' @S3method print fecm
+##' @author Michaela Paul, with contributions from Reinhard Furrer 
 ##' @export
-print.fecm <- function(x, ...){
+print.fecm <- function(x, digits=3, quantiles=c(0.025, 0.25, 0.5, 0.75, 0.975), ...){
    samples <- samples2mcmc(x)
    cat("Model: ", x$model,"\n")
    #cat("Number of samples: ",x$nsamples," (burnin=",x$nburnin,", thinning=",x$thin,")\n", sep="")
-   print(summary(samples$all))
+   print(summary(samples$all, quantiles=quantiles), digits=digits)
    invisible(x)
 }
 
 ##' Print information about mcmc run
 ##'
 ##' @param x result of a call to \code{fecr_mcmc}
+##' @param digits digits passed to printing function
+##' @param quantiles a vector of quantiles to evaluate for each variable
 ##' @return x
 
 ##' @keywords internal
+##' @author Michaela Paul, with contributions from Reinhard Furrer 
 ##' @method print fecrm
-##' @S3method print fecrm
 ##' @export
-print.fecrm <- function(x, ...){
+print.fecrm <- function(x, digits=3, quantiles=c(0.025, 0.25, 0.5, 0.75, 0.975), ...){
    samples <- samples2mcmc(x)
    cat("Model: ", x$model,"\n")
    #cat("Number of samples: ",x$nsamples," (burnin=",x$nburnin,", thinning=",x$thin,")\n", sep="")
-   print(summary(samples$fecr))
+   print(summary(samples$fecr, quantiles=quantiles), digits=digits)
    invisible(x)
 }

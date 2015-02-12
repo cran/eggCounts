@@ -4,8 +4,8 @@
 ##' \tabular{ll}{
 ##' Package: \tab eggCounts\cr
 ##' Type: \tab Package\cr
-##' Version: \tab 0.1-1\cr
-##' Date: \tab 2012-08-24\cr
+##' Version: \tab 0.4-1\cr
+##' Date: \tab 2015-02-07\cr
 ##' License: \tab GPL (>= 2) \cr
 ##' LazyLoad: \tab yes\cr
 ##' }
@@ -19,6 +19,7 @@
 ##' @title Hierarchical modelling of faecal egg counts
 ##' @author Michaela Paul \email{michaela.paul@@uzh.ch}
 ##' @keywords package
+##' @importFrom coda mcmc
 ##' @importFrom actuar rinvgamma dinvgamma
 ##' @importFrom boot boot boot.ci
 # @importFrom methods setClass setOldClass setGeneric setMethod representation
@@ -92,5 +93,6 @@ NULL
 ##' @keywords datasets
 ##' @examples
 ##' data(tab1morgan)
-##' xyplot(k.low+k.up+k ~meanFEC, type="p", pch=19, col=c(8,8,1), data=tab1morgan)
+##' if (require("lattice"))
+##'    xyplot(k.low+k.up+k ~meanFEC, type="p", pch=19, col=c(8,8,1), data=tab1morgan)
 NULL

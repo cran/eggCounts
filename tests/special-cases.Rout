@@ -1,0 +1,252 @@
+
+R Under development (unstable) (2015-02-11 r67792) -- "Unsuffered Consequences"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-unknown-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(eggCounts)
+> 
+> 
+> set.seed(123)
+> 
+> horse2 <- c( 0,0,0,0,0,0,0,0,0,0,0,0,0)
+> horse1 <- c(50,0,0,0,0,0,0,0,0,0,0,0,0)
+> 
+> p   <- fecr_mcmc(horse1,horse2,nburnin=10,nsamples=250, model="paired",    maxiter.pilot=5, priors.phi=list(v=10), verbose=F)
+NOTE: 'nburnin' seems low.
+> up  <- fecr_mcmc(horse1,horse2,nburnin=10,nsamples=250, model="unpaired",  maxiter.pilot=5, priors.phi=list(v=10), verbose=F)
+NOTE: 'nburnin' seems low.
+NOTE: Tuning parameter for phi possibly not ok.
+> u   <- fecr_mcmc(horse1,horse2,nburnin=10,nsamples=250, model="ZIPoGa_u",  maxiter.pilot=5, priors.phi=list(v=10), verbose=F)
+NOTE: 'nburnin' seems low.
+> upd <- fecr_mcmc(horse1,horse2,nburnin=10,nsamples=250, model="ZIPoGa_upd",maxiter.pilot=5, priors.phi=list(v=10), verbose=F)
+NOTE: 'nburnin' seems low.
+NOTE: Tuning parameter for phi possibly not ok.
+> 
+> print(p,   digits=2, quantiles=c(.1,.25,.5,.75,.9))
+Model:  paired 
+
+Iterations = 11:260
+Thinning interval = 1 
+Number of chains = 1 
+Sample size per chain = 250 
+
+1. Empirical mean and standard deviation for each variable,
+   plus standard error of the mean:
+
+                  Mean   SD Naive SE Time-series SE
+fecr              0.71 0.24    0.015          0.081
+meanEpg.untreated 8.86 4.45    0.282          2.594
+meanEpg.treated   2.28 1.85    0.117          0.669
+
+2. Quantiles for each variable:
+
+                   10%  25%  50%   75%   90%
+fecr              0.42 0.59 0.76  0.89  0.95
+meanEpg.untreated 4.92 5.64 6.62 13.03 16.10
+meanEpg.treated   0.40 0.88 1.72  3.30  5.27
+
+> print(up,  digits=2, quantiles=c(.1,.25,.5,.75,.9))
+Model:  unpaired 
+
+Iterations = 11:260
+Thinning interval = 1 
+Number of chains = 1 
+Sample size per chain = 250 
+
+1. Empirical mean and standard deviation for each variable,
+   plus standard error of the mean:
+
+                   Mean   SD Naive SE Time-series SE
+fecr              -0.16 0.38    0.024           0.13
+meanEpg.untreated  3.94 0.67    0.042           0.17
+meanEpg.treated    4.52 1.59    0.101           0.73
+
+2. Quantiles for each variable:
+
+                    10%   25%   50%   75%  90%
+fecr              -0.75 -0.34 -0.11 0.067 0.24
+meanEpg.untreated  3.18  3.47  3.86 4.288 4.81
+meanEpg.treated    2.79  3.37  4.33 5.500 6.89
+
+> print(u,   digits=2, quantiles=c(.1,.25,.5,.75,.9))
+Model:  ZIPoGa_u 
+
+Iterations = 11:260
+Thinning interval = 1 
+Number of chains = 1 
+Sample size per chain = 250 
+
+1. Empirical mean and standard deviation for each variable,
+   plus standard error of the mean:
+
+                  Mean  SD Naive SE Time-series SE
+fecr              0.33 1.1    0.068           0.35
+meanEpg.untreated 2.07 2.5    0.156           0.79
+meanEpg.treated   0.60 1.0    0.064           0.39
+
+2. Quantiles for each variable:
+
+                   10%  25%  50%  75% 90%
+fecr              -1.1 0.18 0.78 1.00 1.0
+meanEpg.untreated  0.2 0.55 1.21 2.47 5.3
+meanEpg.treated    0.0 0.00 0.13 0.59 2.5
+
+> print(upd, digits=2, quantiles=c(.1,.25,.5,.75,.9))
+Model:  ZIPoGa_upd 
+
+Iterations = 11:260
+Thinning interval = 1 
+Number of chains = 1 
+Sample size per chain = 250 
+
+1. Empirical mean and standard deviation for each variable,
+   plus standard error of the mean:
+
+                   Mean    SD Naive SE Time-series SE
+fecr              0.977 0.058   0.0037          0.011
+meanEpg.untreated 3.342 1.971   0.1246          0.643
+meanEpg.treated   0.052 0.109   0.0069          0.035
+
+2. Quantiles for each variable:
+
+                   10% 25% 50% 75%  90%
+fecr              0.90 1.0 1.0 1.0 1.00
+meanEpg.untreated 0.96 1.9 3.1 4.5 6.04
+meanEpg.treated   0.00 0.0 0.0 0.0 0.28
+
+> 
+> 
+> 
+> p   <- fecr_mcmc(horse2,horse1,nburnin=10,nsamples=250,model="paired",    maxiter.pilot=5, priors.phi=list(v=10), verbose=F)
+NOTE: 'nburnin' seems low.
+NOTE: mean of pre-treatment is smaller of post-treatment. Results may be unreliable.
+> up  <- fecr_mcmc(horse2,horse1,nburnin=10,nsamples=250,model="unpaired",  maxiter.pilot=5, priors.phi=list(v=10), verbose=F)
+NOTE: 'nburnin' seems low.
+NOTE: mean of pre-treatment is smaller of post-treatment. Results may be unreliable.
+NOTE: Tuning parameter for phi possibly not ok.
+> u   <- fecr_mcmc(horse2,horse1,nburnin=10,nsamples=250,model="ZIPoGa_u",  maxiter.pilot=5, priors.phi=list(v=10), verbose=F)
+NOTE: 'nburnin' seems low.
+NOTE: mean of pre-treatment is smaller of post-treatment. Results may be unreliable.
+> upd <- fecr_mcmc(horse2,horse1,nburnin=10,nsamples=250,model="ZIPoGa_upd",maxiter.pilot=5, priors.phi=list(v=10), verbose=F)
+NOTE: 'nburnin' seems low.
+NOTE: mean of pre-treatment is smaller of post-treatment. Results may be unreliable.
+NOTE: Tuning parameter for phi possibly not ok.
+> 
+> print(p,   digits=2, quantiles=c(.1,.25,.5,.75,.9))
+Model:  paired 
+
+Iterations = 11:260
+Thinning interval = 1 
+Number of chains = 1 
+Sample size per chain = 250 
+
+1. Empirical mean and standard deviation for each variable,
+   plus standard error of the mean:
+
+                    Mean  SD Naive SE Time-series SE
+fecr              -0.047 0.7    0.044           0.20
+meanEpg.untreated  3.118 1.8    0.115           0.71
+meanEpg.treated    3.201 2.9    0.186           1.51
+
+2. Quantiles for each variable:
+
+                    10%   25%  50%  75% 90%
+fecr              -1.04 -0.42 0.11 0.47 0.7
+meanEpg.untreated  0.73  1.80 3.06 4.05 5.2
+meanEpg.treated    0.47  1.11 2.27 4.30 7.6
+
+> print(up,  digits=2, quantiles=c(.1,.25,.5,.75,.9))
+Model:  unpaired 
+
+Iterations = 11:260
+Thinning interval = 1 
+Number of chains = 1 
+Sample size per chain = 250 
+
+1. Empirical mean and standard deviation for each variable,
+   plus standard error of the mean:
+
+                    Mean   SD Naive SE Time-series SE
+fecr               0.024 0.42    0.026           0.16
+meanEpg.untreated 10.697 4.15    0.262           1.11
+meanEpg.treated    9.447 3.72    0.236           1.81
+
+2. Quantiles for each variable:
+
+                    10%   25%  50%   75%   90%
+fecr              -0.32 -0.18 -0.1  0.36  0.68
+meanEpg.untreated  8.17  9.44 10.0 10.51 15.55
+meanEpg.treated    3.76  5.60 10.5 11.79 12.63
+
+> print(u,   digits=2, quantiles=c(.1,.25,.5,.75,.9))
+NOTE: zero before treatment means appear.
+      You need to expect additional warnings/errors.
+Model:  ZIPoGa_u 
+Error in lm.fit(x, y, offset = offset, singular.ok = singular.ok, ...) : 
+  NA/NaN/Inf in 'y'
+
+Iterations = 11:260
+Thinning interval = 1 
+Number of chains = 1 
+Sample size per chain = 250 
+
+1. Empirical mean and standard deviation for each variable,
+   plus standard error of the mean:
+
+                   Mean    SD Naive SE Time-series SE
+fecr               -Inf   NaN      NaN             NA
+meanEpg.untreated 0.026 0.065   0.0041          0.013
+meanEpg.treated   3.591 3.278   0.2073          1.806
+
+2. Quantiles for each variable:
+
+                   10%      25%      50%      75%     90%
+fecr              -Inf -5.8e+20 -3.3e+05 -134.118 -16.091
+meanEpg.untreated 0.00  2.4e-21  7.9e-06    0.016   0.079
+meanEpg.treated   0.34  6.8e-01  2.3e+00    6.312   8.392
+
+> print(upd, digits=2, quantiles=c(.1,.25,.5,.75,.9))
+NOTE: zero before treatment means appear.
+      You need to expect additional warnings/errors.
+Model:  ZIPoGa_upd 
+Error in lm.fit(x, y, offset = offset, singular.ok = singular.ok, ...) : 
+  NA/NaN/Inf in 'y'
+
+Iterations = 11:260
+Thinning interval = 1 
+Number of chains = 1 
+Sample size per chain = 250 
+
+1. Empirical mean and standard deviation for each variable,
+   plus standard error of the mean:
+
+                   Mean   SD Naive SE Time-series SE
+fecr               -Inf  NaN      NaN             NA
+meanEpg.untreated 0.098 0.28    0.017           0.12
+meanEpg.treated   7.682 6.85    0.433           5.44
+
+2. Quantiles for each variable:
+
+                   10%  25%  50%  75%   90%
+fecr              -Inf -Inf -Inf -Inf -0.96
+meanEpg.untreated 0.00  0.0  0.0    0  0.48
+meanEpg.treated   0.51  1.1  4.7   13 17.81
+
+> 
+> 
+> 
+> proc.time()
+   user  system elapsed 
+ 14.151   0.031  14.163 

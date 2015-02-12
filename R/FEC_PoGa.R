@@ -90,18 +90,19 @@ setInitials1 <- function(initials, fec, f){
 ##' @keywords internal
 statusMsg <- function(piter, time.start){
       #Sys.sleep(.2)
+    
       time.current <- Sys.time()
       time.elapsed <- difftime(time.current, time.start, units="secs")
       time.remaining <- (100-piter)/piter*time.elapsed
       units <- ifelse(time.remaining<60,"secs","mins")
       if(piter==0){
-	 cat("\nStarted to run the MCMC algorithm at",format(time.start,"%T"),"\b.\n")
+	 cat("\n Started to run the MCMC algorithm at",format(time.start,"%T"),"\b.\n")
       } else if(piter==1){
 #      cat(sprintf("Estimated duration: %5.1f %s\n",as.numeric(time.remaining,units=units),units))
-      cat(sprintf("Completed: %2.0f%%, time remaining: %5.1f %s",1,as.numeric(time.remaining,units=units),units))
+      cat(sprintf(" Completed: %2.0f%%, time remaining: %5.1f %s",1,as.numeric(time.remaining,units=units),units))
       } else if(piter<100) {
-	 cat(sprintf("\rCompleted: %2.0f%%, time remaining: %5.1f %s", piter,as.numeric(time.remaining,units=units),units))
-      } else cat("\rCompleted: 100%                   at",format(time.current,"%T"),"\b. \n")
+	 cat(sprintf("\r Completed: %2.0f%%, time remaining: %5.1f %s", piter,as.numeric(time.remaining,units=units),units))
+      } else cat("\r Completed: 100%                   at",format(time.current,"%T"),"\b. \n")
 }
 
 ##' Modelling of Faecal Egg Count data (one-sample case)
@@ -129,6 +130,8 @@ statusMsg <- function(piter, time.start){
 ##' @param initials named list with starting values for the parameters 
 ##'         \code{mu}, \code{phi}, \code{mui}, \code{y},\code{psi}
 ##' @param verbose print progress information
+##' @param .verboselevel print additional information, mainly for
+##'         debugging information, larger values print more details
 ##' @param \dots extra arguments (not used)
 
 ##' @return a named list with 
@@ -141,6 +144,7 @@ statusMsg <- function(piter, time.start){
 ##' \item{nsamples}{ number of returned samples}
 ##' \item{thin}{ used thinning factor}
 
+##' @author Michaela Paul, with contributions from Reinhard Furrer 
 ##' @seealso \code{demo("fecm", package = "eggCounts")}
 
 ##' @export
@@ -161,9 +165,15 @@ fec_mcmc <- function(
    thin =1,
    initials = NULL,
    verbose=TRUE,
+   .verboselevel=0,
    ...
    ){
 
+    if (sys.parent() == 0) env <- asNamespace("eggCounts") else env <- parent.frame()
+    assign(".verboselevel", verbose*.verboselevel, envir = env)
+
+
+    
    # check class of fec
    if(inherits(fec,"data.frame")) fec <- as.matrix(fec)
    if(is.vector(fec)) fec <- as.matrix(fec) 
@@ -183,6 +193,11 @@ fec_mcmc <- function(
       dilution <- 1
    } 
 
+   # check iteration parameters
+   checkMHiterpars( maxiter.pilot,  nburnin, nsamples, thin)
+   
+
+   
    # divide data by correction factor
    if(any(fec %% dilution !=0)) stop("Correction factor does not match the given fec\n")
    fec <- fec/dilution
@@ -210,11 +225,13 @@ fec_mcmc <- function(
    start <- setInitials1(initials, fec, f) 
    v.phi <- priors$phi$v
 
+   
    ############################################################
    ## determine tuning parameter for phi if required
    ###########################################################
    if(priors$phi$proposalDist %in% c("unif","unif01") & maxiter.pilot>0){
-      blocksize <- 500
+      blocksize <- 500  #orig
+#      blocksize <- 5
 
       phi.AR.ok <- FALSE
       startpilot <- start
@@ -222,12 +239,13 @@ fec_mcmc <- function(
       # run pilot chain to determine tuning parameter for phi
       i <- 1
       if(verbose) {
-	 cat("\nStarted to run pilot chain at",format(Sys.time(),"%T"),"\b\n")
-	 cat("using tuning parameter: v =",v.phi,"\n")
+	 cat("\n Started to run pilot chain at",format(Sys.time(),"%T"),"\b\n")
+	 cat(" using tuning parameter: v =",v.phi,"\n")
       }
       while(!phi.AR.ok && i <= maxiter.pilot){
 
-	 pilot <- runMCMC(startpilot,nsamples=blocksize,nburnin=100,thin=1, v.phi=v.phi, time.start=NULL, verbose=FALSE)
+#	 pilot <- runMCMC(startpilot,nsamples=blocksize,nburnin=1,thin=1, v.phi=v.phi, time.start=NULL, verbose=TRUE)
+         pilot <- runMCMC(startpilot,nsamples=blocksize,nburnin=100,thin=1, v.phi=v.phi, time.start=NULL, verbose=FALSE) # orig
 	 startpilot <- pilot$last
 	 AR <- checkAR(pilot$accept["phi"],v.phi, verbose=verbose)
 	 v.phi <- AR[1]
@@ -236,8 +254,8 @@ fec_mcmc <- function(
 	 i <- i+1
       }      
       if(verbose) {
-	 cat("Finished to run pilot chain at",format(Sys.time(),"%T"),"\b.\n")
-	 cat(sprintf("Selected tuning parameter: v = %.1f (acc rate = %3.1f%%)\n",v.phi,100*pilot$accept["phi"]))
+	 cat(" Finished to run pilot chain at",format(Sys.time(),"%T"),"\b.\n")
+	 cat(sprintf(" Selected tuning parameter: v = %.1f (acc rate = %3.1f%%)\n",v.phi,100*pilot$accept["phi"]))
       }
       if(!phi.AR.ok) cat("NOTE: Tuning parameter for phi possibly not ok.\n")
    }
@@ -268,6 +286,7 @@ fec_mcmc <- function(
 ##' @keywords internal
 setUpdates_PoGa_mu <- function(priors, fec, f){ 
 
+   debverbose( 'Setting update parameters (PoGa_mu)', level=2) 
    n <- length(fec)
 
    #hyperparameters for mean mu
@@ -317,6 +336,8 @@ setUpdates_PoGa_mu <- function(priors, fec, f){
    formals(update_phi)$b <- b.phi
    formals(update_phi)$n <- n
 
+   debverbose( 'Start updating parameters', level=2)
+    
    ######
    runMCMC <- bquote(function(start, nsamples,nburnin,thin, v.phi,time.start=NULL, verbose=TRUE, n=.(n)){ 
       # number of iterations
@@ -347,7 +368,7 @@ setUpdates_PoGa_mu <- function(priors, fec, f){
       for (i in (-nburnin):niter){
 	 # update mean
 	 mu <- update_mu(mu, n*phi, sum_mui*phi)   
-	 
+          
 	 # update latent epg counts
 	 y <- update_y(mui)
 
@@ -374,7 +395,7 @@ setUpdates_PoGa_mu <- function(priors, fec, f){
 	 #accept <- accept + c(attributes(mu)$accept,attributes(phi)$accept,attributes(mui)$accept)
 
 	 # print status information
-	 if(length(w <- which(niter.1percent %in% i))) {printMsg(w-1, time.start)}
+	 if(length(w <- which(niter.1percent %in% i))) {printMsg(w[1]-1, time.start)}
 #cat("\nmu=",mu," phi=",phi, " y=",y, " mui=",mui, "sum_mui=",sum_mui,"\n")
       }
       # save last value of chain
@@ -414,6 +435,7 @@ setUpdates_PoGa_mu <- function(priors, fec, f){
 ##' @keywords internal
 setUpdates_ZIPoGa_mu <- function(priors, fec, f){ 
 
+       debverbose( 'Setting update parameters (ZIPPoGa_mu)', level=2) 
    n <- length(fec)
    # which observed counts are zero
    whichZero_fec <- fec==0
@@ -486,6 +508,8 @@ setUpdates_ZIPoGa_mu <- function(priors, fec, f){
    formals(update_psi)$a <- a.psi
    formals(update_psi)$b <- b.psi
 
+   debverbose( 'Start updating parameters', level=2)
+       
    ######
    runMCMC <- bquote(function(start, nsamples,nburnin, thin, v.phi,time.start=NULL, verbose=TRUE, n=.(n), nZero_fec=.(sum(fec==0))){
       # number of iterations
@@ -518,7 +542,7 @@ setUpdates_ZIPoGa_mu <- function(priors, fec, f){
 	 # update mean
 	 mu <- update_mu(mu, nNonZero_mui*phi, phi*sum_mui)   
 #cat("\nmu=",mu,"\n")
-if(is.na(mu)) break
+#if(is.na(mu)) break
 	 # update latent epg counts
 	 y <- update_y(mui)
 #cat("y=c(",paste(y,","),"\n")
@@ -553,7 +577,7 @@ if(is.na(mu)) break
 	 accept <- accept + c(attributes(mu)$accept,attributes(phi)$accept, attributes(mui)$accept)
 
 	 # print status information
-	 if(length(w <- which(niter.1percent %in% i))) {printMsg(w-1, time.start)}
+	 if(length(w <- which(iter.1percent %in% i))) {printMsg(w[1]-1, time.start)}
 #cat("\nmu=",mu," phi=",phi, " psi=",psi, " y=",y, " mui=",mui," nNonZero_mui=",nNonZero_mui, "sum_mui=",sum_mui,"\n")
       }
       # save last value of chain
@@ -607,6 +631,8 @@ logdgammaMixture <- function(mui, shape, rate, prob){
 ##' @keywords internal
 setUpdates_PoGa2 <- function(priors, fec, f){ 
 
+    debverbose( 'Setting update parameters (PoGa2)', level=2)
+       
    n <- length(fec)
 
    #hyperparameters for mean mu
@@ -648,6 +674,8 @@ setUpdates_PoGa2 <- function(priors, fec, f){
    formals(update_phi)$b <- b.phi
    formals(update_phi)$n <- n
 
+   debverbose( 'Start updating parameters', level=2)
+    
    ######
    runMCMC <- bquote(function(start, nsamples,nburnin,thin, v.phi,time.start=NULL, verbose=TRUE, n=.(n), prop=.(1/f), fec=.(fec)){ 
       # number of iterations
@@ -695,7 +723,7 @@ setUpdates_PoGa2 <- function(priors, fec, f){
 	 accept <- accept + c(attributes(mu)$accept,attributes(phi)$accept)
 
 	 # print status information
-	 if(length(w <- which(niter.1percent %in% i))) {printMsg(w-1, time.start)}
+	 if(length(w <- which(niter.1percent %in% i))) {printMsg(w[1]-1, time.start)}
       }
       # save last value of chain
       last <- list(mu=mu, mui=mui,phi=phi)
@@ -727,6 +755,8 @@ setUpdates_PoGa2 <- function(priors, fec, f){
 ##' @keywords internal
 setUpdates_ZIPoGa2 <- function(priors, fec, f){ 
 
+    debverbose( 'Setting update parameters (ZIPoGa2)', level=2)
+    
    n <- length(fec)
    # which observed counts are zero
    whichZero_fec <- fec==0
@@ -789,6 +819,8 @@ setUpdates_ZIPoGa2 <- function(priors, fec, f){
    formals(update_psi)$a <- a.psi
    formals(update_psi)$b <- b.psi
 
+    debverbose( 'Start updating parameters', level=2)
+    
    ######
    runMCMC <- bquote(function(start, nsamples,nburnin, thin, v.phi,time.start=NULL, verbose=TRUE, n=.(n), nZero_fec=.(sum(fec==0)), fec=.(fec), prop=.(1/f)){
       # number of iterations
@@ -846,7 +878,7 @@ setUpdates_ZIPoGa2 <- function(priors, fec, f){
 	 accept <- accept + c(attributes(mu)$accept,attributes(phi)$accept, attributes(mui)$accept)
 
 	 # print status information
-	 if(length(w <- which(niter.1percent %in% i))) {printMsg(w-1, time.start)}
+	 if(length(w <- which(niter.1percent %in% i))) {printMsg(w[1]-1, time.start)}
       }
       # save last value of chain
       last <- list(mu=mu, mui=mui,phi=phi,psi=psi)

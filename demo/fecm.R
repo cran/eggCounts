@@ -51,7 +51,7 @@ samplesP <- samples2mcmc(resultsP)
 
 # for instance
 plot(samplesP$all1)
-geweke.diag(samplesP$all1)
+coda::geweke.diag(samplesP$all1)
 
 
 ##################################################
@@ -63,8 +63,9 @@ data(epgs)
 epgsL <- reshape(epgs, direction="long",varying=list(c("before","after")))
 epgsL$time <- factor(epgsL$time, levels=1:2, labels=c("untreated","after treatment"))
 
-xyplot(before/50 ~ time, group=id, data=epgsL, type=c("p","l"), col=1,
-      xlab="", ylab="Faecal egg counts")
+if (require('lattice'))
+    xyplot(before/50 ~ time, group=id, data=epgsL, type=c("p","l"), col=1,
+           xlab="", ylab="Faecal egg counts")
 
 # specify priors and proposal distributions
 priors.mu <- list(hyperpars = c(1, 0.001))

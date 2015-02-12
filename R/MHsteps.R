@@ -1,3 +1,23 @@
+checkMHiterpars <- function( maxiter.pilot,  nburnin, nsamples, thin)
+{
+    if ((maxiter.pilot<0)|(ceiling(maxiter.pilot)!=floor(maxiter.pilot)))
+        stop("'maxiter.pilot' should be a positive integer", call.=FALSE)
+    if ((nburnin < 0)|(ceiling(nburnin)!=floor(nburnin)))
+        stop("'nburnin' should be a positive integer", call.=FALSE)
+    if ((nsamples < 0)|(ceiling(nsamples)!=floor(nsamples)))
+        stop("'nburnin' should be a positive integer", call.=FALSE)
+    if ((thin < 1)|(ceiling(thin)!=floor(thin)))
+        stop("'thin' should be strictly a positive integer", call.=FALSE)    
+    
+    if (maxiter.pilot < 2)  cat("NOTE: 'maxiter.pilot' seems low.\n")
+    if (nburnin < 100)      cat("NOTE: 'nburnin' seems low.\n")
+    if (nsamples < 100)     cat("NOTE: 'nsamples' seems low.\n")
+    
+    invisible()
+}
+   
+    
+    
 
 ##' Check acceptance rates 
 ##' 
@@ -17,10 +37,10 @@ checkAR <- function(accept, v, verbose=TRUE){  ## todo accept==AR
    AR <- mean(accept)
    if(AR < 0.29){
       v.new <- v*0.75
-      if(verbose) cat("decrease tuning parameter", sQuote(substitute(v)), "to",round(v.new,3),"\n")
+      if(verbose) cat(" decrease tuning parameter", sQuote(substitute(v)), "to",round(v.new,3),"\n")
    } else if (AR >0.40){
       v.new <- v*1.25
-      if(verbose) cat("increase tuning parameter", sQuote(substitute(v)), "to",round(v.new,3),"\n")
+      if(verbose) cat(" increase tuning parameter", sQuote(substitute(v)), "to",round(v.new,3),"\n")
    } else {
       AR.ok <- TRUE
       v.new <- v
@@ -54,7 +74,7 @@ MHstep <- function(old,rprop,dprop, logUpost,...){
    # compute difference of log(proposal ratio)
    diff.log.prop <- dprop(x=old,...,log=TRUE) - dprop(x=new,...,log=TRUE)
    # compute acceptance ratio
-   acc.ratio <- exp(min(0, diff.log.post + diff.log.prop))
+   acc.ratio <- exp(min(0, diff.log.post + diff.log.prop, na.rm=TRUE))
 
    u <- runif(1)
    accept <- u < acc.ratio
@@ -62,7 +82,8 @@ MHstep <- function(old,rprop,dprop, logUpost,...){
    
    attr(ret,"accept") <- accept
 
-#cat("new", new,"diff post",diff.log.post,"diff prop", diff.log.prop, "AR", acc.ratio,"accept",accept,"\n")
+   debverbose(sprintf("MH step: %.3f->%.3f (%d); diff post: %.3f, diff prop: %.3f, AR: %.3f",
+                      old, new, accept,   diff.log.post,diff.log.prop,acc.ratio), level=3)
    
    return(ret)
 }
@@ -86,13 +107,17 @@ MH_RW_unif <- function(old, logUpost, v){
    # compute difference of log(proposal ratio)
    diff.log.prop <- -log(old + v - max(old - v,0)) + log(new + v -max(new - v, 0))
 
-   acc.ratio <- exp(min(0, diff.log.post + diff.log.prop))
+   acc.ratio <- exp(min(0, diff.log.post + diff.log.prop, na.rm=TRUE))
 
    u <- runif(1)
    accept <- u < acc.ratio
    ret <- ifelse(accept, new, old)
    
    attr(ret,"accept") <- accept
+
+   debverbose(sprintf("MH step(unif): %.3f->%.3f (%d); diff post: %.3f, diff prop: %.3f, AR: %.3f",
+                      old, new, accept,   diff.log.post,diff.log.prop,acc.ratio), level=3)
+
    
    return(ret)
 
@@ -117,14 +142,16 @@ MH_RW_unif01 <- function(old, logUpost, v){
    # compute difference of log(proposal ratio)
    diff.log.prop <- -log(min(old + v,1) - max(old - v,0)) + log(min(new + v,1) -max(new - v, 0))
 
-   acc.ratio <- exp(min(0, diff.log.post + diff.log.prop))
+   acc.ratio <- exp(min(0, diff.log.post + diff.log.prop, na.rn=TRUE))
 
    u <- runif(1)
    accept <- u < acc.ratio
    ret <- ifelse(accept, new, old)
    
    attr(ret,"accept") <- accept
-#cat("MH_RW_unif01: old",old,"new",new,"AR",acc.ratio,"accept",accept,"\n")   
+   debverbose(sprintf("MH step(unif01): %.3f->%.3f (%d); diff post: %.3f, diff prop: %.3f, AR: %.3f",
+                      old, new, accept,   diff.log.post,diff.log.prop,acc.ratio), level=3)
+
    return(ret)
 
 }
@@ -159,7 +186,7 @@ fc_approx_invgamma <- function(mode, curvature){
    alpha <- beta/mode-1
 
    if(alpha <=0){
-cat("NOTE: shape parameter of InvGamma approximation negative!,",alpha," -> set to 1\n")
+    cat("NOTE: shape parameter of InvGamma approximation negative!,",alpha," -> set to 1\n")
 #cat("mode=",mode, "curvature=",curvature,"curv*mode^2 =",curvature*mode^2,"\n")
       alpha <- 1
    }

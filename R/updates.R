@@ -1,3 +1,16 @@
+debverbose <- function(string, level=1){
+        if (.verboselevel >= level) cat(paste0( substr("           ",1, level+1),string,"\n"))
+}
+
+
+catchNArgamma <- function(n, shape, rate=1, minval=minrgamma){
+    vector <- rgamma(n, shape, rate)
+    if (sum(is.na(vector))>0)
+        debverbose(paste0('Caught NA in rgamma with shape ',shape," and rate ",rate), level=5)
+    vector[is.na(vector)] <- minval
+    vector
+}
+
 divergenceKL <- function(a,b,c, invGamma=TRUE, logNormal=FALSE){
    #####################################
    KL.hg <- function(x, a,b,c, g="gamma"){
@@ -59,9 +72,11 @@ update_h_kl <- function(theta, argA, argC, a, b){
 
    #
    a1 <- argA-a+1
-
+# cat("update_h_kl:",argA,argC,"\t") # todel
+   if( is.na(a1)) a1 <- 0
+   
    sq <- sqrt(a1^2+4*b*argC)
-#cat("update_h_kl: sq=",sq,"\t")
+
   
    ## decide which approximation to use
    # always use an  inverse gamma if argA-a+1 is > 2
@@ -78,13 +93,14 @@ update_h_kl <- function(theta, argA, argC, a, b){
       # for values of argA-a in (0,1] look at KL divergence (gamma, invGamma) to decide
       whichApprox <- divergenceKL(a=a1,b=b,c=argC, invGamma=TRUE,logNormal=TRUE)
    }
-#cat("whichApprox=",whichApprox,"\n")
+
    theta.new <- switch(whichApprox,
       "invGamma"= MHstep(theta,rinvgamma, dinvgamma, log.post.theta, shape=sq-1, scale=2*argC +0.5*a1*{a1-sq}/b),
       "gamma"= MHstep(theta,rgamma, dgamma, log.post.theta, shape=1+sq, rate=2*b +0.5*a1*{a1+sq}/argC),
       "logNormal" = MHstep(theta,rlnorm, dlnorm, log.post.theta, meanlog=1/sq +log(0.5*{-a1+sq}/b),sdlog=(a1^2+4*b*argC)^(-.25))
    )
-   
+
+   debverbose(sprintf("Update theta(KL): %.3f->%.3f, using %s approximation",theta,theta.new,whichApprox), level=4)
    return(theta.new)
 }
 
@@ -112,6 +128,9 @@ update_h_gamma <- function(theta, argA, argC, a, b){
    fc <- fc_approx_gamma(mode=mode.curv$mode,curvature=mode.curv$curvature)
    # propose new value
    theta.new <- MHstep(theta,rgamma, dgamma, log.post.theta, shape=fc["shape"], rate=fc["rate"])
+
+   debverbose(sprintf("Update theta(gamma): %.3f->%.3f, using approximation shape %.3f and rate %.3f",
+                      theta,theta.new, fc["shape"], rate=fc["rate"]), level=4)
    
    return(theta.new)
 }
@@ -139,6 +158,10 @@ update_h_invGamma <- function(theta, argA, argC, a, b){
    fc <- fc_approx_invgamma(mode=mode.curv$mode,curvature=mode.curv$curvature)
    # propose new value
    theta.new <- MHstep(theta,rinvgamma, dinvgamma, log.post.theta, shape=fc["shape"], scale=fc["scale"])
+
+   debverbose(sprintf("Update theta(invgamma): %.3f->%.3f, using approximation shape %.3f and rate %.3f",
+                      theta,theta.new, fc["shape"], rate=fc["rate"]), level=4)
+
    
    return(theta.new)
 }
@@ -164,6 +187,10 @@ update_h_logNormal <- function(theta, argA, argC, a, b){
    fc <- fc_approx_logNormal(mode=mode.curv$mode,curvature=mode.curv$curvature)
    # propose new value
    theta.new <- MHstep(theta,rlnorm, dlnorm, log.post.theta, meanlog=fc["mean"], sdlog=fc["sd"])
+
+   debverbose(sprintf("Update theta(logNormal): %.3f->%.3f, using approximation meanlog %.3f and sdlog %.3f",
+                      theta,theta.new, fc["mean"], rate=fc["sd"]), level=4)
+
    
    return(theta.new)
 }
@@ -205,9 +232,9 @@ update_phi_unif <- function(phi,mu, sum_mui,sumlog_mui, n, a, b, v.phi){
    # do an MH step
    phi.new <- MH_RW_unif(phi,log.post.phi, v=v.phi)
 
-   if (is.na(phi.new)) {      
-       cat(paste(' phi:',phi.new,phi, a, b, n,sum_mui,sumlog_mui))
-   }
+   debverbose(sprintf("Update phi(unif): %.3f->%.3f",phi,phi.new), level=3)
+
+   
    return(phi.new)
 }
 
@@ -227,6 +254,9 @@ update_phiTransf_unif <- function(phi,mu, sum_mui,sumlog_mui, n, a, b, v.phi, fa
    phi.new <- MH_RW_unif01(phi.01,log.post.phi, v=v.phi) # truncate at 0 and 1? use a beta as proposal?
    
    phi.new <- factor*tan(phi.new*pi/2)
+
+   debverbose(sprintf("Update phi.transf(unif): %.3f->%.3f",phi.01,phi.new), level=3)
+
    return(phi.new)
 }
 
@@ -255,6 +285,8 @@ update_phi_gamma <- function(phi,mu, sum_mui,sumlog_mui, n, a, b,...){
    fc <- fc_approx_gamma(mode=mode.curv$mode,curvature=mode.curv$curvature)
    # do an MH step
    phi.new <- MHstep(phi,rgamma,dgamma, log.post.phi, shape=fc["shape"], rate=fc["rate"])
+
+   debverbose(sprintf("Update phi(gamma): %.3f->%.3f",phi,phi.new), level=3)
    
    return(phi.new)
 }
@@ -273,12 +305,14 @@ update_theta_gammaAdd <- function(theta, s,r, n){
    addS <- 0.05
    # draw from full conditional if shape is not "too small"
    if(all(s>0.05)){
-      ret <- pmin( rgamma(n, shape = s, rate= r), minrgamma)
+#      ret <- catchNA( rgamma(n, shape = s, rate= r), minrgamma)
+      ret <- catchNArgamma(n, shape = s, rate= r, minrgamma)
       attr(ret,"accept") <- rep(TRUE, n)
    } else { # shift scale a bit to avoid too small theta's
       # propose a new value
       addS <- ifelse(s<=0.05,addS,0)
-      new <- pmin( rgamma(n,shape=s+addS, rate=r), minrgamma)
+#      new <- catchNA( rgamma(n,shape=s+addS, rate=r), minrgamma)
+      new <- catchNArgamma(n,shape=s+addS, rate=r, minrgamma)
       # compute difference of log(posterior ratio)
       diff.log.post <- dgamma(new, shape=s, rate=r, log=TRUE) - dgamma(theta, shape=s, rate=r, log=TRUE)
       # compute difference of log(proposal ratio)
@@ -304,7 +338,8 @@ update_theta_gammaAdd <- function(theta, s,r, n){
 ##' @return updated parameter \eqn{theta}
 ##' @keywords internal
 update_theta_gamma <- function(s,r, n){
-   pmin( rgamma(n, shape = s, rate= r), minrgamma)
+   catchNArgamma(n, shape = s, rate= r, minrgamma)
+#      catchNA( rgamma(n, shape = s, rate= r), minrgamma)
 }
 
 ##' Update a parameter \eqn{theta} based on a gamma distribution
@@ -318,7 +353,8 @@ update_theta_gamma <- function(s,r, n){
 ##' @return updated parameter \eqn{theta}
 ##' @keywords internal
 update_theta_gamma1 <- function(s,r, a,b, ...){
-   pmin( rgamma(1, shape = s+a, rate= r+b), minrgamma)
+#   catchNA( rgamma(1, shape = s+a, rate= r+b), minrgamma)
+   catchNArgamma(1, shape = s+a, rate= r+b, minrgamma)
 }
 
 
@@ -353,7 +389,8 @@ update_theta_gammaMix <- function(mui, y, mu, phi, psi, n, whichZero_fec, nNonZe
    shape <- y+phi
    rate <- p+phi/mu
    # for non-zero observed counts, draw from gamma full conditional
-   new[!whichZero_fec] <- pmin( rgamma(nNonZero_fec, shape=shape[!whichZero_fec], rate=rate), minrgamma)
+#   new[!whichZero_fec] <- catchNA( rgamma(nNonZero_fec, shape=shape[!whichZero_fec], rate=rate), minrgamma)
+   new[!whichZero_fec] <- catchNArgamma(nNonZero_fec, shape=shape[!whichZero_fec], rate=rate, minrgamma)
 
 if(n==nNonZero_fec) return(new)
 
@@ -364,8 +401,9 @@ if(n==nNonZero_fec) return(new)
 
    # draw mui's for zero observed counts from a mixture of a gamma distribution and a point mass at zero
    which_zeroFEC_posMui <- rbinom(n-nNonZero_fec, size=1, prob=psi)==1
-   proposed_mui[which_zeroFEC_posMui] <- pmin(
-       rgamma(sum(which_zeroFEC_posMui),shape=yZero_fec[which_zeroFEC_posMui]+phi+addS, rate=rate), minrgamma)
+#   proposed_mui[which_zeroFEC_posMui] <- catchNA(
+#       rgamma(sum(which_zeroFEC_posMui),shape=yZero_fec[which_zeroFEC_posMui]+phi+addS, rate=rate), minrgamma)
+   proposed_mui[which_zeroFEC_posMui] <- catchNArgamma(sum(which_zeroFEC_posMui),shape=yZero_fec[which_zeroFEC_posMui]+phi+addS, rate=rate, minrgamma)
 
 
    nZero <- sum(whichZero_fec)
@@ -441,6 +479,8 @@ update_psi_beta <- function(psi,nNZ_b,nZ_b,nNZ_a,delta, n, a, b ){
    fc <- fc_approx_beta(mode=mode.curv$mode,curvature=mode.curv$curvature, dens01=mode.curv$dens01)
    # propose new value
    psi.new <- MHstep(psi,rbeta, dbeta, log.post.psi, shape1=fc["shape1"], shape2=fc["shape2"])
+
+
    
    return(psi.new)
 }
