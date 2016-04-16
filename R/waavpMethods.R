@@ -2,45 +2,15 @@
 ## compute standard FECR
 #######################################
 
-##' Compute standard FECRT according to WAAVP guidelines
-##'
-##' Computes the standard Faecal Egg Count Reduction test together with approximate
-##' confidence intervals according to the WAAVP guidelines 
-##' (Coles et al., 1992, 2006). The function also returns bootstrap percentile 
-##' confidence intervals.
-
-##' @param epg1 faecal egg counts in untreated animals
-##' @param epg2 faecal egg counts in treated animals
-##' @param paired logical indication whether or not the samples are paired 
-##' @param alpha confidence level of the intervals
-##' @param R number of bootstrap replicates
-##' @param \dots extra arguments (not used)
-
-##' @return A list with
-##' \item{estimate}{the estimated percentage reduction in mean epg rate}
-##' \item{bootCI}{corresponding percentile bootstrap confidence interval}
-##' \item{approxCI}{corresponding approximate confidence interval}
-
-##' @references 
-##' Coles GC, Bauer C, Borgsteede FHM, Geerts S, Klei TR, Taylor MA,  Waller, PJ (1992).
-##' World Association for the Advancement of Veterinary Parasitology (WAAVP)
-##' methods for the detection of anthelmintic resistance in nematodes of 
-##' veterinary importance, Veterinary Parasitology, 44:35-44.
-##'
-##' Coles GC, Jackson F, Pomroy WE, Prichard RK,  von Samson-Himmelstjerna G,
-##' Silvestre A, Taylor MA,  Vercruysse J (2006).
-##' The detection of anthelmintic resistance in nematodes of veterinary	importance,
-##' VeterinaryParasitology, 136:167-185.
-
-##' @examples
-##' data(epgs)
-##' fecrtCI(epgs$before, epgs$after, paired=TRUE)
-
-##' @export
-# Coles:       FECRT = 1 - T2/C2   -> paired = FALSE
-# Kochapakdee: FECRT = 1 - T2/T1   -> paired = TRUE
-fecrtCI <- function(epg1, epg2, paired=FALSE, alpha=0.05, R=1999,...){
-
+fecrtCI <- function(epg1, epg2, paired=FALSE, alpha=0.05, R=1999){
+  if (!is.logical(paired))
+    stop("The paired argument must be a logical", call.=FALSE)
+  if ((R < 1)|(ceiling(R)!=floor(R)))
+    stop("'R' should be a positive integer", call.=FALSE)
+  if ((alpha<0)||(alpha>1))
+    stop("alpha must be between 0 and 1", call.=FALSE)
+  if (R > 9999)      cat("NOTE: 'R' seems high\n")
+  
    conf.level <- 1-alpha
 
    if(paired){
@@ -76,11 +46,12 @@ fecrtCI <- function(epg1, epg2, paired=FALSE, alpha=0.05, R=1999,...){
    }
    boot.out <- boot(data, meanratio,R=R, stype="i", strata=data[,"grp"])
    ## Ratio of means (percentile bootstrap) ##
+   if (sum(epg1)!=0){
    if(sd(boot.out$t[!is.na(boot.out$t) & is.finite(boot.out$t)])==0){
       conf.int <- c(NA,NA)
    } else {
       conf.int <- boot.ci(boot.out = boot.out, conf = conf.level, type = c("perc"))$perc[4:5]
-   }
+   }} else {conf.int <- c(NA,NA)}
 
    estimate <- 1-mean(epg2)/mean(epg1)
 

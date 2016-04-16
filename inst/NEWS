@@ -1,3 +1,16 @@
+eggCounts 1.0:  
+
+* MCMC inference migrated from Metropolis-Hastlings algorithm and Gibbs sampler to Stan modelling language.
+
+* Further improved bug fix of version 0.4.
+
+* Improved models.
+
+* Full-support on zero-inflation models.
+
+
+
+
 eggCounts 0.4, 0.4-1:  
 
 * Bug fixes introduced since version 0.1.
