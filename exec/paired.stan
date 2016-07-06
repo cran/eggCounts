@@ -16,10 +16,10 @@ transformed parameters{
   real lambdab[J];
   real kappamu;
   for (i in 1:J){
-    lambdab[i] <- mub[i]/fpre[i];
-    lambdaa[i] <- delta*mub[i]/fpost[i];
+    lambdab[i] = mub[i]/fpre[i];
+    lambdaa[i] = delta*mub[i]/fpost[i];
   }
-  kappamu <- kappa/mu;
+  kappamu = kappa/mu;
 }
 model {
   mu ~ gamma(1,0.001);    // prior

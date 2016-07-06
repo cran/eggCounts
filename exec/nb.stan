@@ -12,9 +12,9 @@ transformed parameters{
   real lambda[J];
   real kappamu;
   for (i in 1:J){
-    lambda[i] <- mui[i]/CF[i];
+    lambda[i] = mui[i]/CF[i];
   }
-  kappamu <- kappa/mu;
+  kappamu = kappa/mu;
 }
 model {
   mu ~ gamma(1,0.001);    // prior

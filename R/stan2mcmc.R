@@ -41,7 +41,7 @@ stan2mcmc <- function(stanFit){
          },
          "Zero-inflated Bayesian model"=,
          "zinb"={
-           meanEPG<-rowMeans(extract(stanFit,"mui")[[1]])*extract(stanFit,"phi")[[1]]
+           meanEPG<-rowMeans(extract(stanFit,"mui")[[1]])*(1-extract(stanFit,"phi")[[1]])
            phi<-extract(stanFit,"phi")$phi
            kappa<-extract(stanFit,"kappa")$kappa
            output<-cbind(meanEPG=meanEPG,kappa=kappa,phi=phi)

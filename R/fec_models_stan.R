@@ -40,9 +40,9 @@ nb_stan <- function(priors){
           real lambda[J];
           real kappamu;
           for (i in 1:J){
-          lambda[i] <- mui[i]/CF[i];
+          lambda[i] = mui[i]/CF[i];
           }
-          kappamu <- kappa/mu;
+          kappamu = kappa/mu;
          }
          model {
           mu ~ ',dist.mu,'(',a.mu,',',b.mu,');    // prior
@@ -82,9 +82,9 @@ zinb_stan <- function(priors){
           real lambda[J];
           real kappamu;
           for (i in 1:J){
-          lambda[i] <- mui[i]/CF[i];
+          lambda[i] = mui[i]/CF[i];
           }
-          kappamu <- kappa/mu;
+          kappamu = kappa/mu;
          }
           model {
           mu ~ ',dist.mu,'(',a.mu,',',b.mu,');       // prior
@@ -93,9 +93,9 @@ zinb_stan <- function(priors){
           mui ~ gamma(kappa,kappamu); 
           for (n in 1:J) {             // likelihoods
           if (ystarraw[n] == 0)
-          increment_log_prob(log_sum_exp(bernoulli_log(1,phi), bernoulli_log(0,phi)+poisson_log(ystarraw[n],lambda[n])));
+          target += log_sum_exp(bernoulli_lpmf(1 | phi), bernoulli_lpmf(0 | phi)+poisson_lpmf(ystarraw[n] | lambda[n]));
           else
-          increment_log_prob(bernoulli_log(0,phi) + poisson_log(ystarraw[n],lambda[n]));
+          target += bernoulli_lpmf(0 | phi) + poisson_lpmf(ystarraw[n] | lambda[n]);
           }
           }')
 }

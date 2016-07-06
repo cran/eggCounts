@@ -19,18 +19,18 @@ transformed parameters{
   real kappamu;
   real kappamudelta;
   for (i in 1:Jb){
-    lambdab[i] <- mub[i]/fpre[i];
+    lambdab[i] = mub[i]/fpre[i];
   }
   for (i in 1:Ja){
-    lambdaa[i] <- delta*mua[i]/fpost[i];
+    lambdaa[i] = delta*mua[i]/fpost[i];
   }
-  kappamu <- kappa/mu;
+  kappamu = kappa/mu;
 }
 model {
   mu ~ gamma(1,0.001);    // prior
   kappa ~ gamma(1,0.7);
   delta ~ beta(1,1);
-  increment_log_prob(gamma_log(mub,kappa,kappamu)+gamma_log(mua,kappa,kappamu));   // likelihoods
+  target += gamma_lpdf(mub | kappa,kappamu)+gamma_lpdf(mua | kappa,kappamu);   // likelihoods
   ystarbraw ~ poisson(lambdab);
   ystararaw ~ poisson(lambdaa);
 }

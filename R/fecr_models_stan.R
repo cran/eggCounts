@@ -51,10 +51,10 @@ paired_stan <- function(priors){
            real lambdab[J];
            real kappamu;
            for (i in 1:J){
-           lambdab[i] <- mub[i]/fpre[i];
-           lambdaa[i] <- delta*mub[i]/fpost[i];
+           lambdab[i] = mub[i]/fpre[i];
+           lambdaa[i] = delta*mub[i]/fpost[i];
            }
-           kappamu <- kappa/mu;
+           kappamu = kappa/mu;
            }
            model {
            mu ~ ',dist.mu,'(',a.mu,',',b.mu,');            // prior
@@ -101,19 +101,19 @@ unpaired_stan <- function(priors){
              real lambdab[Jb];
              real kappamu;
              for (i in 1:Jb){
-             lambdab[i] <- mub[i]/fpre[i];
+             lambdab[i] = mub[i]/fpre[i];
              }
              for (i in 1:Ja){
-             lambdaa[i] <- delta*mua[i]/fpost[i];
+             lambdaa[i] = delta*mua[i]/fpost[i];
              }
-             kappamu <- kappa/mu;
+             kappamu = kappa/mu;
            }
            model {
              // prior
            mu ~ ',dist.mu,'(',a.mu,',',b.mu,'); 
            kappa ~ ',dist.kappa,'(',a.kappa,',',b.kappa,');
            delta ~ ',dist.delta,'(',a.delta,',',b.delta,');
-           increment_log_prob(gamma_log(mub,kappa,kappamu)+gamma_log(mua,kappa,kappamu));             // likelihoods
+           target += gamma_lpdf(mub | kappa,kappamu)+gamma_lpdf(mua | kappa,kappamu);             // likelihoods
            ystarbraw ~ poisson(lambdab);
            ystararaw ~ poisson(lambdaa);
            }')
@@ -159,12 +159,12 @@ ZI_unpaired_stan <- function(priors){
           real lambdab[Jb];
           real kappamu;
           for (i in 1:Jb){
-            lambdab[i] <- mub[i]/fpre[i];
+            lambdab[i] = mub[i]/fpre[i];
           }
           for (i in 1:Ja){
-            lambdaa[i] <- delta*mua[i]/fpost[i];
+            lambdaa[i] = delta*mua[i]/fpost[i];
           }
-          kappamu <- kappa/mu;
+          kappamu = kappa/mu;
         }
         model {
           // prior
@@ -177,15 +177,15 @@ ZI_unpaired_stan <- function(priors){
           ystararaw ~ poisson(lambdaa); 
           for (n in 1:Jb) {
             if (mub[n] == 0)
-                 increment_log_prob(bernoulli_log(1,phi));
+                 target += bernoulli_lpmf(1 | phi);
                  else
-                 increment_log_prob(bernoulli_log(0,phi) + gamma_log(mub[n],kappa,kappamu));
+                 target += bernoulli_lpmf(0 | phi) + gamma_lpdf(mub[n] | kappa,kappamu);
            }
           for (n in 1:Ja) {
              if (mua[n] == 0)
-                increment_log_prob(bernoulli_log(1,phi));
+                target += bernoulli_lpmf(1 | phi);
           else 
-                increment_log_prob(bernoulli_log(0,phi) + gamma_log(mua[n],kappa,kappamu));
+                target += bernoulli_lpmf(0 | phi) + gamma_lpdf(mua[n] | kappa,kappamu);
           }
 }')
 }
@@ -228,10 +228,10 @@ ZI_paired_stan <- function(priors){
           real lambdab[J];
           real kappamu;
           for (i in 1:J){
-            lambdab[i] <- mub[i]/fpre[i];
-            lambdaa[i] <- delta*mub[i]/fpost[i];
+            lambdab[i] = mub[i]/fpre[i];
+            lambdaa[i] = delta*mub[i]/fpost[i];
           }
-          kappamu <- kappa/mu;
+          kappamu = kappa/mu;
         }
         model {
           mu ~ ',dist.mu,'(',a.mu,',',b.mu,');           // prior
@@ -241,15 +241,15 @@ ZI_paired_stan <- function(priors){
           mub ~ gamma(kappa,kappamu);           // likelihoods
           for (n in 1:J) {
           if (ystarbraw[n] == 0)
-            increment_log_prob(log_sum_exp(bernoulli_log(1,phi), bernoulli_log(0,phi)+poisson_log(ystarbraw[n],lambdab[n])));
+            target += log_sum_exp(bernoulli_lpmf(1 | phi), bernoulli_lpmf(0 | phi)+poisson_lpmf(ystarbraw[n] | lambdab[n]));
             else
-            increment_log_prob(bernoulli_log(0,phi) + poisson_log(ystarbraw[n],lambdab[n]));
+            target += bernoulli_lpmf(0 | phi) + poisson_lpmf(ystarbraw[n] | lambdab[n]);
           }
           for (n in 1:J) {
             if (ystararaw[n] == 0)
-            increment_log_prob(log_sum_exp(bernoulli_log(1,phi), bernoulli_log(0,phi)+poisson_log(ystararaw[n],lambdaa[n])));
+            target += log_sum_exp(bernoulli_lpmf(1 | phi), bernoulli_lpmf(0 | phi)+poisson_lpmf(ystararaw[n] | lambdaa[n]));
             else 
-            increment_log_prob(bernoulli_log(0,phi) + poisson_log(ystararaw[n],lambdaa[n]));
+            target += bernoulli_lpmf(0 | phi) + poisson_lpmf(ystararaw[n] | lambdaa[n]);
           }
         }
 ')

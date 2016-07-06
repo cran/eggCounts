@@ -1,3 +1,11 @@
+eggCounts 1.1:  
+
+* Updated Stan program syntax 
+
+* Fixed minor bug in the mcmc output of the 1-sample zero-inflation model
+
+
+
 eggCounts 1.0:  
 
 * MCMC inference migrated from Metropolis-Hastlings algorithm and Gibbs sampler to Stan modelling language.

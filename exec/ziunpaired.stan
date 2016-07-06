@@ -19,12 +19,12 @@ transformed parameters{
   real lambdab[Jb];
   real kappamu;
   for (i in 1:Jb){
-    lambdab[i] <- mub[i]/fpre[i];
+    lambdab[i] = mub[i]/fpre[i];
   }
   for (i in 1:Ja){
-    lambdaa[i] <- delta*mua[i]/fpost[i];
+    lambdaa[i] = delta*mua[i]/fpost[i];
   }
-  kappamu <- kappa/mu;
+  kappamu = kappa/mu;
 }
 model {
   mu ~ gamma(1,0.001);    // prior
@@ -51,14 +51,14 @@ model {
     mua ~ gamma(kappa,kappamu); 
   for (n in 1:Jb) {
     if (ystarbraw[n] == 0)
-      increment_log_prob(log_sum_exp(bernoulli_log(1,phi), bernoulli_log(0,phi)+poisson_log(ystarbraw[n],lambdab[n])));
+      target += log_sum_exp(bernoulli_lpmf(1 | phi), bernoulli_lpmf(0 | phi)+poisson_lpmf(ystarbraw[n] | lambdab[n]));
     else
-      increment_log_prob(bernoulli_log(0,phi) + poisson_log(ystarbraw[n],lambdab[n]));
+      target += bernoulli_lpmf(0 | phi) + poisson_lpmf(ystarbraw[n] | lambdab[n]);
   }
   for (n in 1:Ja) {
     if (ystararaw[n] == 0)
-      increment_log_prob(log_sum_exp(bernoulli_log(1,phi), bernoulli_log(0,phi)+poisson_log(ystararaw[n],lambdaa[n])));
+      target += log_sum_exp(bernoulli_lpmf(1 | phi), bernoulli_lpmf(0 | phi)+poisson_lpmf(ystararaw[n] | lambdaa[n]));
     else 
-      increment_log_prob(bernoulli_log(0,phi) + poisson_log(ystararaw[n],lambdaa[n]));
+      target += bernoulli_lpmf(0 | phi) + poisson_lpmf(ystararaw[n] | lambdaa[n]);
   }
 }
