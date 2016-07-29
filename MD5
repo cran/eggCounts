@@ -1,5 +1,5 @@
 65ff55fe1f559429a8db17753d2f2db5 *ChangeLog
-354869efc06dff5938617b3b6369f9de *DESCRIPTION
+b81b199c4de40584965b67a8bb612b8f *DESCRIPTION
 8ba38d9634eb09446c0bab3497413eb7 *NAMESPACE
 985303624cd947aea12d97142a5ca94c *R/fec_models_stan.R
 f901da11710455511cb7bee0ab7d57bc *R/fec_stan.R
@@ -26,11 +26,11 @@ cf09a43834d054fb410bdc67bb7bef7b *exec/unpaired.stan
 36e74ca97db771a64b00858a519cb584 *exec/zipaired.stan
 873fcd3a97206908e022050edecd511f *exec/ziunpaired.stan
 1065b76bacc0474d9a67c3dfd6a8f86b *inst/CITATION
-7ccb557f64a7480f2f80f4459f05259b *inst/NEWS
+3855fb31618403b85f9f954ab5db4e56 *inst/NEWS
 d32239bcb673463ab874e80d47fae504 *inst/chunks/gpl.txt
 75f528da4a081f93b8ae8a6909fbb719 *inst/chunks/license.stan
 a7ca453796ebc56e50eb03c61985c243 *man/echinococcus.Rd
-64cb7aedc31be22b52783f2f454e15fc *man/eggCounts-package.Rd
+a82b5f8a42ea058225e36d20e88a61b6 *man/eggCounts-package.Rd
 fe87a2ba2c4459c0982184ad5747c452 *man/epgs.Rd
 54fa445dfa5b01c2c694229438f580fb *man/fec_stan.Rd
 1c1d6a4ddc4dacd1bed921b68ce7585a *man/fecr_stan.Rd
