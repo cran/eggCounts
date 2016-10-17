@@ -42,15 +42,15 @@ Defaults to \code{FALSE}.}
 \value{
 An object of S4 class \code{stanfit} representing the fitted results. For more information, please see the \href{https://cran.r-project.org/package=rstan}{\code{stanfit-class}} in \code{rstan} reference manual.
 
-Prints out summary of \code{meanEPG} as the posterior mean egg count.
+Prints out summary of \code{meanEPG} as the posterior mean egg count. The posterior summary contains the mean, standard deviation (sd), 2.5\%, 25\%, 50\%, 75\% and 97.5\% percentiles, the 95\% highest posterior density interval (HPDLow95 and HPDHigh95) and the posterior mode. NOTE: we recommend to use the 95\% HPD interval and the mode for further statistical analysis.
 }
 \description{
-Models faecal egg counts data in a one-sample case with (zero-inflated) Poisson-gamma model formulation using the Stan modelling language.
+Models faecal egg counts data in a one-sample case with (zero-inflated) Poisson-gamma model formulation using the Stan modelling language. It is computationally several-fold faster compare to conventional MCMC techniques. For the installation instruction of Stan, please read: \href{https://github.com/stan-dev/rstan/wiki/Installing-RStan-on-Windows}{Stan Installation.}
 }
 \details{
 The first time each non-default model is applied, it can take up to 20 seconds for stan to compile the model. Currently the function only support prior distributions with two parameters. For a complete list of supported priors and their parameterization, please consult the list of distributions in \href{http://mc-stan.org/documentation/}{Stan}.
 
-Sometimes the function outputs informational message from Stan regarding the Metropolis proposal rejections, this is due to the sampler hit the boundary of the parameter space. For some variables, the boundary point is not supported in the distribution. This is not a concern if there are only a few such warnings.
+Sometimes the function outputs informational message from Stan regarding the Metropolis proposal rejections, this is due to the sampler hit the boundary of the parameter space. For some variables, the boundary point is not supported in the distribution. This is not a concern if there are only a few such warnings. 
 }
 \author{
 Craig Wang \email{craig.wang@uzh.ch} 

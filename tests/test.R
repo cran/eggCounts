@@ -5,7 +5,7 @@ library(testthat)
 set.seed(1)
 count <- simData1s()
 counts <- simData2s()
-
+if (Sys.info()["sysname"] != "SunOS"){
 # test raw counts and calculated epg result same mcmc samples
 set.seed(1)
 t1 <- stan2mcmc(fec_stan(count[,"obs"], rawCounts=FALSE, CF=50, zeroInflation = TRUE, nburnin=10,nsamples=1e3,thinning=1))
@@ -49,5 +49,5 @@ expect_that(t9,is_a("stanfit"))
 
 # check incorrect inputs
 expect_that(fecr_stan(counts[,"masterPre"],counts[,"masterPost"],rawCounts=FALSE,preCF=50),throws_error())
-expect_that(fecr_stan(counts[,"obsPre"],counts[,"obsPost"],preCF=50.5), throws_error())
+expect_that(fecr_stan(counts[,"obsPre"],counts[,"obsPost"],preCF=50.5), throws_error())}
 
