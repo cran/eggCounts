@@ -12,7 +12,8 @@ fec_stan<-function(fec,rawCounts=FALSE,CF=50,
   # number of faecal samples
   n <- length(fec)
   # check correction factors
-  if (any(CF < 0)|(ceiling(CF)!=floor(CF)))    stop("correction factor(s) should be a positive integer", call.=FALSE)
+  checkCF <- function(CF){(CF < 0)|(ceiling(CF)!=floor(CF))}
+  if (any(sapply(CF,checkCF)))     stop("correction factor(s) should be a positive integer", call.=FALSE)
   if(length(CF)>1 && length(CF)!=n) stop("Lengths of the vectors for FEC and correction factors do not match\n")
   
   # raw counts or EpGs?
@@ -56,7 +57,7 @@ fec_stan<-function(fec,rawCounts=FALSE,CF=50,
   meanEPG<-rowMeans(extract(samples,"mui")[[1]])*(1-extract(samples,"phi")$phi)
   } else {meanEPG<-rowMeans(extract(samples,"mui")[[1]])}
   
-  cat("Model: ", model,"\n","Number of Samples: ",nsamples, "\n","Warm-up samples: ",nburnin,"\n","Thinning: ",thinning,"\n")
-  printSummary(cbind(meanEPG))
-  return(invisible(samples))
+  cat("Model: ", model,"\n","Number of Samples: ",nsamples, "\n","Warm-up Samples: ",nburnin,"\n","Thinning: ",thinning,"\n","Number of Chains",nchain,"\n")
+  summarys<-printSummary(cbind(meanEPG))
+  return(invisible(list(stan.samples = samples,posterior.summary = summarys)))
 }

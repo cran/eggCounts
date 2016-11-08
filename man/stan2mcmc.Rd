@@ -8,7 +8,7 @@ stan2mcmc(stanFit)
 \item{stanFit}{A stanfit object from the output of either \code{fecr_stan()} or \code{fec_stan()}}
 }
 \value{
-A MCMC object with a list of relevant parameters depending on the model.
+A MCMC object with a list of relevant parameters depending on the chosen model.
 }
 
 \description{
@@ -23,7 +23,7 @@ data(epgs)
 
 ## apply zero-infation model for the paired design to the data vector
 model <- fecr_stan(epgs[,1], epgs[,2], rawCounts=FALSE, preCF=10, paired=TRUE, zeroInflation=TRUE)
-samples <- stan2mcmc(model)
+samples <- stan2mcmc(model$stan.samples)
 summary(samples)
 }}
 \author{

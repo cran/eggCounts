@@ -75,7 +75,7 @@ data(epgs)
 
 ## apply zero-infation model to the data vector
 model<-fecr_stan(epgs[,1],epgs[,2],rawCounts=FALSE,preCF=10,paired=TRUE,zeroInflation=TRUE)
-samples<-stan2mcmc(model)
+samples<-stan2mcmc(model$stan.samples)
 
 ## a demonstration
 demo("fecm_stan", package = "eggCounts") 

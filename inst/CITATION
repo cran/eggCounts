@@ -1,4 +1,4 @@
-citHeader("To cite `eggCounts` in publications use:")
+citHeader("To cite `eggCounts` model and `eggCounts` package in publication use:")
 
 citEntry(entry = "Article",
   title        = "Evaluating faecal egg count reduction using a specifically designed package `eggCounts` in R and a user friendly web interface",
@@ -18,3 +18,14 @@ citEntry(entry = "Article",
         "International Journal for Parasitology, 44(5), 299-303."),
 )
 
+citEntry(entry = "Manual",
+    title = "eggCounts: Hierarchical Modelling of Faecal Egg Counts",
+    author = "Craig Wang and Michaela Paul",
+    year = "2016",
+    note = "R package version 1.2",
+    url = "https://CRAN.R-project.org/package=eggCounts",
+
+  textVersion  =
+  paste("Craig Wang and Michaela Paul (2016). eggCounts: Hierarchical Modelling of Faecal Egg Counts. R package version 1.2.
+  https://CRAN.R-project.org/package=eggCounts"),
+)

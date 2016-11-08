@@ -66,7 +66,7 @@ fec<-echinococcus[[1]]
 
 ## apply zero-infation model to the data vector
 model<-fec_stan(fec,rawCounts=FALSE,CF=50,zeroInflation=FALSE)
-samples<-stan2mcmc(model)
+samples<-stan2mcmc(model$stan.samples)
 
 ## a demonstration
 demo("fecm_stan", package = "eggCounts") 

@@ -43,8 +43,9 @@ fecr_stan<-function(preFEC,postFEC,rawCounts=FALSE,preCF=50,postCF=preCF,
   postN <- length(postFEC)
 
   # check correction factors
-  if ((preCF < 0)|(ceiling(preCF)!=floor(preCF)))    stop("correction factor(s) should be a positive integer", call.=FALSE)
-  if ((postCF < 0)|(ceiling(postCF)!=floor(postCF)))    stop("correction factor(s) should be a positive integer", call.=FALSE)
+  checkCF <- function(CF){(CF < 0)|(ceiling(CF)!=floor(CF))}
+  if (any(sapply(preCF,checkCF)))    stop("correction factor(s) should be a positive integer", call.=FALSE)
+  if (any(sapply(postCF,checkCF)))     stop("correction factor(s) should be a positive integer", call.=FALSE)
   if(length(preCF)>1 && length(preCF)!=preN) stop("Lengths of the vectors preCF and preFEC do not match\n")
   if(length(postCF)>1 && length(postCF)!=postN) stop("Lengths of the vectors postCF and postFEC do not match\n")
   
@@ -138,7 +139,7 @@ fecr_stan<-function(preFEC,postFEC,rawCounts=FALSE,preCF=50,postCF=preCF,
            fecr<-1-extract(samples,"delta")$delta
            result<-cbind(fecr,meanEPG.untreated,meanEPG.treated)
    }
-  cat("Model: ", model,"\n","Number of Samples: ",nsamples, "\n","Warm-up samples: ",nburnin,"\n","Thinning: ",thinning,"\n")
-  printSummary(result)
-  return(invisible(samples))
+  cat("Model: ", model,"\n","Number of Samples: ",nsamples, "\n","Warm-up samples: ",nburnin,"\n","Thinning: ",thinning,"\n","Number of Chains",nchain,"\n")
+  summarys<-printSummary(result)
+  return(invisible(list(stan.samples = samples,posterior.summary = summarys)))
 }

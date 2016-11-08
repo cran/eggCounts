@@ -2581,7 +2581,7 @@ public:
             current_statement_begin__ = 31;
             for (int n = 1; n <= J; ++n) {
                 current_statement_begin__ = 32;
-                if (as_bool(logical_eq(get_base1(ystarbraw,n,"ystarbraw",1),0))) {
+                if (as_bool((primitive_value(logical_eq(get_base1(ystarbraw,n,"ystarbraw",1),0)) && primitive_value(logical_eq(get_base1(ystararaw,n,"ystararaw",1),0))))) {
                     current_statement_begin__ = 33;
                     lp_accum__.add(log_sum_exp(bernoulli_log(1,phi),(bernoulli_log(0,phi) + poisson_log(get_base1(ystarbraw,n,"ystarbraw",1),get_base1(lambdab,n,"lambdab",1)))));
                 } else {
@@ -2592,7 +2592,7 @@ public:
             current_statement_begin__ = 37;
             for (int n = 1; n <= J; ++n) {
                 current_statement_begin__ = 38;
-                if (as_bool(logical_eq(get_base1(ystararaw,n,"ystararaw",1),0))) {
+                if (as_bool((primitive_value(logical_eq(get_base1(ystarbraw,n,"ystarbraw",1),0)) && primitive_value(logical_eq(get_base1(ystararaw,n,"ystararaw",1),0))))) {
                     current_statement_begin__ = 39;
                     lp_accum__.add(log_sum_exp(bernoulli_log(1,phi),(bernoulli_log(0,phi) + poisson_log(get_base1(ystararaw,n,"ystararaw",1),get_base1(lambdaa,n,"lambdaa",1)))));
                 } else {

@@ -7,7 +7,7 @@ stan2mcmc <- function(stanFit){
            meanEPG.treated<-rowMeans(extract(stanFit,"mub")[[1]])*extract(stanFit,"delta")$delta*(1-extract(stanFit,"phi")$phi)
            fecr<-1-extract(stanFit,"delta")[[1]]
            result<-cbind(fecr,meanEPG.untreated,meanEPG.treated)
-           output<-cbind(result,extract(stanFit,c("kappa","mu","phi","delta"),permuted=FALSE)[,1,])
+           output<-cbind(result,as.data.frame(extract(stanFit,c("kappa","mu","phi","delta"))))
          },
          "Zero-inflated Bayesian model for unpaired design"=,
          "ziunpaired"={
@@ -15,7 +15,7 @@ stan2mcmc <- function(stanFit){
            meanEPG.treated<-rowMeans(extract(stanFit,"mua")[[1]])*extract(stanFit,"delta")$delta*(1-extract(stanFit,"phi")$phi)
            fecr<-1-extract(stanFit,"delta")[[1]]
            result<-cbind(fecr,meanEPG.untreated,meanEPG.treated)
-           output<-cbind(result,extract(stanFit,c("kappa","mu","phi","delta"),permuted=FALSE)[,1,])
+           output<-cbind(result,as.data.frame(extract(stanFit,c("kappa","mu","phi","delta"))))
          },
          "Bayesian model without zero-inflation for paired design"=,
          "paired"=={
@@ -23,7 +23,7 @@ stan2mcmc <- function(stanFit){
            meanEPG.treated<-rowMeans(extract(stanFit,"mub")[[1]])*extract(stanFit,"delta")$delta
            fecr<-1-extract(stanFit,"delta")[[1]]
            result<-cbind(fecr,meanEPG.untreated,meanEPG.treated)
-           output<-cbind(result,extract(stanFit,c("kappa","mu","delta"),permuted=FALSE)[,1,])
+           output<-cbind(result,as.data.frame(extract(stanFit,c("kappa","mu","delta"))))
          },
          "Bayesian model without zero-inflation for unpaired design"=,
          "unpaired"={
@@ -31,7 +31,7 @@ stan2mcmc <- function(stanFit){
            meanEPG.treated<-rowMeans(extract(stanFit,"mua")[[1]])*extract(stanFit,"delta")$delta
            fecr<-1-extract(stanFit,"delta")[[1]]
            result<-cbind(fecr,meanEPG.untreated,meanEPG.treated)
-           output<-cbind(result,extract(stanFit,c("kappa","mu","delta"),permuted=FALSE)[,1,])
+           output<-cbind(result,as.data.frame(extract(stanFit,c("kappa","mu","delta"))))
          },
          "Bayesian model without zero-inflation"=,
          "nb"={
@@ -47,5 +47,5 @@ stan2mcmc <- function(stanFit){
            output<-cbind(meanEPG=meanEPG,kappa=kappa,phi=phi)
          }
         )
-  return(invisible(mcmc(output,start=stanFit@sim$warmup+1,thin=stanFit@sim$thin)))
+  return(invisible(mcmc(output,thin=stanFit@sim$thin)))
 }

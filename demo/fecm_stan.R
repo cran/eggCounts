@@ -27,7 +27,7 @@ resultsP <- fec_stan(counts[,"obs"],zeroInflation = FALSE)
 # of the R-package coda (summary, plot,...) can be used
 # get samples 
 
-result_mcmc<-stan2mcmc(resultsP)
+result_mcmc<-stan2mcmc(resultsP$stan.samples)
 # this is a list with
 #  fec  - mean(EpG rate)
 
@@ -51,7 +51,7 @@ if (require('lattice'))
 result2 <- fecr_stan(epgs$before, epgs$after, preCF=10, paired = TRUE, zeroInflation = TRUE)
 
 # get samples 
-result_mcmc2<-stan2mcmc(result2)
+result_mcmc2<-stan2mcmc(result2$stan.samples)
 # this is a list with
 #  fecr=reduction in means),
 #  mean(EpG rate in untreated animals) and

@@ -1,3 +1,14 @@
+eggCounts 1.2:
+
+* Allowed direct extraction of summary output
+
+* Fixed minor bug in validating correction factors
+
+* fixed minor bug in converting multiple mcmc chains
+
+* Updated citation information
+
+
 eggCounts 1.1-2:  
 
 * Updated documentation

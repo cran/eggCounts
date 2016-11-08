@@ -10,15 +10,15 @@ This package implements Bayesian hierarchical models for the analysis of faecal 
 \tabular{ll}{
 Package: \tab eggCounts\cr
 Type: \tab Package\cr
-Version: \tab 1.1-2\cr
-Date: \tab 2016-10-13\cr
+Version: \tab 1.2\cr
+Date: \tab 2016-11-08\cr
 License: \tab GPL (>= 3) \cr
 LazyLoad: \tab yes\cr
 }}
 
 \author{
 Craig Wang \email{craig.wang@uzh.ch} \cr
-Michaela Paul \email{michaela.paul@uzh.ch}
+Michaela Paul 
 }
 \keyword{package}
 
