@@ -1,31 +1,29 @@
 citHeader("To cite `eggCounts` model and `eggCounts` package in publication use:")
 
 citEntry(entry = "Article",
-  title        = "Evaluating faecal egg count reduction using a specifically designed package `eggCounts` in R and a user friendly web interface",
-  author       = personList(as.person("Paul R. Torgerson"),
-      as.person("Michaela Paul"), as.person("Reinhard Furrer")),
-  journal      = "International Journal of Parasitology",
-  year         = "2014",
-  volume       = "44",
-  doi          = "10.1016/j.ijpara.2014.01.005",
-  pmid         = "24556564", 
-  number       = "5",
-  pages        = "299--303",
+  title        = "Zero-inflated hierarchical models for faecal egg counts to assess anthelmintic efficacy",
+  author       = personList(as.person("Craig Wang"),as.person("Paul R. Torgerson"),
+      as.person("Johan H{\"o}glund"), as.person("Reinhard Furrer")),
+  journal      = "Veterinary Parasitology",
+  year         = "2017",
+  volume       = "235",
+  doi          = "10.1016/j.vetpar.2016.12.007",
+	issn         = "0304-4017",
+  pages        = "20--28",
 
   textVersion  =
-  paste("Torgerson, P. R., Paul, M. and Furrer, R. (2014). Evaluating faecal egg count reduction ",
-        "using a specifically designed package `eggCounts` in R and a user friendly web interface.",
-        "International Journal for Parasitology, 44(5), 299-303."),
+  paste("Wang, C., Torgerson, P. R., Hoeglund, J. and Furrer, R. (2017). Zero-inflated hierarchical models for faecal egg counts to assess anthelmintic efficacy","Veterinary Parasitology, 235, 20--28."),
 )
 
 citEntry(entry = "Manual",
     title = "eggCounts: Hierarchical Modelling of Faecal Egg Counts",
-    author = "Craig Wang and Michaela Paul",
-    year = "2016",
-    note = "R package version 1.2",
+    author = personList(as.person("Craig Wang"),
+      as.person("Michaela Paul")),
+    year = "2017",
+    note = "R package version 1.3",
     url = "https://CRAN.R-project.org/package=eggCounts",
 
   textVersion  =
-  paste("Craig Wang and Michaela Paul (2016). eggCounts: Hierarchical Modelling of Faecal Egg Counts. R package version 1.2.
+  paste("Wang, C. and Paul, M. (2017). eggCounts: Hierarchical Modelling of Faecal Egg Counts. R package version 1.3.
   https://CRAN.R-project.org/package=eggCounts"),
 )

@@ -43,7 +43,7 @@ paired_stan <- function(priors){
            parameters {
            real<lower=0> kappa;
            real<lower=0> mu;
-           real<lower=0,upper=1> delta;
+           real<lower=0> delta;
            real<lower=0> mub[J];
            }
            transformed parameters{
@@ -92,7 +92,7 @@ unpaired_stan <- function(priors){
            parameters {
              real<lower=0> kappa;
              real<lower=0> mu;
-             real<lower=0,upper=1> delta;
+             real<lower=0> delta;
              real<lower=0> mub[Jb]; # true epg before treatment
              real<lower=0> mua[Ja]; # true epg after treatment
            }
@@ -149,7 +149,7 @@ ZI_unpaired_stan <- function(priors){
         parameters {
            real<lower=0> kappa;
            real<lower=0> mu;
-           real<lower=0,upper=1> delta;
+           real<lower=0> delta;
            real<lower=0> mua[Ja];
            real<lower=0> mub[Jb];
            real<lower=0,upper=1> phi;
@@ -219,7 +219,7 @@ ZI_paired_stan <- function(priors){
          parameters {
            real<lower=0> kappa;
            real<lower=0> mu;
-           real<lower=0,upper=1> delta;
+           real<lower=0> delta;
            real<lower=0> mub[J];
            real<lower=0,upper=1> phi;
          }

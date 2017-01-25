@@ -34,7 +34,7 @@ data(epgs)
 fecrtCI(epgs$before, epgs$after, paired=TRUE)
 }}
 \author{
-Michaela Paul \email{michaela.paul@uzh.ch}
+Michaela Paul
 }
 \references{
 Coles GC, Bauer C, Borgsteede FHM, Geerts S, Klei TR, Taylor MA,  Waller, PJ (1992).

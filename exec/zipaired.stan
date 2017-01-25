@@ -29,13 +29,13 @@ model {
   phi ~ beta(1,1);
   mub ~ gamma(kappa,kappamu);   // likelihoods
    for (n in 1:J) {
-    if (ystarbraw[n] == 0 && ystararaw[n] == 0 )
+    if (ystarbraw[n] == 0)
       target +=  log_sum_exp(bernoulli_lpmf(1 | phi), bernoulli_lpmf(0 | phi)+poisson_lpmf(ystarbraw[n] | lambdab[n]));
     else
       target += bernoulli_lpmf(0 | phi) + poisson_lpmf(ystarbraw[n] | lambdab[n]);
   }
   for (n in 1:J) {
-    if (ystarbraw[n] == 0  && ystararaw[n] == 0 )
+    if (ystararaw[n] == 0 )
       target += log_sum_exp(bernoulli_lpmf(1 | phi), bernoulli_lpmf(0 | phi)+poisson_lpmf(ystararaw[n] | lambdaa[n]));
     else
       target += bernoulli_lpmf(0 | phi) + poisson_lpmf(ystararaw[n] | lambdaa[n]);

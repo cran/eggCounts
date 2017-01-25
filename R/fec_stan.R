@@ -54,10 +54,10 @@ fec_stan<-function(fec,rawCounts=FALSE,CF=50,
   
   # calculate samples
   if(zeroInflation){
-  meanEPG<-rowMeans(extract(samples,"mui")[[1]])*(1-extract(samples,"phi")$phi)
-  } else {meanEPG<-rowMeans(extract(samples,"mui")[[1]])}
+  meanEPG<-extract(samples,"mu")$mu*(1-extract(samples,"phi")$phi)
+  } else {meanEPG<-extract(samples,"mu")$mu}
   
   cat("Model: ", model,"\n","Number of Samples: ",nsamples, "\n","Warm-up Samples: ",nburnin,"\n","Thinning: ",thinning,"\n","Number of Chains",nchain,"\n")
-  summarys<-printSummary(cbind(meanEPG))
+  summarys<-as.data.frame(printSummary(cbind(meanEPG)))
   return(invisible(list(stan.samples = samples,posterior.summary = summarys)))
 }

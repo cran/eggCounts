@@ -17,15 +17,18 @@ transformed parameters{
   real kappamu;
   for (i in 1:J){
     lambdab[i] = mub[i]/fpre[i];
-    lambdaa[i] = delta*mub[i]/fpost[i];
   }
+  for (i in 1:J){
+    lambdaa[i] = delta*mub[i]/fpost[i];
+  }  
   kappamu = kappa/mu;
 }
 model {
   mu ~ gamma(1,0.001);    // prior
   kappa ~ gamma(1,0.7);
   delta ~ beta(1,1);
-  mub ~ gamma(kappa,kappamu);     // likelihoods
-  ystarbraw ~ poisson(lambdab);
+  target += gamma_lpdf(mub | kappa,kappamu);   // likelihoods 
   ystararaw ~ poisson(lambdaa);
+  ystarbraw ~ poisson(lambdab);
+
 }

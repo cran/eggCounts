@@ -11,7 +11,7 @@ fec_stan(fec, rawCounts = FALSE, CF = 50, zeroInflation = TRUE,
 \item{fec}{vector of faecal egg counts}
 
 \item{rawCounts}{logical. If true, \code{preFEC} and \code{postFEC} correspond to raw counts
-(as counted on the McMaster slide). Otherwise they correspond to calculated epgs (raw counts times correction factor).
+(as counted on equipment). Otherwise they correspond to calculated epgs (raw counts times correction factor).
 Defaults to \code{FALSE}.}
 
 \item{CF}{correction factor or vector of correction factors}
@@ -40,9 +40,12 @@ Defaults to \code{FALSE}.}
 
 }
 \value{
-An object of S4 class \code{stanfit} representing the fitted results. For more information, please see the \href{https://cran.r-project.org/package=rstan}{\code{stanfit-class}} in \code{rstan} reference manual.
-
 Prints out summary of \code{meanEPG} as the posterior mean egg count. The posterior summary contains the mean, standard deviation (sd), 2.5\%, 25\%, 50\%, 75\% and 97.5\% percentiles, the 95\% highest posterior density interval (HPDLow95 and HPDHigh95) and the posterior mode. NOTE: we recommend to use the 95\% HPD interval and the mode for further statistical analysis.
+
+The returned value is a list that consists of:
+\item{stan.samples}{An object of S4 class \code{stanfit} representing the fitted results. For more information, please see the \href{https://cran.r-project.org/package=rstan}{\code{stanfit-class}} in \code{rstan} reference manual.}
+
+\item{posterior.summary}{A data frame that is the same as the printed posterior summary.}
 }
 \description{
 Models faecal egg counts data in a one-sample case with (zero-inflated) Poisson-gamma model formulation using the Stan modelling language. It is computationally several-fold faster compare to conventional MCMC techniques. For the installation instruction of Stan, please read: \href{https://github.com/stan-dev/rstan/wiki/Installing-RStan-on-Windows}{Stan Installation.}

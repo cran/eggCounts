@@ -39,8 +39,8 @@ The simulation process does not exactly match the proposed models in [ref:paper]
 In the simulation of raw (\code{master}) counts, it follows a Poisson distribution with some mean. The mean is frequently rounded down if it has a very low value and \code{rounding = TRUE},there expects to be a up to 3-10\% positive bias in the mean reduction when \eqn{\mu} < 150 and \eqn{\delta} < 0.1. Set \code{rounding = FALSE} if one does not wish to have any bias.
 }
 \author{
-Michaela Paul \email{michaela.paul@uzh.ch}\cr
-Craig Wang \email{craig.wang@uzh.ch} 
+Craig Wang \email{craig.wang@uzh.ch} \cr
+Michaela Paul 
 }
 \examples{
 fec <- simData2s(n=10, preMean=500, delta=0.1, kappa=0.5)

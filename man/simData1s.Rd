@@ -26,8 +26,8 @@ A matrix with three columns, namely the observed epg (\code{obs}),
 Simulates (zero-inflated) egg count data
 }
 \author{
-Michaela Paul \email{michaela.paul@uzh.ch} \cr
-Craig Wang \email{craig.wang@uzh.ch} 
+Craig Wang \email{craig.wang@uzh.ch} \cr
+Michaela Paul 
 }
 \details{
 The simulation process does not exactly match the proposed models in [ref:paper], however the simulated data resembles the data observed in real world. 

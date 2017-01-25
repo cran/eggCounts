@@ -68,10 +68,17 @@ fecr_stan<-function(preFEC,postFEC,rawCounts=FALSE,preCF=50,postCF=preCF,
   A possible correction factor (the largest common divisor) is"),mGCD(postFEC)))
   postFEC <- postFEC/postDilution
   
+  if (!rawCounts){
   if ( mean( preFEC) < mean( postFEC))
     cat("NOTE: mean of pre-treatment is smaller of post-treatment. Results may be unreliable.\n")
   if ( median( preFEC) < median( postFEC))
     cat("NOTE: median of pre-treatment is smaller of post-treatment. Results may be unreliable.\n")
+  } else {
+    if ( mean( preFEC*preCF) < mean( postFEC*postCF))
+      cat("NOTE: mean of pre-treatment is smaller of post-treatment. Results may be unreliable.\n")
+    if ( median( preFEC*preCF) < median( postFEC*postCF))
+      cat("NOTE: median of pre-treatment is smaller of post-treatment. Results may be unreliable.\n")
+  }
   
   
   # set default values
@@ -116,30 +123,30 @@ fecr_stan<-function(preFEC,postFEC,rawCounts=FALSE,preCF=50,postCF=preCF,
   
   # generate samples according to different models
   if(paired & !zeroInflation){
-           meanEPG.untreated<-rowMeans(extract(samples,"mub")[[1]])
-           meanEPG.treated<-rowMeans(extract(samples,"mub")[[1]])*extract(samples,"delta")$delta
+           meanEPG.untreated<-extract(samples,"mu")[[1]]
+           meanEPG.treated<-extract(samples,"mu")[[1]]*extract(samples,"delta")$delta
            fecr<-1-extract(samples,"delta")[[1]]
            result<-cbind(fecr,meanEPG.untreated,meanEPG.treated)
          }
   if(!paired & !zeroInflation){
-           meanEPG.untreated<-rowMeans(extract(samples,"mub")[[1]])
-           meanEPG.treated<-rowMeans(extract(samples,"mua")[[1]])*extract(samples,"delta")$delta
+           meanEPG.untreated<-extract(samples,"mu")[[1]]
+           meanEPG.treated<-extract(samples,"mu")[[1]]*extract(samples,"delta")$delta
            fecr<-1-extract(samples,"delta")[[1]]
            result<-cbind(fecr,meanEPG.untreated,meanEPG.treated)
          }
   if(paired & zeroInflation){
-           meanEPG.untreated<-rowMeans(extract(samples,"mub")[[1]])*(1-extract(samples,"phi")$phi)
-           meanEPG.treated<-rowMeans(extract(samples,"mub")[[1]])*extract(samples,"delta")$delta*(1-extract(samples,"phi")$phi)
+           meanEPG.untreated<-extract(samples,"mu")[[1]]*(1-extract(samples,"phi")$phi)
+           meanEPG.treated<-extract(samples,"mu")[[1]]*extract(samples,"delta")$delta*(1-extract(samples,"phi")$phi)
            fecr<-1-extract(samples,"delta")$delta
            result<-cbind(fecr,meanEPG.untreated,meanEPG.treated)
          }
    if(!paired & zeroInflation){
-           meanEPG.untreated<-rowMeans(extract(samples,"mub")[[1]])*(1-extract(samples,"phi")$phi)
-           meanEPG.treated<-rowMeans(extract(samples,"mua")[[1]])*extract(samples,"delta")$delta*(1-extract(samples,"phi")$phi)
+           meanEPG.untreated<-extract(samples,"mu")[[1]]*(1-extract(samples,"phi")$phi)
+           meanEPG.treated<-extract(samples,"mu")[[1]]*extract(samples,"delta")$delta*(1-extract(samples,"phi")$phi)
            fecr<-1-extract(samples,"delta")$delta
            result<-cbind(fecr,meanEPG.untreated,meanEPG.treated)
    }
   cat("Model: ", model,"\n","Number of Samples: ",nsamples, "\n","Warm-up samples: ",nburnin,"\n","Thinning: ",thinning,"\n","Number of Chains",nchain,"\n")
-  summarys<-printSummary(result)
+  summarys<-as.data.frame(printSummary(result))
   return(invisible(list(stan.samples = samples,posterior.summary = summarys)))
 }

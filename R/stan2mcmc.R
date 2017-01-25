@@ -3,45 +3,45 @@ stan2mcmc <- function(stanFit){
   switch(modelName,
          "Zero-inflated Bayesian model for paired design"=,
          "zipaired"={
-           meanEPG.untreated<-rowMeans(extract(stanFit,"mub")[[1]])*(1-extract(stanFit,"phi")$phi)
-           meanEPG.treated<-rowMeans(extract(stanFit,"mub")[[1]])*extract(stanFit,"delta")$delta*(1-extract(stanFit,"phi")$phi)
+           meanEPG.untreated<-extract(stanFit,"mu")[[1]]*(1-extract(stanFit,"phi")$phi)
+           meanEPG.treated<-extract(stanFit,"mu")[[1]]*extract(stanFit,"delta")$delta*(1-extract(stanFit,"phi")$phi)
            fecr<-1-extract(stanFit,"delta")[[1]]
            result<-cbind(fecr,meanEPG.untreated,meanEPG.treated)
-           output<-cbind(result,as.data.frame(extract(stanFit,c("kappa","mu","phi","delta"))))
+           output<-cbind(result,as.data.frame(extract(stanFit,c("kappa","phi","delta"))))
          },
          "Zero-inflated Bayesian model for unpaired design"=,
          "ziunpaired"={
-           meanEPG.untreated<-rowMeans(extract(stanFit,"mub")[[1]])*(1-extract(stanFit,"phi")$phi)
-           meanEPG.treated<-rowMeans(extract(stanFit,"mua")[[1]])*extract(stanFit,"delta")$delta*(1-extract(stanFit,"phi")$phi)
+           meanEPG.untreated<-extract(stanFit,"mu")[[1]]*(1-extract(stanFit,"phi")$phi)
+           meanEPG.treated<-extract(stanFit,"mu")[[1]]*extract(stanFit,"delta")$delta*(1-extract(stanFit,"phi")$phi)
            fecr<-1-extract(stanFit,"delta")[[1]]
            result<-cbind(fecr,meanEPG.untreated,meanEPG.treated)
-           output<-cbind(result,as.data.frame(extract(stanFit,c("kappa","mu","phi","delta"))))
+           output<-cbind(result,as.data.frame(extract(stanFit,c("kappa","phi","delta"))))
          },
          "Bayesian model without zero-inflation for paired design"=,
-         "paired"=={
-           meanEPG.untreated<-rowMeans(extract(stanFit,"mub")[[1]])
-           meanEPG.treated<-rowMeans(extract(stanFit,"mub")[[1]])*extract(stanFit,"delta")$delta
+         "paired"={
+           meanEPG.untreated<-extract(stanFit,"mu")[[1]]
+           meanEPG.treated<-extract(stanFit,"mu")[[1]]*extract(stanFit,"delta")$delta
            fecr<-1-extract(stanFit,"delta")[[1]]
            result<-cbind(fecr,meanEPG.untreated,meanEPG.treated)
-           output<-cbind(result,as.data.frame(extract(stanFit,c("kappa","mu","delta"))))
+           output<-cbind(result,as.data.frame(extract(stanFit,c("kappa","delta"))))
          },
          "Bayesian model without zero-inflation for unpaired design"=,
          "unpaired"={
-           meanEPG.untreated<-rowMeans(extract(stanFit,"mub")[[1]])
-           meanEPG.treated<-rowMeans(extract(stanFit,"mua")[[1]])*extract(stanFit,"delta")$delta
+           meanEPG.untreated<-extract(stanFit,"mu")[[1]]
+           meanEPG.treated<-extract(stanFit,"mu")[[1]]*extract(stanFit,"delta")$delta
            fecr<-1-extract(stanFit,"delta")[[1]]
            result<-cbind(fecr,meanEPG.untreated,meanEPG.treated)
-           output<-cbind(result,as.data.frame(extract(stanFit,c("kappa","mu","delta"))))
+           output<-cbind(result,as.data.frame(extract(stanFit,c("kappa","delta"))))
          },
          "Bayesian model without zero-inflation"=,
          "nb"={
-           meanEPG<-rowMeans(extract(stanFit,"mui")[[1]])
+           meanEPG<-extract(stanFit,"mu")[[1]]
            kappa<-extract(stanFit,"kappa")$kappa
            output<-cbind(meanEPG=meanEPG,kappa=kappa)
          },
          "Zero-inflated Bayesian model"=,
          "zinb"={
-           meanEPG<-rowMeans(extract(stanFit,"mui")[[1]])*(1-extract(stanFit,"phi")[[1]])
+           meanEPG<-extract(stanFit,"mu")[[1]]*(1-extract(stanFit,"phi")[[1]])
            phi<-extract(stanFit,"phi")$phi
            kappa<-extract(stanFit,"kappa")$kappa
            output<-cbind(meanEPG=meanEPG,kappa=kappa,phi=phi)

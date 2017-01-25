@@ -770,10 +770,13 @@ public:
             for (int i = 1; i <= J; ++i) {
                 current_statement_begin__ = 19;
                 stan::math::assign(get_base1_lhs(lambdab,i,"lambdab",1), (get_base1(mub,i,"mub",1) / get_base1(fpre,i,"fpre",1)));
-                current_statement_begin__ = 20;
+            }
+            current_statement_begin__ = 21;
+            for (int i = 1; i <= J; ++i) {
+                current_statement_begin__ = 22;
                 stan::math::assign(get_base1_lhs(lambdaa,i,"lambdaa",1), ((delta * get_base1(mub,i,"mub",1)) / get_base1(fpost,i,"fpost",1)));
             }
-            current_statement_begin__ = 22;
+            current_statement_begin__ = 24;
             stan::math::assign(kappamu, (kappa / mu));
         } catch (const std::exception& e) {
             stan::lang::rethrow_located(e,current_statement_begin__);
@@ -807,18 +810,18 @@ public:
 
         // model body
         try {
-            current_statement_begin__ = 25;
-            lp_accum__.add(gamma_log<propto__>(mu, 1, 0.001));
-            current_statement_begin__ = 26;
-            lp_accum__.add(gamma_log<propto__>(kappa, 1, 0.69999999999999996));
             current_statement_begin__ = 27;
-            lp_accum__.add(beta_log<propto__>(delta, 1, 1));
+            lp_accum__.add(gamma_log<propto__>(mu, 1, 0.001));
             current_statement_begin__ = 28;
-            lp_accum__.add(gamma_log<propto__>(mub, kappa, kappamu));
+            lp_accum__.add(gamma_log<propto__>(kappa, 1, 0.69999999999999996));
             current_statement_begin__ = 29;
-            lp_accum__.add(poisson_log<propto__>(ystarbraw, lambdab));
+            lp_accum__.add(beta_log<propto__>(delta, 1, 1));
             current_statement_begin__ = 30;
+            lp_accum__.add(gamma_log(mub,kappa,kappamu));
+            current_statement_begin__ = 31;
             lp_accum__.add(poisson_log<propto__>(ystararaw, lambdaa));
+            current_statement_begin__ = 32;
+            lp_accum__.add(poisson_log<propto__>(ystarbraw, lambdab));
         } catch (const std::exception& e) {
             stan::lang::rethrow_located(e,current_statement_begin__);
             // Next line prevents compiler griping about no return
@@ -920,10 +923,13 @@ public:
             for (int i = 1; i <= J; ++i) {
                 current_statement_begin__ = 19;
                 stan::math::assign(get_base1_lhs(lambdab,i,"lambdab",1), (get_base1(mub,i,"mub",1) / get_base1(fpre,i,"fpre",1)));
-                current_statement_begin__ = 20;
+            }
+            current_statement_begin__ = 21;
+            for (int i = 1; i <= J; ++i) {
+                current_statement_begin__ = 22;
                 stan::math::assign(get_base1_lhs(lambdaa,i,"lambdaa",1), ((delta * get_base1(mub,i,"mub",1)) / get_base1(fpost,i,"fpost",1)));
             }
-            current_statement_begin__ = 22;
+            current_statement_begin__ = 24;
             stan::math::assign(kappamu, (kappa / mu));
         } catch (const std::exception& e) {
             stan::lang::rethrow_located(e,current_statement_begin__);
@@ -2581,7 +2587,7 @@ public:
             current_statement_begin__ = 31;
             for (int n = 1; n <= J; ++n) {
                 current_statement_begin__ = 32;
-                if (as_bool((primitive_value(logical_eq(get_base1(ystarbraw,n,"ystarbraw",1),0)) && primitive_value(logical_eq(get_base1(ystararaw,n,"ystararaw",1),0))))) {
+                if (as_bool(logical_eq(get_base1(ystarbraw,n,"ystarbraw",1),0))) {
                     current_statement_begin__ = 33;
                     lp_accum__.add(log_sum_exp(bernoulli_log(1,phi),(bernoulli_log(0,phi) + poisson_log(get_base1(ystarbraw,n,"ystarbraw",1),get_base1(lambdab,n,"lambdab",1)))));
                 } else {
@@ -2592,7 +2598,7 @@ public:
             current_statement_begin__ = 37;
             for (int n = 1; n <= J; ++n) {
                 current_statement_begin__ = 38;
-                if (as_bool((primitive_value(logical_eq(get_base1(ystarbraw,n,"ystarbraw",1),0)) && primitive_value(logical_eq(get_base1(ystararaw,n,"ystararaw",1),0))))) {
+                if (as_bool(logical_eq(get_base1(ystararaw,n,"ystararaw",1),0))) {
                     current_statement_begin__ = 39;
                     lp_accum__.add(log_sum_exp(bernoulli_log(1,phi),(bernoulli_log(0,phi) + poisson_log(get_base1(ystararaw,n,"ystararaw",1),get_base1(lambdaa,n,"lambdaa",1)))));
                 } else {
