@@ -3,9 +3,9 @@
 \title{Modelling of faecal egg count data (one-sample case)}
 \usage{
 fec_stan(fec, rawCounts = FALSE, CF = 50, zeroInflation = TRUE, 
-  muPrior, kappaPrior, phiPrior, nsamples = 12000, 
+  muPrior, kappaPrior, phiPrior, nsamples = 4000, 
   nburnin = 2000, thinning = 1, nchain = 1, 
-  ncore = 1, adaptdelta = 0.9, verbose = FALSE)
+  ncore = 1, adaptdelta = 0.95, verbose = FALSE)
 }
 \arguments{
 \item{fec}{vector of faecal egg counts}
@@ -53,7 +53,9 @@ Models faecal egg counts data in a one-sample case with (zero-inflated) Poisson-
 \details{
 The first time each non-default model is applied, it can take up to 20 seconds for stan to compile the model. Currently the function only support prior distributions with two parameters. For a complete list of supported priors and their parameterization, please consult the list of distributions in \href{http://mc-stan.org/documentation/}{Stan}.
 
-Sometimes the function outputs informational message from Stan regarding the Metropolis proposal rejections, this is due to the sampler hit the boundary of the parameter space. For some variables, the boundary point is not supported in the distribution. This is not a concern if there are only a few such warnings. 
+Sometimes the function outputs informational message from Stan regarding the Metropolis proposal rejections, this is due to the sampler hitting the boundary of a parameter space. For some variables, the boundary point is not supported in the distribution. This is not a concern if there are only a few such warnings. 
+
+The default number of iterations is 2000, with 1000 burn-in iterations. Normally this is sufficient in Stan. If MCMC chains do not converge, one should tune the MCMC parameters until convergence is reached to ensure correct results.
 }
 \author{
 Craig Wang \email{craig.wang@uzh.ch} 
@@ -68,7 +70,7 @@ data(echinococcus)
 fec<-echinococcus[[1]]
 
 ## apply zero-infation model to the data vector
-model<-fec_stan(fec,rawCounts=FALSE,CF=50,zeroInflation=FALSE)
+model<-fec_stan(fec,rawCounts=FALSE,CF=50)
 samples<-stan2mcmc(model$stan.samples)
 
 ## a demonstration

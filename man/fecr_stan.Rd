@@ -5,8 +5,8 @@
 fecr_stan(preFEC, postFEC,rawCounts = FALSE, preCF = 50,
   postCF = preCF, paired = TRUE, zeroInflation=TRUE, 
   muPrior, kappaPrior, deltaPrior, phiPrior, 
-  nsamples = 12000, nburnin = 2000, thinning = 1, nchain = 1, 
-  ncore = 1, adaptdelta = 0.9, verbose = FALSE)
+  nsamples = 4000, nburnin = 2000, thinning = 1, nchain = 1, 
+  ncore = 1, adaptdelta = 0.95, verbose = FALSE)
 }
 \arguments{
 \item{preFEC}{vector of pre-treatment faecal egg counts}
@@ -63,7 +63,9 @@ a (un)paired (zero-inflated) Poisson-gamma model formulation using the Stan mode
 \details{
 The first time each model with non-default priors is applied, it can take up to 20 seconds for stan to compile the model. Currently the function only support prior distributions with two parameters. For a complete list of supported priors and their parameterization, please consult the list of distributions in \href{http://mc-stan.org/documentation/}{Stan}. 
 
-Sometimes the function outputs informational message from Stan regarding the Metropolis proposal rejections, this is due to the sampler hit the boundary of the parameter space. For some variables, the boundary point is not supported in the distribution. This is not a concern if there are only a few such warnings.
+Sometimes the function outputs informational message from Stan regarding the Metropolis proposal rejections, this is due to the sampler hitting the boundary of the parameter space. For some variables, the boundary point is not supported in the distribution. This is not a concern if there are only a few such warnings.
+
+The default number of iterations is 2000, with 1000 burn-in iterations. Normally this is sufficient in Stan. If MCMC chains do not converge, one should tune the MCMC parameters until convergence is reached to ensure correct results.
 }
 \author{
 Craig Wang \email{craig.wang@uzh.ch} 

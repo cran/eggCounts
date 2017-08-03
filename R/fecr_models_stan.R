@@ -173,19 +173,19 @@ ZI_unpaired_stan <- function(priors){
           delta ~ ',dist.delta,'(',a.delta,',',b.delta,');
           phi ~ ',dist.phi,'(',a.phi,',',b.phi,');
           // likelihoods
-          ystarbraw ~ poisson(lambdab); 
-          ystararaw ~ poisson(lambdaa); 
+          mub ~ gamma(kappa,kappamu); 
+          mua ~ gamma(kappa,kappamu); 
           for (n in 1:Jb) {
-            if (mub[n] == 0)
-                 target += bernoulli_lpmf(1 | phi);
-                 else
-                 target += bernoulli_lpmf(0 | phi) + gamma_lpdf(mub[n] | kappa,kappamu);
-           }
+             if (ystarbraw[n] == 0)
+                target += log_sum_exp(bernoulli_lpmf(1 | phi), bernoulli_lpmf(0 | phi)+poisson_lpmf(ystarbraw[n] | lambdab[n]));
+             else
+                target += bernoulli_lpmf(0 | phi) + poisson_lpmf(ystarbraw[n] | lambdab[n]);
+          }
           for (n in 1:Ja) {
-             if (mua[n] == 0)
-                target += bernoulli_lpmf(1 | phi);
-          else 
-                target += bernoulli_lpmf(0 | phi) + gamma_lpdf(mua[n] | kappa,kappamu);
+             if (ystararaw[n] == 0)
+                target += log_sum_exp(bernoulli_lpmf(1 | phi), bernoulli_lpmf(0 | phi)+poisson_lpmf(ystararaw[n] | lambdaa[n]));
+             else 
+          target += bernoulli_lpmf(0 | phi) + poisson_lpmf(ystararaw[n] | lambdaa[n]);
           }
 }')
 }

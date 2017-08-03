@@ -7,7 +7,7 @@ RCPP_MODULE(stan_fit4nb_mod) {
 
     class_<rstan::stan_fit<model_nb_namespace::model_nb, boost::random::ecuyer1988> >("model_nb")
 
-    .constructor<SEXP,SEXP>()
+    .constructor<SEXP,SEXP,SEXP>()
 
 
     .method("call_sampler", &rstan::stan_fit<model_nb_namespace::model_nb, boost::random::ecuyer1988> ::call_sampler)
@@ -36,7 +36,7 @@ RCPP_MODULE(stan_fit4paired_mod) {
 
     class_<rstan::stan_fit<model_paired_namespace::model_paired, boost::random::ecuyer1988> >("model_paired")
 
-    .constructor<SEXP,SEXP>()
+    .constructor<SEXP,SEXP,SEXP>()
 
 
     .method("call_sampler", &rstan::stan_fit<model_paired_namespace::model_paired, boost::random::ecuyer1988> ::call_sampler)
@@ -65,7 +65,7 @@ RCPP_MODULE(stan_fit4unpaired_mod) {
 
     class_<rstan::stan_fit<model_unpaired_namespace::model_unpaired, boost::random::ecuyer1988> >("model_unpaired")
 
-    .constructor<SEXP,SEXP>()
+    .constructor<SEXP,SEXP,SEXP>()
 
 
     .method("call_sampler", &rstan::stan_fit<model_unpaired_namespace::model_unpaired, boost::random::ecuyer1988> ::call_sampler)
@@ -94,7 +94,7 @@ RCPP_MODULE(stan_fit4zinb_mod) {
 
     class_<rstan::stan_fit<model_zinb_namespace::model_zinb, boost::random::ecuyer1988> >("model_zinb")
 
-    .constructor<SEXP,SEXP>()
+    .constructor<SEXP,SEXP,SEXP>()
 
 
     .method("call_sampler", &rstan::stan_fit<model_zinb_namespace::model_zinb, boost::random::ecuyer1988> ::call_sampler)
@@ -123,7 +123,7 @@ RCPP_MODULE(stan_fit4zipaired_mod) {
 
     class_<rstan::stan_fit<model_zipaired_namespace::model_zipaired, boost::random::ecuyer1988> >("model_zipaired")
 
-    .constructor<SEXP,SEXP>()
+    .constructor<SEXP,SEXP,SEXP>()
 
 
     .method("call_sampler", &rstan::stan_fit<model_zipaired_namespace::model_zipaired, boost::random::ecuyer1988> ::call_sampler)
@@ -152,7 +152,7 @@ RCPP_MODULE(stan_fit4ziunpaired_mod) {
 
     class_<rstan::stan_fit<model_ziunpaired_namespace::model_ziunpaired, boost::random::ecuyer1988> >("model_ziunpaired")
 
-    .constructor<SEXP,SEXP>()
+    .constructor<SEXP,SEXP,SEXP>()
 
 
     .method("call_sampler", &rstan::stan_fit<model_ziunpaired_namespace::model_ziunpaired, boost::random::ecuyer1988> ::call_sampler)

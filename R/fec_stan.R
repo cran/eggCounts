@@ -4,7 +4,7 @@
 
 fec_stan<-function(fec,rawCounts=FALSE,CF=50,
                     zeroInflation=TRUE,muPrior,kappaPrior,phiPrior,
-                    nsamples=12000,nburnin=2000,thinning=1,nchain=1,ncore=1,adaptdelta=0.9,verbose=FALSE){
+                    nsamples=4000,nburnin=2000,thinning=1,nchain=1,ncore=1,adaptdelta=0.95,verbose=FALSE){
   # checks from FECR_PoGa.R -------------------------------------------------
   #   if (sys.parent() == 0) env <- asNamespace("eggCounts") else env <- parent.frame()
   #   assign(".verboselevel", verbose*.verboselevel, envir = env)

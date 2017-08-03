@@ -3,7 +3,7 @@ citHeader("To cite `eggCounts` model and `eggCounts` package in publication use:
 citEntry(entry = "Article",
   title        = "Zero-inflated hierarchical models for faecal egg counts to assess anthelmintic efficacy",
   author       = personList(as.person("Craig Wang"),as.person("Paul R. Torgerson"),
-      as.person("Johan H{\"o}glund"), as.person("Reinhard Furrer")),
+      as.person("Johan Hoeglund"), as.person("Reinhard Furrer")),
   journal      = "Veterinary Parasitology",
   year         = "2017",
   volume       = "235",
@@ -20,10 +20,10 @@ citEntry(entry = "Manual",
     author = personList(as.person("Craig Wang"),
       as.person("Michaela Paul")),
     year = "2017",
-    note = "R package version 1.3",
+    note = "R package version 1.4",
     url = "https://CRAN.R-project.org/package=eggCounts",
 
   textVersion  =
-  paste("Wang, C. and Paul, M. (2017). eggCounts: Hierarchical Modelling of Faecal Egg Counts. R package version 1.3.
+  paste("Wang, C. and Paul, M. (2017). eggCounts: Hierarchical Modelling of Faecal Egg Counts. R package version 1.4.
   https://CRAN.R-project.org/package=eggCounts"),
 )
