@@ -23,6 +23,665 @@
 
 #include <stan/model/model_header.hpp>
 
+namespace model_indefficacy_namespace {
+
+using std::istream;
+using std::string;
+using std::stringstream;
+using std::vector;
+using stan::io::dump;
+using stan::math::lgamma;
+using stan::model::prob_grad;
+using namespace stan::math;
+
+typedef Eigen::Matrix<double,Eigen::Dynamic,1> vector_d;
+typedef Eigen::Matrix<double,1,Eigen::Dynamic> row_vector_d;
+typedef Eigen::Matrix<double,Eigen::Dynamic,Eigen::Dynamic> matrix_d;
+
+static int current_statement_begin__;
+
+stan::io::program_reader prog_reader__() {
+    stan::io::program_reader reader;
+    reader.add_event(0, 0, "start", "model_indefficacy");
+    reader.add_event(33, 33, "end", "model_indefficacy");
+    return reader;
+}
+
+class model_indefficacy : public prob_grad {
+private:
+    int J;
+    vector<int> ystararaw;
+    vector<int> ystarbraw;
+    vector<int> fpre;
+    vector<int> fpost;
+public:
+    model_indefficacy(stan::io::var_context& context__,
+        std::ostream* pstream__ = 0)
+        : prob_grad(0) {
+        ctor_body(context__, 0, pstream__);
+    }
+
+    model_indefficacy(stan::io::var_context& context__,
+        unsigned int random_seed__,
+        std::ostream* pstream__ = 0)
+        : prob_grad(0) {
+        ctor_body(context__, random_seed__, pstream__);
+    }
+
+    void ctor_body(stan::io::var_context& context__,
+                   unsigned int random_seed__,
+                   std::ostream* pstream__) {
+        boost::ecuyer1988 base_rng__ =
+          stan::services::util::create_rng(random_seed__, 0);
+        (void) base_rng__;  // suppress unused var warning
+
+        current_statement_begin__ = -1;
+
+        static const char* function__ = "model_indefficacy_namespace::model_indefficacy";
+        (void) function__;  // dummy to suppress unused var warning
+        size_t pos__;
+        (void) pos__;  // dummy to suppress unused var warning
+        std::vector<int> vals_i__;
+        std::vector<double> vals_r__;
+        double DUMMY_VAR__(std::numeric_limits<double>::quiet_NaN());
+        (void) DUMMY_VAR__;  // suppress unused var warning
+
+        // initialize member variables
+        context__.validate_dims("data initialization", "J", "int", context__.to_vec());
+        J = int(0);
+        vals_i__ = context__.vals_i("J");
+        pos__ = 0;
+        J = vals_i__[pos__++];
+        validate_non_negative_index("ystararaw", "J", J);
+        context__.validate_dims("data initialization", "ystararaw", "int", context__.to_vec(J));
+        validate_non_negative_index("ystararaw", "J", J);
+        ystararaw = std::vector<int>(J,int(0));
+        vals_i__ = context__.vals_i("ystararaw");
+        pos__ = 0;
+        size_t ystararaw_limit_0__ = J;
+        for (size_t i_0__ = 0; i_0__ < ystararaw_limit_0__; ++i_0__) {
+            ystararaw[i_0__] = vals_i__[pos__++];
+        }
+        validate_non_negative_index("ystarbraw", "J", J);
+        context__.validate_dims("data initialization", "ystarbraw", "int", context__.to_vec(J));
+        validate_non_negative_index("ystarbraw", "J", J);
+        ystarbraw = std::vector<int>(J,int(0));
+        vals_i__ = context__.vals_i("ystarbraw");
+        pos__ = 0;
+        size_t ystarbraw_limit_0__ = J;
+        for (size_t i_0__ = 0; i_0__ < ystarbraw_limit_0__; ++i_0__) {
+            ystarbraw[i_0__] = vals_i__[pos__++];
+        }
+        validate_non_negative_index("fpre", "J", J);
+        context__.validate_dims("data initialization", "fpre", "int", context__.to_vec(J));
+        validate_non_negative_index("fpre", "J", J);
+        fpre = std::vector<int>(J,int(0));
+        vals_i__ = context__.vals_i("fpre");
+        pos__ = 0;
+        size_t fpre_limit_0__ = J;
+        for (size_t i_0__ = 0; i_0__ < fpre_limit_0__; ++i_0__) {
+            fpre[i_0__] = vals_i__[pos__++];
+        }
+        validate_non_negative_index("fpost", "J", J);
+        context__.validate_dims("data initialization", "fpost", "int", context__.to_vec(J));
+        validate_non_negative_index("fpost", "J", J);
+        fpost = std::vector<int>(J,int(0));
+        vals_i__ = context__.vals_i("fpost");
+        pos__ = 0;
+        size_t fpost_limit_0__ = J;
+        for (size_t i_0__ = 0; i_0__ < fpost_limit_0__; ++i_0__) {
+            fpost[i_0__] = vals_i__[pos__++];
+        }
+
+        // validate, data variables
+        // initialize data variables
+
+        try {
+        } catch (const std::exception& e) {
+            stan::lang::rethrow_located(e, current_statement_begin__, prog_reader__());
+            // Next line prevents compiler griping about no return
+            throw std::runtime_error("*** IF YOU SEE THIS, PLEASE REPORT A BUG ***");
+        }
+
+        // validate transformed data
+
+        // validate, set parameter ranges
+        num_params_r__ = 0U;
+        param_ranges_i__.clear();
+        ++num_params_r__;
+        ++num_params_r__;
+        validate_non_negative_index("delta", "J", J);
+        num_params_r__ += J;
+        ++num_params_r__;
+        ++num_params_r__;
+        validate_non_negative_index("mub", "J", J);
+        num_params_r__ += J;
+    }
+
+    ~model_indefficacy() { }
+
+
+    void transform_inits(const stan::io::var_context& context__,
+                         std::vector<int>& params_i__,
+                         std::vector<double>& params_r__,
+                         std::ostream* pstream__) const {
+        stan::io::writer<double> writer__(params_r__,params_i__);
+        size_t pos__;
+        (void) pos__; // dummy call to supress warning
+        std::vector<double> vals_r__;
+        std::vector<int> vals_i__;
+
+        if (!(context__.contains_r("kappa")))
+            throw std::runtime_error("variable kappa missing");
+        vals_r__ = context__.vals_r("kappa");
+        pos__ = 0U;
+        context__.validate_dims("initialization", "kappa", "double", context__.to_vec());
+        // generate_declaration kappa
+        double kappa(0);
+        kappa = vals_r__[pos__++];
+        try {
+            writer__.scalar_lb_unconstrain(0,kappa);
+        } catch (const std::exception& e) { 
+            throw std::runtime_error(std::string("Error transforming variable kappa: ") + e.what());
+        }
+
+        if (!(context__.contains_r("mu")))
+            throw std::runtime_error("variable mu missing");
+        vals_r__ = context__.vals_r("mu");
+        pos__ = 0U;
+        context__.validate_dims("initialization", "mu", "double", context__.to_vec());
+        // generate_declaration mu
+        double mu(0);
+        mu = vals_r__[pos__++];
+        try {
+            writer__.scalar_lb_unconstrain(0,mu);
+        } catch (const std::exception& e) { 
+            throw std::runtime_error(std::string("Error transforming variable mu: ") + e.what());
+        }
+
+        if (!(context__.contains_r("delta")))
+            throw std::runtime_error("variable delta missing");
+        vals_r__ = context__.vals_r("delta");
+        pos__ = 0U;
+        validate_non_negative_index("delta", "J", J);
+        context__.validate_dims("initialization", "delta", "double", context__.to_vec(J));
+        // generate_declaration delta
+        std::vector<double> delta(J,double(0));
+        for (int i0__ = 0U; i0__ < J; ++i0__)
+            delta[i0__] = vals_r__[pos__++];
+        for (int i0__ = 0U; i0__ < J; ++i0__)
+            try {
+            writer__.scalar_lb_unconstrain(0,delta[i0__]);
+        } catch (const std::exception& e) { 
+            throw std::runtime_error(std::string("Error transforming variable delta: ") + e.what());
+        }
+
+        if (!(context__.contains_r("delta_shape")))
+            throw std::runtime_error("variable delta_shape missing");
+        vals_r__ = context__.vals_r("delta_shape");
+        pos__ = 0U;
+        context__.validate_dims("initialization", "delta_shape", "double", context__.to_vec());
+        // generate_declaration delta_shape
+        double delta_shape(0);
+        delta_shape = vals_r__[pos__++];
+        try {
+            writer__.scalar_lb_unconstrain(0,delta_shape);
+        } catch (const std::exception& e) { 
+            throw std::runtime_error(std::string("Error transforming variable delta_shape: ") + e.what());
+        }
+
+        if (!(context__.contains_r("delta_mu")))
+            throw std::runtime_error("variable delta_mu missing");
+        vals_r__ = context__.vals_r("delta_mu");
+        pos__ = 0U;
+        context__.validate_dims("initialization", "delta_mu", "double", context__.to_vec());
+        // generate_declaration delta_mu
+        double delta_mu(0);
+        delta_mu = vals_r__[pos__++];
+        try {
+            writer__.scalar_lub_unconstrain(0,1,delta_mu);
+        } catch (const std::exception& e) { 
+            throw std::runtime_error(std::string("Error transforming variable delta_mu: ") + e.what());
+        }
+
+        if (!(context__.contains_r("mub")))
+            throw std::runtime_error("variable mub missing");
+        vals_r__ = context__.vals_r("mub");
+        pos__ = 0U;
+        validate_non_negative_index("mub", "J", J);
+        context__.validate_dims("initialization", "mub", "double", context__.to_vec(J));
+        // generate_declaration mub
+        std::vector<double> mub(J,double(0));
+        for (int i0__ = 0U; i0__ < J; ++i0__)
+            mub[i0__] = vals_r__[pos__++];
+        for (int i0__ = 0U; i0__ < J; ++i0__)
+            try {
+            writer__.scalar_lb_unconstrain(0,mub[i0__]);
+        } catch (const std::exception& e) { 
+            throw std::runtime_error(std::string("Error transforming variable mub: ") + e.what());
+        }
+
+        params_r__ = writer__.data_r();
+        params_i__ = writer__.data_i();
+    }
+
+    void transform_inits(const stan::io::var_context& context,
+                         Eigen::Matrix<double,Eigen::Dynamic,1>& params_r,
+                         std::ostream* pstream__) const {
+      std::vector<double> params_r_vec;
+      std::vector<int> params_i_vec;
+      transform_inits(context, params_i_vec, params_r_vec, pstream__);
+      params_r.resize(params_r_vec.size());
+      for (int i = 0; i < params_r.size(); ++i)
+        params_r(i) = params_r_vec[i];
+    }
+
+
+    template <bool propto__, bool jacobian__, typename T__>
+    T__ log_prob(vector<T__>& params_r__,
+                 vector<int>& params_i__,
+                 std::ostream* pstream__ = 0) const {
+
+        T__ DUMMY_VAR__(std::numeric_limits<double>::quiet_NaN());
+        (void) DUMMY_VAR__;  // suppress unused var warning
+
+        T__ lp__(0.0);
+        stan::math::accumulator<T__> lp_accum__;
+
+        // model parameters
+        stan::io::reader<T__> in__(params_r__,params_i__);
+
+        T__ kappa;
+        (void) kappa;  // dummy to suppress unused var warning
+        if (jacobian__)
+            kappa = in__.scalar_lb_constrain(0,lp__);
+        else
+            kappa = in__.scalar_lb_constrain(0);
+
+        T__ mu;
+        (void) mu;  // dummy to suppress unused var warning
+        if (jacobian__)
+            mu = in__.scalar_lb_constrain(0,lp__);
+        else
+            mu = in__.scalar_lb_constrain(0);
+
+        vector<T__> delta;
+        size_t dim_delta_0__ = J;
+        delta.reserve(dim_delta_0__);
+        for (size_t k_0__ = 0; k_0__ < dim_delta_0__; ++k_0__) {
+            if (jacobian__)
+                delta.push_back(in__.scalar_lb_constrain(0,lp__));
+            else
+                delta.push_back(in__.scalar_lb_constrain(0));
+        }
+
+        T__ delta_shape;
+        (void) delta_shape;  // dummy to suppress unused var warning
+        if (jacobian__)
+            delta_shape = in__.scalar_lb_constrain(0,lp__);
+        else
+            delta_shape = in__.scalar_lb_constrain(0);
+
+        T__ delta_mu;
+        (void) delta_mu;  // dummy to suppress unused var warning
+        if (jacobian__)
+            delta_mu = in__.scalar_lub_constrain(0,1,lp__);
+        else
+            delta_mu = in__.scalar_lub_constrain(0,1);
+
+        vector<T__> mub;
+        size_t dim_mub_0__ = J;
+        mub.reserve(dim_mub_0__);
+        for (size_t k_0__ = 0; k_0__ < dim_mub_0__; ++k_0__) {
+            if (jacobian__)
+                mub.push_back(in__.scalar_lb_constrain(0,lp__));
+            else
+                mub.push_back(in__.scalar_lb_constrain(0));
+        }
+
+
+        // transformed parameters
+        validate_non_negative_index("lambdaa", "J", J);
+        vector<T__> lambdaa(J);
+        stan::math::initialize(lambdaa, DUMMY_VAR__);
+        stan::math::fill(lambdaa,DUMMY_VAR__);
+        validate_non_negative_index("lambdab", "J", J);
+        vector<T__> lambdab(J);
+        stan::math::initialize(lambdab, DUMMY_VAR__);
+        stan::math::fill(lambdab,DUMMY_VAR__);
+
+
+        try {
+            current_statement_begin__ = 19;
+            for (int i = 1; i <= J; ++i) {
+
+                current_statement_begin__ = 20;
+                stan::math::assign(get_base1_lhs(lambdab,i,"lambdab",1), (get_base1(mub,i,"mub",1) / get_base1(fpre,i,"fpre",1)));
+                current_statement_begin__ = 21;
+                stan::math::assign(get_base1_lhs(lambdaa,i,"lambdaa",1), ((get_base1(delta,i,"delta",1) * get_base1(mub,i,"mub",1)) / get_base1(fpost,i,"fpost",1)));
+            }
+        } catch (const std::exception& e) {
+            stan::lang::rethrow_located(e, current_statement_begin__, prog_reader__());
+            // Next line prevents compiler griping about no return
+            throw std::runtime_error("*** IF YOU SEE THIS, PLEASE REPORT A BUG ***");
+        }
+
+        // validate transformed parameters
+        for (int i0__ = 0; i0__ < J; ++i0__) {
+            if (stan::math::is_uninitialized(lambdaa[i0__])) {
+                std::stringstream msg__;
+                msg__ << "Undefined transformed parameter: lambdaa" << '[' << i0__ << ']';
+                throw std::runtime_error(msg__.str());
+            }
+        }
+        for (int i0__ = 0; i0__ < J; ++i0__) {
+            if (stan::math::is_uninitialized(lambdab[i0__])) {
+                std::stringstream msg__;
+                msg__ << "Undefined transformed parameter: lambdab" << '[' << i0__ << ']';
+                throw std::runtime_error(msg__.str());
+            }
+        }
+
+        const char* function__ = "validate transformed params";
+        (void) function__;  // dummy to suppress unused var warning
+
+        // model body
+        try {
+
+            current_statement_begin__ = 25;
+            lp_accum__.add(gamma_log<propto__>(mu, 1, 0.001));
+            current_statement_begin__ = 26;
+            lp_accum__.add(gamma_log<propto__>(kappa, 1, 0.69999999999999996));
+            current_statement_begin__ = 27;
+            lp_accum__.add(gamma_log<propto__>(delta, delta_shape, (delta_shape / delta_mu)));
+            current_statement_begin__ = 28;
+            lp_accum__.add(normal_log<propto__>(delta_shape, 2, 1));
+            current_statement_begin__ = 29;
+            lp_accum__.add(beta_log<propto__>(delta_mu, 1, 1));
+            current_statement_begin__ = 30;
+            lp_accum__.add(gamma_log<propto__>(mub, kappa, (kappa / mu)));
+            current_statement_begin__ = 31;
+            lp_accum__.add(poisson_log<propto__>(ystararaw, lambdaa));
+            current_statement_begin__ = 32;
+            lp_accum__.add(poisson_log<propto__>(ystarbraw, lambdab));
+        } catch (const std::exception& e) {
+            stan::lang::rethrow_located(e, current_statement_begin__, prog_reader__());
+            // Next line prevents compiler griping about no return
+            throw std::runtime_error("*** IF YOU SEE THIS, PLEASE REPORT A BUG ***");
+        }
+
+        lp_accum__.add(lp__);
+        return lp_accum__.sum();
+
+    } // log_prob()
+
+    template <bool propto, bool jacobian, typename T_>
+    T_ log_prob(Eigen::Matrix<T_,Eigen::Dynamic,1>& params_r,
+               std::ostream* pstream = 0) const {
+      std::vector<T_> vec_params_r;
+      vec_params_r.reserve(params_r.size());
+      for (int i = 0; i < params_r.size(); ++i)
+        vec_params_r.push_back(params_r(i));
+      std::vector<int> vec_params_i;
+      return log_prob<propto,jacobian,T_>(vec_params_r, vec_params_i, pstream);
+    }
+
+
+    void get_param_names(std::vector<std::string>& names__) const {
+        names__.resize(0);
+        names__.push_back("kappa");
+        names__.push_back("mu");
+        names__.push_back("delta");
+        names__.push_back("delta_shape");
+        names__.push_back("delta_mu");
+        names__.push_back("mub");
+        names__.push_back("lambdaa");
+        names__.push_back("lambdab");
+    }
+
+
+    void get_dims(std::vector<std::vector<size_t> >& dimss__) const {
+        dimss__.resize(0);
+        std::vector<size_t> dims__;
+        dims__.resize(0);
+        dimss__.push_back(dims__);
+        dims__.resize(0);
+        dimss__.push_back(dims__);
+        dims__.resize(0);
+        dims__.push_back(J);
+        dimss__.push_back(dims__);
+        dims__.resize(0);
+        dimss__.push_back(dims__);
+        dims__.resize(0);
+        dimss__.push_back(dims__);
+        dims__.resize(0);
+        dims__.push_back(J);
+        dimss__.push_back(dims__);
+        dims__.resize(0);
+        dims__.push_back(J);
+        dimss__.push_back(dims__);
+        dims__.resize(0);
+        dims__.push_back(J);
+        dimss__.push_back(dims__);
+    }
+
+    template <typename RNG>
+    void write_array(RNG& base_rng__,
+                     std::vector<double>& params_r__,
+                     std::vector<int>& params_i__,
+                     std::vector<double>& vars__,
+                     bool include_tparams__ = true,
+                     bool include_gqs__ = true,
+                     std::ostream* pstream__ = 0) const {
+        vars__.resize(0);
+        stan::io::reader<double> in__(params_r__,params_i__);
+        static const char* function__ = "model_indefficacy_namespace::write_array";
+        (void) function__;  // dummy to suppress unused var warning
+        // read-transform, write parameters
+        double kappa = in__.scalar_lb_constrain(0);
+        double mu = in__.scalar_lb_constrain(0);
+        vector<double> delta;
+        size_t dim_delta_0__ = J;
+        for (size_t k_0__ = 0; k_0__ < dim_delta_0__; ++k_0__) {
+            delta.push_back(in__.scalar_lb_constrain(0));
+        }
+        double delta_shape = in__.scalar_lb_constrain(0);
+        double delta_mu = in__.scalar_lub_constrain(0,1);
+        vector<double> mub;
+        size_t dim_mub_0__ = J;
+        for (size_t k_0__ = 0; k_0__ < dim_mub_0__; ++k_0__) {
+            mub.push_back(in__.scalar_lb_constrain(0));
+        }
+        vars__.push_back(kappa);
+        vars__.push_back(mu);
+        for (int k_0__ = 0; k_0__ < J; ++k_0__) {
+            vars__.push_back(delta[k_0__]);
+        }
+        vars__.push_back(delta_shape);
+        vars__.push_back(delta_mu);
+        for (int k_0__ = 0; k_0__ < J; ++k_0__) {
+            vars__.push_back(mub[k_0__]);
+        }
+
+        if (!include_tparams__) return;
+        // declare and define transformed parameters
+        double lp__ = 0.0;
+        (void) lp__;  // dummy to suppress unused var warning
+        stan::math::accumulator<double> lp_accum__;
+
+        double DUMMY_VAR__(std::numeric_limits<double>::quiet_NaN());
+        (void) DUMMY_VAR__;  // suppress unused var warning
+
+        validate_non_negative_index("lambdaa", "J", J);
+        vector<double> lambdaa(J, 0.0);
+        stan::math::initialize(lambdaa, std::numeric_limits<double>::quiet_NaN());
+        stan::math::fill(lambdaa,DUMMY_VAR__);
+        validate_non_negative_index("lambdab", "J", J);
+        vector<double> lambdab(J, 0.0);
+        stan::math::initialize(lambdab, std::numeric_limits<double>::quiet_NaN());
+        stan::math::fill(lambdab,DUMMY_VAR__);
+
+
+        try {
+            current_statement_begin__ = 19;
+            for (int i = 1; i <= J; ++i) {
+
+                current_statement_begin__ = 20;
+                stan::math::assign(get_base1_lhs(lambdab,i,"lambdab",1), (get_base1(mub,i,"mub",1) / get_base1(fpre,i,"fpre",1)));
+                current_statement_begin__ = 21;
+                stan::math::assign(get_base1_lhs(lambdaa,i,"lambdaa",1), ((get_base1(delta,i,"delta",1) * get_base1(mub,i,"mub",1)) / get_base1(fpost,i,"fpost",1)));
+            }
+        } catch (const std::exception& e) {
+            stan::lang::rethrow_located(e, current_statement_begin__, prog_reader__());
+            // Next line prevents compiler griping about no return
+            throw std::runtime_error("*** IF YOU SEE THIS, PLEASE REPORT A BUG ***");
+        }
+
+        // validate transformed parameters
+
+        // write transformed parameters
+        for (int k_0__ = 0; k_0__ < J; ++k_0__) {
+            vars__.push_back(lambdaa[k_0__]);
+        }
+        for (int k_0__ = 0; k_0__ < J; ++k_0__) {
+            vars__.push_back(lambdab[k_0__]);
+        }
+
+        if (!include_gqs__) return;
+        // declare and define generated quantities
+
+
+        try {
+        } catch (const std::exception& e) {
+            stan::lang::rethrow_located(e, current_statement_begin__, prog_reader__());
+            // Next line prevents compiler griping about no return
+            throw std::runtime_error("*** IF YOU SEE THIS, PLEASE REPORT A BUG ***");
+        }
+
+        // validate generated quantities
+
+        // write generated quantities
+    }
+
+    template <typename RNG>
+    void write_array(RNG& base_rng,
+                     Eigen::Matrix<double,Eigen::Dynamic,1>& params_r,
+                     Eigen::Matrix<double,Eigen::Dynamic,1>& vars,
+                     bool include_tparams = true,
+                     bool include_gqs = true,
+                     std::ostream* pstream = 0) const {
+      std::vector<double> params_r_vec(params_r.size());
+      for (int i = 0; i < params_r.size(); ++i)
+        params_r_vec[i] = params_r(i);
+      std::vector<double> vars_vec;
+      std::vector<int> params_i_vec;
+      write_array(base_rng,params_r_vec,params_i_vec,vars_vec,include_tparams,include_gqs,pstream);
+      vars.resize(vars_vec.size());
+      for (int i = 0; i < vars.size(); ++i)
+        vars(i) = vars_vec[i];
+    }
+
+    static std::string model_name() {
+        return "model_indefficacy";
+    }
+
+
+    void constrained_param_names(std::vector<std::string>& param_names__,
+                                 bool include_tparams__ = true,
+                                 bool include_gqs__ = true) const {
+        std::stringstream param_name_stream__;
+        param_name_stream__.str(std::string());
+        param_name_stream__ << "kappa";
+        param_names__.push_back(param_name_stream__.str());
+        param_name_stream__.str(std::string());
+        param_name_stream__ << "mu";
+        param_names__.push_back(param_name_stream__.str());
+        for (int k_0__ = 1; k_0__ <= J; ++k_0__) {
+            param_name_stream__.str(std::string());
+            param_name_stream__ << "delta" << '.' << k_0__;
+            param_names__.push_back(param_name_stream__.str());
+        }
+        param_name_stream__.str(std::string());
+        param_name_stream__ << "delta_shape";
+        param_names__.push_back(param_name_stream__.str());
+        param_name_stream__.str(std::string());
+        param_name_stream__ << "delta_mu";
+        param_names__.push_back(param_name_stream__.str());
+        for (int k_0__ = 1; k_0__ <= J; ++k_0__) {
+            param_name_stream__.str(std::string());
+            param_name_stream__ << "mub" << '.' << k_0__;
+            param_names__.push_back(param_name_stream__.str());
+        }
+
+        if (!include_gqs__ && !include_tparams__) return;
+        for (int k_0__ = 1; k_0__ <= J; ++k_0__) {
+            param_name_stream__.str(std::string());
+            param_name_stream__ << "lambdaa" << '.' << k_0__;
+            param_names__.push_back(param_name_stream__.str());
+        }
+        for (int k_0__ = 1; k_0__ <= J; ++k_0__) {
+            param_name_stream__.str(std::string());
+            param_name_stream__ << "lambdab" << '.' << k_0__;
+            param_names__.push_back(param_name_stream__.str());
+        }
+
+        if (!include_gqs__) return;
+    }
+
+
+    void unconstrained_param_names(std::vector<std::string>& param_names__,
+                                   bool include_tparams__ = true,
+                                   bool include_gqs__ = true) const {
+        std::stringstream param_name_stream__;
+        param_name_stream__.str(std::string());
+        param_name_stream__ << "kappa";
+        param_names__.push_back(param_name_stream__.str());
+        param_name_stream__.str(std::string());
+        param_name_stream__ << "mu";
+        param_names__.push_back(param_name_stream__.str());
+        for (int k_0__ = 1; k_0__ <= J; ++k_0__) {
+            param_name_stream__.str(std::string());
+            param_name_stream__ << "delta" << '.' << k_0__;
+            param_names__.push_back(param_name_stream__.str());
+        }
+        param_name_stream__.str(std::string());
+        param_name_stream__ << "delta_shape";
+        param_names__.push_back(param_name_stream__.str());
+        param_name_stream__.str(std::string());
+        param_name_stream__ << "delta_mu";
+        param_names__.push_back(param_name_stream__.str());
+        for (int k_0__ = 1; k_0__ <= J; ++k_0__) {
+            param_name_stream__.str(std::string());
+            param_name_stream__ << "mub" << '.' << k_0__;
+            param_names__.push_back(param_name_stream__.str());
+        }
+
+        if (!include_gqs__ && !include_tparams__) return;
+        for (int k_0__ = 1; k_0__ <= J; ++k_0__) {
+            param_name_stream__.str(std::string());
+            param_name_stream__ << "lambdaa" << '.' << k_0__;
+            param_names__.push_back(param_name_stream__.str());
+        }
+        for (int k_0__ = 1; k_0__ <= J; ++k_0__) {
+            param_name_stream__.str(std::string());
+            param_name_stream__ << "lambdab" << '.' << k_0__;
+            param_names__.push_back(param_name_stream__.str());
+        }
+
+        if (!include_gqs__) return;
+    }
+
+}; // model
+
+}
+
+
+
+
+// Code generated by Stan version 2.16.0
+
+#include <stan/model/model_header.hpp>
+
 namespace model_nb_namespace {
 
 using std::istream;
@@ -43,7 +702,7 @@ static int current_statement_begin__;
 stan::io::program_reader prog_reader__() {
     stan::io::program_reader reader;
     reader.add_event(0, 0, "start", "model_nb");
-    reader.add_event(24, 24, "end", "model_nb");
+    reader.add_event(22, 22, "end", "model_nb");
     return reader;
 }
 
@@ -250,22 +909,15 @@ public:
         vector<T__> lambda(J);
         stan::math::initialize(lambda, DUMMY_VAR__);
         stan::math::fill(lambda,DUMMY_VAR__);
-        T__ kappamu;
-        (void) kappamu;  // dummy to suppress unused var warning
-
-        stan::math::initialize(kappamu, DUMMY_VAR__);
-        stan::math::fill(kappamu,DUMMY_VAR__);
 
 
         try {
-            current_statement_begin__ = 14;
+            current_statement_begin__ = 13;
             for (int i = 1; i <= J; ++i) {
 
-                current_statement_begin__ = 15;
+                current_statement_begin__ = 14;
                 stan::math::assign(get_base1_lhs(lambda,i,"lambda",1), (get_base1(mui,i,"mui",1) / get_base1(CF,i,"CF",1)));
             }
-            current_statement_begin__ = 17;
-            stan::math::assign(kappamu, (kappa / mu));
         } catch (const std::exception& e) {
             stan::lang::rethrow_located(e, current_statement_begin__, prog_reader__());
             // Next line prevents compiler griping about no return
@@ -280,11 +932,6 @@ public:
                 throw std::runtime_error(msg__.str());
             }
         }
-        if (stan::math::is_uninitialized(kappamu)) {
-            std::stringstream msg__;
-            msg__ << "Undefined transformed parameter: kappamu";
-            throw std::runtime_error(msg__.str());
-        }
 
         const char* function__ = "validate transformed params";
         (void) function__;  // dummy to suppress unused var warning
@@ -292,13 +939,13 @@ public:
         // model body
         try {
 
-            current_statement_begin__ = 20;
+            current_statement_begin__ = 18;
             lp_accum__.add(gamma_log<propto__>(mu, 1, 0.001));
-            current_statement_begin__ = 21;
+            current_statement_begin__ = 19;
             lp_accum__.add(gamma_log<propto__>(kappa, 1, 0.69999999999999996));
-            current_statement_begin__ = 22;
-            lp_accum__.add(gamma_log<propto__>(mui, kappa, kappamu));
-            current_statement_begin__ = 23;
+            current_statement_begin__ = 20;
+            lp_accum__.add(gamma_log<propto__>(mui, kappa, (kappa / mu)));
+            current_statement_begin__ = 21;
             lp_accum__.add(poisson_log<propto__>(ystarraw, lambda));
         } catch (const std::exception& e) {
             stan::lang::rethrow_located(e, current_statement_begin__, prog_reader__());
@@ -329,7 +976,6 @@ public:
         names__.push_back("mu");
         names__.push_back("mui");
         names__.push_back("lambda");
-        names__.push_back("kappamu");
     }
 
 
@@ -345,8 +991,6 @@ public:
         dimss__.push_back(dims__);
         dims__.resize(0);
         dims__.push_back(J);
-        dimss__.push_back(dims__);
-        dims__.resize(0);
         dimss__.push_back(dims__);
     }
 
@@ -389,22 +1033,15 @@ public:
         vector<double> lambda(J, 0.0);
         stan::math::initialize(lambda, std::numeric_limits<double>::quiet_NaN());
         stan::math::fill(lambda,DUMMY_VAR__);
-        double kappamu(0.0);
-        (void) kappamu;  // dummy to suppress unused var warning
-
-        stan::math::initialize(kappamu, std::numeric_limits<double>::quiet_NaN());
-        stan::math::fill(kappamu,DUMMY_VAR__);
 
 
         try {
-            current_statement_begin__ = 14;
+            current_statement_begin__ = 13;
             for (int i = 1; i <= J; ++i) {
 
-                current_statement_begin__ = 15;
+                current_statement_begin__ = 14;
                 stan::math::assign(get_base1_lhs(lambda,i,"lambda",1), (get_base1(mui,i,"mui",1) / get_base1(CF,i,"CF",1)));
             }
-            current_statement_begin__ = 17;
-            stan::math::assign(kappamu, (kappa / mu));
         } catch (const std::exception& e) {
             stan::lang::rethrow_located(e, current_statement_begin__, prog_reader__());
             // Next line prevents compiler griping about no return
@@ -417,7 +1054,6 @@ public:
         for (int k_0__ = 0; k_0__ < J; ++k_0__) {
             vars__.push_back(lambda[k_0__]);
         }
-        vars__.push_back(kappamu);
 
         if (!include_gqs__) return;
         // declare and define generated quantities
@@ -480,9 +1116,6 @@ public:
             param_name_stream__ << "lambda" << '.' << k_0__;
             param_names__.push_back(param_name_stream__.str());
         }
-        param_name_stream__.str(std::string());
-        param_name_stream__ << "kappamu";
-        param_names__.push_back(param_name_stream__.str());
 
         if (!include_gqs__) return;
     }
@@ -510,9 +1143,6 @@ public:
             param_name_stream__ << "lambda" << '.' << k_0__;
             param_names__.push_back(param_name_stream__.str());
         }
-        param_name_stream__.str(std::string());
-        param_name_stream__ << "kappamu";
-        param_names__.push_back(param_name_stream__.str());
 
         if (!include_gqs__) return;
     }
@@ -548,7 +1178,7 @@ static int current_statement_begin__;
 stan::io::program_reader prog_reader__() {
     stan::io::program_reader reader;
     reader.add_event(0, 0, "start", "model_paired");
-    reader.add_event(34, 34, "end", "model_paired");
+    reader.add_event(30, 30, "end", "model_paired");
     return reader;
 }
 
@@ -803,28 +1433,17 @@ public:
         vector<T__> lambdab(J);
         stan::math::initialize(lambdab, DUMMY_VAR__);
         stan::math::fill(lambdab,DUMMY_VAR__);
-        T__ kappamu;
-        (void) kappamu;  // dummy to suppress unused var warning
-
-        stan::math::initialize(kappamu, DUMMY_VAR__);
-        stan::math::fill(kappamu,DUMMY_VAR__);
 
 
         try {
-            current_statement_begin__ = 18;
+            current_statement_begin__ = 17;
             for (int i = 1; i <= J; ++i) {
 
-                current_statement_begin__ = 19;
+                current_statement_begin__ = 18;
                 stan::math::assign(get_base1_lhs(lambdab,i,"lambdab",1), (get_base1(mub,i,"mub",1) / get_base1(fpre,i,"fpre",1)));
-            }
-            current_statement_begin__ = 21;
-            for (int i = 1; i <= J; ++i) {
-
-                current_statement_begin__ = 22;
+                current_statement_begin__ = 19;
                 stan::math::assign(get_base1_lhs(lambdaa,i,"lambdaa",1), ((delta * get_base1(mub,i,"mub",1)) / get_base1(fpost,i,"fpost",1)));
             }
-            current_statement_begin__ = 24;
-            stan::math::assign(kappamu, (kappa / mu));
         } catch (const std::exception& e) {
             stan::lang::rethrow_located(e, current_statement_begin__, prog_reader__());
             // Next line prevents compiler griping about no return
@@ -846,11 +1465,6 @@ public:
                 throw std::runtime_error(msg__.str());
             }
         }
-        if (stan::math::is_uninitialized(kappamu)) {
-            std::stringstream msg__;
-            msg__ << "Undefined transformed parameter: kappamu";
-            throw std::runtime_error(msg__.str());
-        }
 
         const char* function__ = "validate transformed params";
         (void) function__;  // dummy to suppress unused var warning
@@ -858,17 +1472,17 @@ public:
         // model body
         try {
 
-            current_statement_begin__ = 27;
+            current_statement_begin__ = 23;
             lp_accum__.add(gamma_log<propto__>(mu, 1, 0.001));
-            current_statement_begin__ = 28;
+            current_statement_begin__ = 24;
             lp_accum__.add(gamma_log<propto__>(kappa, 1, 0.69999999999999996));
-            current_statement_begin__ = 29;
+            current_statement_begin__ = 25;
             lp_accum__.add(beta_log<propto__>(delta, 1, 1));
-            current_statement_begin__ = 30;
-            lp_accum__.add(gamma_log(mub,kappa,kappamu));
-            current_statement_begin__ = 31;
+            current_statement_begin__ = 26;
+            lp_accum__.add(gamma_log<propto__>(mub, kappa, (kappa / mu)));
+            current_statement_begin__ = 27;
             lp_accum__.add(poisson_log<propto__>(ystararaw, lambdaa));
-            current_statement_begin__ = 32;
+            current_statement_begin__ = 28;
             lp_accum__.add(poisson_log<propto__>(ystarbraw, lambdab));
         } catch (const std::exception& e) {
             stan::lang::rethrow_located(e, current_statement_begin__, prog_reader__());
@@ -901,7 +1515,6 @@ public:
         names__.push_back("mub");
         names__.push_back("lambdaa");
         names__.push_back("lambdab");
-        names__.push_back("kappamu");
     }
 
 
@@ -922,8 +1535,6 @@ public:
         dimss__.push_back(dims__);
         dims__.resize(0);
         dims__.push_back(J);
-        dimss__.push_back(dims__);
-        dims__.resize(0);
         dimss__.push_back(dims__);
     }
 
@@ -972,28 +1583,17 @@ public:
         vector<double> lambdab(J, 0.0);
         stan::math::initialize(lambdab, std::numeric_limits<double>::quiet_NaN());
         stan::math::fill(lambdab,DUMMY_VAR__);
-        double kappamu(0.0);
-        (void) kappamu;  // dummy to suppress unused var warning
-
-        stan::math::initialize(kappamu, std::numeric_limits<double>::quiet_NaN());
-        stan::math::fill(kappamu,DUMMY_VAR__);
 
 
         try {
-            current_statement_begin__ = 18;
+            current_statement_begin__ = 17;
             for (int i = 1; i <= J; ++i) {
 
-                current_statement_begin__ = 19;
+                current_statement_begin__ = 18;
                 stan::math::assign(get_base1_lhs(lambdab,i,"lambdab",1), (get_base1(mub,i,"mub",1) / get_base1(fpre,i,"fpre",1)));
-            }
-            current_statement_begin__ = 21;
-            for (int i = 1; i <= J; ++i) {
-
-                current_statement_begin__ = 22;
+                current_statement_begin__ = 19;
                 stan::math::assign(get_base1_lhs(lambdaa,i,"lambdaa",1), ((delta * get_base1(mub,i,"mub",1)) / get_base1(fpost,i,"fpost",1)));
             }
-            current_statement_begin__ = 24;
-            stan::math::assign(kappamu, (kappa / mu));
         } catch (const std::exception& e) {
             stan::lang::rethrow_located(e, current_statement_begin__, prog_reader__());
             // Next line prevents compiler griping about no return
@@ -1009,7 +1609,6 @@ public:
         for (int k_0__ = 0; k_0__ < J; ++k_0__) {
             vars__.push_back(lambdab[k_0__]);
         }
-        vars__.push_back(kappamu);
 
         if (!include_gqs__) return;
         // declare and define generated quantities
@@ -1080,9 +1679,6 @@ public:
             param_name_stream__ << "lambdab" << '.' << k_0__;
             param_names__.push_back(param_name_stream__.str());
         }
-        param_name_stream__.str(std::string());
-        param_name_stream__ << "kappamu";
-        param_names__.push_back(param_name_stream__.str());
 
         if (!include_gqs__) return;
     }
@@ -1118,9 +1714,489 @@ public:
             param_name_stream__ << "lambdab" << '.' << k_0__;
             param_names__.push_back(param_name_stream__.str());
         }
+
+        if (!include_gqs__) return;
+    }
+
+}; // model
+
+}
+
+
+
+
+// Code generated by Stan version 2.16.0
+
+#include <stan/model/model_header.hpp>
+
+namespace model_simple_namespace {
+
+using std::istream;
+using std::string;
+using std::stringstream;
+using std::vector;
+using stan::io::dump;
+using stan::math::lgamma;
+using stan::model::prob_grad;
+using namespace stan::math;
+
+typedef Eigen::Matrix<double,Eigen::Dynamic,1> vector_d;
+typedef Eigen::Matrix<double,1,Eigen::Dynamic> row_vector_d;
+typedef Eigen::Matrix<double,Eigen::Dynamic,Eigen::Dynamic> matrix_d;
+
+static int current_statement_begin__;
+
+stan::io::program_reader prog_reader__() {
+    stan::io::program_reader reader;
+    reader.add_event(0, 0, "start", "model_simple");
+    reader.add_event(28, 28, "end", "model_simple");
+    return reader;
+}
+
+class model_simple : public prob_grad {
+private:
+    int J;
+    vector<int> ystararaw;
+    vector<int> ystarbraw;
+    vector<int> fpre;
+    vector<int> fpost;
+public:
+    model_simple(stan::io::var_context& context__,
+        std::ostream* pstream__ = 0)
+        : prob_grad(0) {
+        ctor_body(context__, 0, pstream__);
+    }
+
+    model_simple(stan::io::var_context& context__,
+        unsigned int random_seed__,
+        std::ostream* pstream__ = 0)
+        : prob_grad(0) {
+        ctor_body(context__, random_seed__, pstream__);
+    }
+
+    void ctor_body(stan::io::var_context& context__,
+                   unsigned int random_seed__,
+                   std::ostream* pstream__) {
+        boost::ecuyer1988 base_rng__ =
+          stan::services::util::create_rng(random_seed__, 0);
+        (void) base_rng__;  // suppress unused var warning
+
+        current_statement_begin__ = -1;
+
+        static const char* function__ = "model_simple_namespace::model_simple";
+        (void) function__;  // dummy to suppress unused var warning
+        size_t pos__;
+        (void) pos__;  // dummy to suppress unused var warning
+        std::vector<int> vals_i__;
+        std::vector<double> vals_r__;
+        double DUMMY_VAR__(std::numeric_limits<double>::quiet_NaN());
+        (void) DUMMY_VAR__;  // suppress unused var warning
+
+        // initialize member variables
+        context__.validate_dims("data initialization", "J", "int", context__.to_vec());
+        J = int(0);
+        vals_i__ = context__.vals_i("J");
+        pos__ = 0;
+        J = vals_i__[pos__++];
+        validate_non_negative_index("ystararaw", "J", J);
+        context__.validate_dims("data initialization", "ystararaw", "int", context__.to_vec(J));
+        validate_non_negative_index("ystararaw", "J", J);
+        ystararaw = std::vector<int>(J,int(0));
+        vals_i__ = context__.vals_i("ystararaw");
+        pos__ = 0;
+        size_t ystararaw_limit_0__ = J;
+        for (size_t i_0__ = 0; i_0__ < ystararaw_limit_0__; ++i_0__) {
+            ystararaw[i_0__] = vals_i__[pos__++];
+        }
+        validate_non_negative_index("ystarbraw", "J", J);
+        context__.validate_dims("data initialization", "ystarbraw", "int", context__.to_vec(J));
+        validate_non_negative_index("ystarbraw", "J", J);
+        ystarbraw = std::vector<int>(J,int(0));
+        vals_i__ = context__.vals_i("ystarbraw");
+        pos__ = 0;
+        size_t ystarbraw_limit_0__ = J;
+        for (size_t i_0__ = 0; i_0__ < ystarbraw_limit_0__; ++i_0__) {
+            ystarbraw[i_0__] = vals_i__[pos__++];
+        }
+        validate_non_negative_index("fpre", "J", J);
+        context__.validate_dims("data initialization", "fpre", "int", context__.to_vec(J));
+        validate_non_negative_index("fpre", "J", J);
+        fpre = std::vector<int>(J,int(0));
+        vals_i__ = context__.vals_i("fpre");
+        pos__ = 0;
+        size_t fpre_limit_0__ = J;
+        for (size_t i_0__ = 0; i_0__ < fpre_limit_0__; ++i_0__) {
+            fpre[i_0__] = vals_i__[pos__++];
+        }
+        validate_non_negative_index("fpost", "J", J);
+        context__.validate_dims("data initialization", "fpost", "int", context__.to_vec(J));
+        validate_non_negative_index("fpost", "J", J);
+        fpost = std::vector<int>(J,int(0));
+        vals_i__ = context__.vals_i("fpost");
+        pos__ = 0;
+        size_t fpost_limit_0__ = J;
+        for (size_t i_0__ = 0; i_0__ < fpost_limit_0__; ++i_0__) {
+            fpost[i_0__] = vals_i__[pos__++];
+        }
+
+        // validate, data variables
+        // initialize data variables
+
+        try {
+        } catch (const std::exception& e) {
+            stan::lang::rethrow_located(e, current_statement_begin__, prog_reader__());
+            // Next line prevents compiler griping about no return
+            throw std::runtime_error("*** IF YOU SEE THIS, PLEASE REPORT A BUG ***");
+        }
+
+        // validate transformed data
+
+        // validate, set parameter ranges
+        num_params_r__ = 0U;
+        param_ranges_i__.clear();
+        ++num_params_r__;
+        ++num_params_r__;
+    }
+
+    ~model_simple() { }
+
+
+    void transform_inits(const stan::io::var_context& context__,
+                         std::vector<int>& params_i__,
+                         std::vector<double>& params_r__,
+                         std::ostream* pstream__) const {
+        stan::io::writer<double> writer__(params_r__,params_i__);
+        size_t pos__;
+        (void) pos__; // dummy call to supress warning
+        std::vector<double> vals_r__;
+        std::vector<int> vals_i__;
+
+        if (!(context__.contains_r("delta")))
+            throw std::runtime_error("variable delta missing");
+        vals_r__ = context__.vals_r("delta");
+        pos__ = 0U;
+        context__.validate_dims("initialization", "delta", "double", context__.to_vec());
+        // generate_declaration delta
+        double delta(0);
+        delta = vals_r__[pos__++];
+        try {
+            writer__.scalar_lub_unconstrain(0,1,delta);
+        } catch (const std::exception& e) { 
+            throw std::runtime_error(std::string("Error transforming variable delta: ") + e.what());
+        }
+
+        if (!(context__.contains_r("mu")))
+            throw std::runtime_error("variable mu missing");
+        vals_r__ = context__.vals_r("mu");
+        pos__ = 0U;
+        context__.validate_dims("initialization", "mu", "double", context__.to_vec());
+        // generate_declaration mu
+        double mu(0);
+        mu = vals_r__[pos__++];
+        try {
+            writer__.scalar_lb_unconstrain(0,mu);
+        } catch (const std::exception& e) { 
+            throw std::runtime_error(std::string("Error transforming variable mu: ") + e.what());
+        }
+
+        params_r__ = writer__.data_r();
+        params_i__ = writer__.data_i();
+    }
+
+    void transform_inits(const stan::io::var_context& context,
+                         Eigen::Matrix<double,Eigen::Dynamic,1>& params_r,
+                         std::ostream* pstream__) const {
+      std::vector<double> params_r_vec;
+      std::vector<int> params_i_vec;
+      transform_inits(context, params_i_vec, params_r_vec, pstream__);
+      params_r.resize(params_r_vec.size());
+      for (int i = 0; i < params_r.size(); ++i)
+        params_r(i) = params_r_vec[i];
+    }
+
+
+    template <bool propto__, bool jacobian__, typename T__>
+    T__ log_prob(vector<T__>& params_r__,
+                 vector<int>& params_i__,
+                 std::ostream* pstream__ = 0) const {
+
+        T__ DUMMY_VAR__(std::numeric_limits<double>::quiet_NaN());
+        (void) DUMMY_VAR__;  // suppress unused var warning
+
+        T__ lp__(0.0);
+        stan::math::accumulator<T__> lp_accum__;
+
+        // model parameters
+        stan::io::reader<T__> in__(params_r__,params_i__);
+
+        T__ delta;
+        (void) delta;  // dummy to suppress unused var warning
+        if (jacobian__)
+            delta = in__.scalar_lub_constrain(0,1,lp__);
+        else
+            delta = in__.scalar_lub_constrain(0,1);
+
+        T__ mu;
+        (void) mu;  // dummy to suppress unused var warning
+        if (jacobian__)
+            mu = in__.scalar_lb_constrain(0,lp__);
+        else
+            mu = in__.scalar_lb_constrain(0);
+
+
+        // transformed parameters
+        validate_non_negative_index("lambdaa", "J", J);
+        vector<T__> lambdaa(J);
+        stan::math::initialize(lambdaa, DUMMY_VAR__);
+        stan::math::fill(lambdaa,DUMMY_VAR__);
+        validate_non_negative_index("lambdab", "J", J);
+        vector<T__> lambdab(J);
+        stan::math::initialize(lambdab, DUMMY_VAR__);
+        stan::math::fill(lambdab,DUMMY_VAR__);
+
+
+        try {
+            current_statement_begin__ = 17;
+            for (int i = 1; i <= J; ++i) {
+
+                current_statement_begin__ = 18;
+                stan::math::assign(get_base1_lhs(lambdab,i,"lambdab",1), (mu / get_base1(fpre,i,"fpre",1)));
+                current_statement_begin__ = 19;
+                stan::math::assign(get_base1_lhs(lambdaa,i,"lambdaa",1), ((delta * mu) / get_base1(fpost,i,"fpost",1)));
+            }
+        } catch (const std::exception& e) {
+            stan::lang::rethrow_located(e, current_statement_begin__, prog_reader__());
+            // Next line prevents compiler griping about no return
+            throw std::runtime_error("*** IF YOU SEE THIS, PLEASE REPORT A BUG ***");
+        }
+
+        // validate transformed parameters
+        for (int i0__ = 0; i0__ < J; ++i0__) {
+            if (stan::math::is_uninitialized(lambdaa[i0__])) {
+                std::stringstream msg__;
+                msg__ << "Undefined transformed parameter: lambdaa" << '[' << i0__ << ']';
+                throw std::runtime_error(msg__.str());
+            }
+        }
+        for (int i0__ = 0; i0__ < J; ++i0__) {
+            if (stan::math::is_uninitialized(lambdab[i0__])) {
+                std::stringstream msg__;
+                msg__ << "Undefined transformed parameter: lambdab" << '[' << i0__ << ']';
+                throw std::runtime_error(msg__.str());
+            }
+        }
+
+        const char* function__ = "validate transformed params";
+        (void) function__;  // dummy to suppress unused var warning
+
+        // model body
+        try {
+
+            current_statement_begin__ = 24;
+            lp_accum__.add(gamma_log<propto__>(mu, 1, 0.001));
+            current_statement_begin__ = 25;
+            lp_accum__.add(beta_log<propto__>(delta, 1, 1));
+            current_statement_begin__ = 26;
+            lp_accum__.add(poisson_log<propto__>(ystararaw, lambdaa));
+            current_statement_begin__ = 27;
+            lp_accum__.add(poisson_log<propto__>(ystarbraw, lambdab));
+        } catch (const std::exception& e) {
+            stan::lang::rethrow_located(e, current_statement_begin__, prog_reader__());
+            // Next line prevents compiler griping about no return
+            throw std::runtime_error("*** IF YOU SEE THIS, PLEASE REPORT A BUG ***");
+        }
+
+        lp_accum__.add(lp__);
+        return lp_accum__.sum();
+
+    } // log_prob()
+
+    template <bool propto, bool jacobian, typename T_>
+    T_ log_prob(Eigen::Matrix<T_,Eigen::Dynamic,1>& params_r,
+               std::ostream* pstream = 0) const {
+      std::vector<T_> vec_params_r;
+      vec_params_r.reserve(params_r.size());
+      for (int i = 0; i < params_r.size(); ++i)
+        vec_params_r.push_back(params_r(i));
+      std::vector<int> vec_params_i;
+      return log_prob<propto,jacobian,T_>(vec_params_r, vec_params_i, pstream);
+    }
+
+
+    void get_param_names(std::vector<std::string>& names__) const {
+        names__.resize(0);
+        names__.push_back("delta");
+        names__.push_back("mu");
+        names__.push_back("lambdaa");
+        names__.push_back("lambdab");
+    }
+
+
+    void get_dims(std::vector<std::vector<size_t> >& dimss__) const {
+        dimss__.resize(0);
+        std::vector<size_t> dims__;
+        dims__.resize(0);
+        dimss__.push_back(dims__);
+        dims__.resize(0);
+        dimss__.push_back(dims__);
+        dims__.resize(0);
+        dims__.push_back(J);
+        dimss__.push_back(dims__);
+        dims__.resize(0);
+        dims__.push_back(J);
+        dimss__.push_back(dims__);
+    }
+
+    template <typename RNG>
+    void write_array(RNG& base_rng__,
+                     std::vector<double>& params_r__,
+                     std::vector<int>& params_i__,
+                     std::vector<double>& vars__,
+                     bool include_tparams__ = true,
+                     bool include_gqs__ = true,
+                     std::ostream* pstream__ = 0) const {
+        vars__.resize(0);
+        stan::io::reader<double> in__(params_r__,params_i__);
+        static const char* function__ = "model_simple_namespace::write_array";
+        (void) function__;  // dummy to suppress unused var warning
+        // read-transform, write parameters
+        double delta = in__.scalar_lub_constrain(0,1);
+        double mu = in__.scalar_lb_constrain(0);
+        vars__.push_back(delta);
+        vars__.push_back(mu);
+
+        if (!include_tparams__) return;
+        // declare and define transformed parameters
+        double lp__ = 0.0;
+        (void) lp__;  // dummy to suppress unused var warning
+        stan::math::accumulator<double> lp_accum__;
+
+        double DUMMY_VAR__(std::numeric_limits<double>::quiet_NaN());
+        (void) DUMMY_VAR__;  // suppress unused var warning
+
+        validate_non_negative_index("lambdaa", "J", J);
+        vector<double> lambdaa(J, 0.0);
+        stan::math::initialize(lambdaa, std::numeric_limits<double>::quiet_NaN());
+        stan::math::fill(lambdaa,DUMMY_VAR__);
+        validate_non_negative_index("lambdab", "J", J);
+        vector<double> lambdab(J, 0.0);
+        stan::math::initialize(lambdab, std::numeric_limits<double>::quiet_NaN());
+        stan::math::fill(lambdab,DUMMY_VAR__);
+
+
+        try {
+            current_statement_begin__ = 17;
+            for (int i = 1; i <= J; ++i) {
+
+                current_statement_begin__ = 18;
+                stan::math::assign(get_base1_lhs(lambdab,i,"lambdab",1), (mu / get_base1(fpre,i,"fpre",1)));
+                current_statement_begin__ = 19;
+                stan::math::assign(get_base1_lhs(lambdaa,i,"lambdaa",1), ((delta * mu) / get_base1(fpost,i,"fpost",1)));
+            }
+        } catch (const std::exception& e) {
+            stan::lang::rethrow_located(e, current_statement_begin__, prog_reader__());
+            // Next line prevents compiler griping about no return
+            throw std::runtime_error("*** IF YOU SEE THIS, PLEASE REPORT A BUG ***");
+        }
+
+        // validate transformed parameters
+
+        // write transformed parameters
+        for (int k_0__ = 0; k_0__ < J; ++k_0__) {
+            vars__.push_back(lambdaa[k_0__]);
+        }
+        for (int k_0__ = 0; k_0__ < J; ++k_0__) {
+            vars__.push_back(lambdab[k_0__]);
+        }
+
+        if (!include_gqs__) return;
+        // declare and define generated quantities
+
+
+        try {
+        } catch (const std::exception& e) {
+            stan::lang::rethrow_located(e, current_statement_begin__, prog_reader__());
+            // Next line prevents compiler griping about no return
+            throw std::runtime_error("*** IF YOU SEE THIS, PLEASE REPORT A BUG ***");
+        }
+
+        // validate generated quantities
+
+        // write generated quantities
+    }
+
+    template <typename RNG>
+    void write_array(RNG& base_rng,
+                     Eigen::Matrix<double,Eigen::Dynamic,1>& params_r,
+                     Eigen::Matrix<double,Eigen::Dynamic,1>& vars,
+                     bool include_tparams = true,
+                     bool include_gqs = true,
+                     std::ostream* pstream = 0) const {
+      std::vector<double> params_r_vec(params_r.size());
+      for (int i = 0; i < params_r.size(); ++i)
+        params_r_vec[i] = params_r(i);
+      std::vector<double> vars_vec;
+      std::vector<int> params_i_vec;
+      write_array(base_rng,params_r_vec,params_i_vec,vars_vec,include_tparams,include_gqs,pstream);
+      vars.resize(vars_vec.size());
+      for (int i = 0; i < vars.size(); ++i)
+        vars(i) = vars_vec[i];
+    }
+
+    static std::string model_name() {
+        return "model_simple";
+    }
+
+
+    void constrained_param_names(std::vector<std::string>& param_names__,
+                                 bool include_tparams__ = true,
+                                 bool include_gqs__ = true) const {
+        std::stringstream param_name_stream__;
         param_name_stream__.str(std::string());
-        param_name_stream__ << "kappamu";
+        param_name_stream__ << "delta";
         param_names__.push_back(param_name_stream__.str());
+        param_name_stream__.str(std::string());
+        param_name_stream__ << "mu";
+        param_names__.push_back(param_name_stream__.str());
+
+        if (!include_gqs__ && !include_tparams__) return;
+        for (int k_0__ = 1; k_0__ <= J; ++k_0__) {
+            param_name_stream__.str(std::string());
+            param_name_stream__ << "lambdaa" << '.' << k_0__;
+            param_names__.push_back(param_name_stream__.str());
+        }
+        for (int k_0__ = 1; k_0__ <= J; ++k_0__) {
+            param_name_stream__.str(std::string());
+            param_name_stream__ << "lambdab" << '.' << k_0__;
+            param_names__.push_back(param_name_stream__.str());
+        }
+
+        if (!include_gqs__) return;
+    }
+
+
+    void unconstrained_param_names(std::vector<std::string>& param_names__,
+                                   bool include_tparams__ = true,
+                                   bool include_gqs__ = true) const {
+        std::stringstream param_name_stream__;
+        param_name_stream__.str(std::string());
+        param_name_stream__ << "delta";
+        param_names__.push_back(param_name_stream__.str());
+        param_name_stream__.str(std::string());
+        param_name_stream__ << "mu";
+        param_names__.push_back(param_name_stream__.str());
+
+        if (!include_gqs__ && !include_tparams__) return;
+        for (int k_0__ = 1; k_0__ <= J; ++k_0__) {
+            param_name_stream__.str(std::string());
+            param_name_stream__ << "lambdaa" << '.' << k_0__;
+            param_names__.push_back(param_name_stream__.str());
+        }
+        for (int k_0__ = 1; k_0__ <= J; ++k_0__) {
+            param_name_stream__.str(std::string());
+            param_name_stream__ << "lambdab" << '.' << k_0__;
+            param_names__.push_back(param_name_stream__.str());
+        }
 
         if (!include_gqs__) return;
     }
@@ -1156,7 +2232,7 @@ static int current_statement_begin__;
 stan::io::program_reader prog_reader__() {
     stan::io::program_reader reader;
     reader.add_event(0, 0, "start", "model_unpaired");
-    reader.add_event(36, 36, "end", "model_unpaired");
+    reader.add_event(34, 34, "end", "model_unpaired");
     return reader;
 }
 
@@ -1446,33 +2522,21 @@ public:
         vector<T__> lambdab(Jb);
         stan::math::initialize(lambdab, DUMMY_VAR__);
         stan::math::fill(lambdab,DUMMY_VAR__);
-        T__ kappamu;
-        (void) kappamu;  // dummy to suppress unused var warning
-
-        stan::math::initialize(kappamu, DUMMY_VAR__);
-        stan::math::fill(kappamu,DUMMY_VAR__);
-        T__ kappamudelta;
-        (void) kappamudelta;  // dummy to suppress unused var warning
-
-        stan::math::initialize(kappamudelta, DUMMY_VAR__);
-        stan::math::fill(kappamudelta,DUMMY_VAR__);
 
 
         try {
-            current_statement_begin__ = 21;
+            current_statement_begin__ = 19;
             for (int i = 1; i <= Jb; ++i) {
 
-                current_statement_begin__ = 22;
+                current_statement_begin__ = 20;
                 stan::math::assign(get_base1_lhs(lambdab,i,"lambdab",1), (get_base1(mub,i,"mub",1) / get_base1(fpre,i,"fpre",1)));
             }
-            current_statement_begin__ = 24;
+            current_statement_begin__ = 22;
             for (int i = 1; i <= Ja; ++i) {
 
-                current_statement_begin__ = 25;
+                current_statement_begin__ = 23;
                 stan::math::assign(get_base1_lhs(lambdaa,i,"lambdaa",1), ((delta * get_base1(mua,i,"mua",1)) / get_base1(fpost,i,"fpost",1)));
             }
-            current_statement_begin__ = 27;
-            stan::math::assign(kappamu, (kappa / mu));
         } catch (const std::exception& e) {
             stan::lang::rethrow_located(e, current_statement_begin__, prog_reader__());
             // Next line prevents compiler griping about no return
@@ -1494,16 +2558,6 @@ public:
                 throw std::runtime_error(msg__.str());
             }
         }
-        if (stan::math::is_uninitialized(kappamu)) {
-            std::stringstream msg__;
-            msg__ << "Undefined transformed parameter: kappamu";
-            throw std::runtime_error(msg__.str());
-        }
-        if (stan::math::is_uninitialized(kappamudelta)) {
-            std::stringstream msg__;
-            msg__ << "Undefined transformed parameter: kappamudelta";
-            throw std::runtime_error(msg__.str());
-        }
 
         const char* function__ = "validate transformed params";
         (void) function__;  // dummy to suppress unused var warning
@@ -1511,17 +2565,19 @@ public:
         // model body
         try {
 
-            current_statement_begin__ = 30;
+            current_statement_begin__ = 27;
             lp_accum__.add(gamma_log<propto__>(mu, 1, 0.001));
-            current_statement_begin__ = 31;
+            current_statement_begin__ = 28;
             lp_accum__.add(gamma_log<propto__>(kappa, 1, 0.69999999999999996));
-            current_statement_begin__ = 32;
+            current_statement_begin__ = 29;
             lp_accum__.add(beta_log<propto__>(delta, 1, 1));
-            current_statement_begin__ = 33;
-            lp_accum__.add((gamma_log(mub,kappa,kappamu) + gamma_log(mua,kappa,kappamu)));
-            current_statement_begin__ = 34;
+            current_statement_begin__ = 30;
+            lp_accum__.add(gamma_log<propto__>(mub, kappa, (kappa / mu)));
+            current_statement_begin__ = 31;
+            lp_accum__.add(gamma_log<propto__>(mua, kappa, (kappa / mu)));
+            current_statement_begin__ = 32;
             lp_accum__.add(poisson_log<propto__>(ystarbraw, lambdab));
-            current_statement_begin__ = 35;
+            current_statement_begin__ = 33;
             lp_accum__.add(poisson_log<propto__>(ystararaw, lambdaa));
         } catch (const std::exception& e) {
             stan::lang::rethrow_located(e, current_statement_begin__, prog_reader__());
@@ -1555,8 +2611,6 @@ public:
         names__.push_back("mua");
         names__.push_back("lambdaa");
         names__.push_back("lambdab");
-        names__.push_back("kappamu");
-        names__.push_back("kappamudelta");
     }
 
 
@@ -1580,10 +2634,6 @@ public:
         dimss__.push_back(dims__);
         dims__.resize(0);
         dims__.push_back(Jb);
-        dimss__.push_back(dims__);
-        dims__.resize(0);
-        dimss__.push_back(dims__);
-        dims__.resize(0);
         dimss__.push_back(dims__);
     }
 
@@ -1640,33 +2690,21 @@ public:
         vector<double> lambdab(Jb, 0.0);
         stan::math::initialize(lambdab, std::numeric_limits<double>::quiet_NaN());
         stan::math::fill(lambdab,DUMMY_VAR__);
-        double kappamu(0.0);
-        (void) kappamu;  // dummy to suppress unused var warning
-
-        stan::math::initialize(kappamu, std::numeric_limits<double>::quiet_NaN());
-        stan::math::fill(kappamu,DUMMY_VAR__);
-        double kappamudelta(0.0);
-        (void) kappamudelta;  // dummy to suppress unused var warning
-
-        stan::math::initialize(kappamudelta, std::numeric_limits<double>::quiet_NaN());
-        stan::math::fill(kappamudelta,DUMMY_VAR__);
 
 
         try {
-            current_statement_begin__ = 21;
+            current_statement_begin__ = 19;
             for (int i = 1; i <= Jb; ++i) {
 
-                current_statement_begin__ = 22;
+                current_statement_begin__ = 20;
                 stan::math::assign(get_base1_lhs(lambdab,i,"lambdab",1), (get_base1(mub,i,"mub",1) / get_base1(fpre,i,"fpre",1)));
             }
-            current_statement_begin__ = 24;
+            current_statement_begin__ = 22;
             for (int i = 1; i <= Ja; ++i) {
 
-                current_statement_begin__ = 25;
+                current_statement_begin__ = 23;
                 stan::math::assign(get_base1_lhs(lambdaa,i,"lambdaa",1), ((delta * get_base1(mua,i,"mua",1)) / get_base1(fpost,i,"fpost",1)));
             }
-            current_statement_begin__ = 27;
-            stan::math::assign(kappamu, (kappa / mu));
         } catch (const std::exception& e) {
             stan::lang::rethrow_located(e, current_statement_begin__, prog_reader__());
             // Next line prevents compiler griping about no return
@@ -1682,8 +2720,6 @@ public:
         for (int k_0__ = 0; k_0__ < Jb; ++k_0__) {
             vars__.push_back(lambdab[k_0__]);
         }
-        vars__.push_back(kappamu);
-        vars__.push_back(kappamudelta);
 
         if (!include_gqs__) return;
         // declare and define generated quantities
@@ -1759,12 +2795,6 @@ public:
             param_name_stream__ << "lambdab" << '.' << k_0__;
             param_names__.push_back(param_name_stream__.str());
         }
-        param_name_stream__.str(std::string());
-        param_name_stream__ << "kappamu";
-        param_names__.push_back(param_name_stream__.str());
-        param_name_stream__.str(std::string());
-        param_name_stream__ << "kappamudelta";
-        param_names__.push_back(param_name_stream__.str());
 
         if (!include_gqs__) return;
     }
@@ -1805,12 +2835,6 @@ public:
             param_name_stream__ << "lambdab" << '.' << k_0__;
             param_names__.push_back(param_name_stream__.str());
         }
-        param_name_stream__.str(std::string());
-        param_name_stream__ << "kappamu";
-        param_names__.push_back(param_name_stream__.str());
-        param_name_stream__.str(std::string());
-        param_name_stream__ << "kappamudelta";
-        param_names__.push_back(param_name_stream__.str());
 
         if (!include_gqs__) return;
     }
@@ -1846,7 +2870,7 @@ static int current_statement_begin__;
 stan::io::program_reader prog_reader__() {
     stan::io::program_reader reader;
     reader.add_event(0, 0, "start", "model_zinb");
-    reader.add_event(31, 31, "end", "model_zinb");
+    reader.add_event(29, 29, "end", "model_zinb");
     return reader;
 }
 
@@ -2075,22 +3099,15 @@ public:
         vector<T__> lambda(J);
         stan::math::initialize(lambda, DUMMY_VAR__);
         stan::math::fill(lambda,DUMMY_VAR__);
-        T__ kappamu;
-        (void) kappamu;  // dummy to suppress unused var warning
-
-        stan::math::initialize(kappamu, DUMMY_VAR__);
-        stan::math::fill(kappamu,DUMMY_VAR__);
 
 
         try {
-            current_statement_begin__ = 15;
+            current_statement_begin__ = 14;
             for (int i = 1; i <= J; ++i) {
 
-                current_statement_begin__ = 16;
+                current_statement_begin__ = 15;
                 stan::math::assign(get_base1_lhs(lambda,i,"lambda",1), (get_base1(mui,i,"mui",1) / get_base1(CF,i,"CF",1)));
             }
-            current_statement_begin__ = 18;
-            stan::math::assign(kappamu, (kappa / mu));
         } catch (const std::exception& e) {
             stan::lang::rethrow_located(e, current_statement_begin__, prog_reader__());
             // Next line prevents compiler griping about no return
@@ -2105,11 +3122,6 @@ public:
                 throw std::runtime_error(msg__.str());
             }
         }
-        if (stan::math::is_uninitialized(kappamu)) {
-            std::stringstream msg__;
-            msg__ << "Undefined transformed parameter: kappamu";
-            throw std::runtime_error(msg__.str());
-        }
 
         const char* function__ = "validate transformed params";
         (void) function__;  // dummy to suppress unused var warning
@@ -2117,23 +3129,23 @@ public:
         // model body
         try {
 
-            current_statement_begin__ = 21;
+            current_statement_begin__ = 19;
             lp_accum__.add(gamma_log<propto__>(mu, 1, 0.001));
-            current_statement_begin__ = 22;
+            current_statement_begin__ = 20;
             lp_accum__.add(gamma_log<propto__>(kappa, 1, 0.69999999999999996));
-            current_statement_begin__ = 23;
+            current_statement_begin__ = 21;
             lp_accum__.add(beta_log<propto__>(phi, 1, 1));
-            current_statement_begin__ = 24;
-            lp_accum__.add(gamma_log<propto__>(mui, kappa, kappamu));
-            current_statement_begin__ = 25;
+            current_statement_begin__ = 22;
+            lp_accum__.add(gamma_log<propto__>(mui, kappa, (kappa / mu)));
+            current_statement_begin__ = 23;
             for (int n = 1; n <= J; ++n) {
 
-                current_statement_begin__ = 26;
+                current_statement_begin__ = 24;
                 if (as_bool(logical_eq(get_base1(ystarraw,n,"ystarraw",1),0))) {
-                    current_statement_begin__ = 27;
+                    current_statement_begin__ = 25;
                     lp_accum__.add(log_sum_exp(bernoulli_log(1,phi),(bernoulli_log(0,phi) + poisson_log(get_base1(ystarraw,n,"ystarraw",1),get_base1(lambda,n,"lambda",1)))));
                 } else {
-                    current_statement_begin__ = 29;
+                    current_statement_begin__ = 27;
                     lp_accum__.add((bernoulli_log(0,phi) + poisson_log(get_base1(ystarraw,n,"ystarraw",1),get_base1(lambda,n,"lambda",1))));
                 }
             }
@@ -2167,7 +3179,6 @@ public:
         names__.push_back("mui");
         names__.push_back("phi");
         names__.push_back("lambda");
-        names__.push_back("kappamu");
     }
 
 
@@ -2185,8 +3196,6 @@ public:
         dimss__.push_back(dims__);
         dims__.resize(0);
         dims__.push_back(J);
-        dimss__.push_back(dims__);
-        dims__.resize(0);
         dimss__.push_back(dims__);
     }
 
@@ -2231,22 +3240,15 @@ public:
         vector<double> lambda(J, 0.0);
         stan::math::initialize(lambda, std::numeric_limits<double>::quiet_NaN());
         stan::math::fill(lambda,DUMMY_VAR__);
-        double kappamu(0.0);
-        (void) kappamu;  // dummy to suppress unused var warning
-
-        stan::math::initialize(kappamu, std::numeric_limits<double>::quiet_NaN());
-        stan::math::fill(kappamu,DUMMY_VAR__);
 
 
         try {
-            current_statement_begin__ = 15;
+            current_statement_begin__ = 14;
             for (int i = 1; i <= J; ++i) {
 
-                current_statement_begin__ = 16;
+                current_statement_begin__ = 15;
                 stan::math::assign(get_base1_lhs(lambda,i,"lambda",1), (get_base1(mui,i,"mui",1) / get_base1(CF,i,"CF",1)));
             }
-            current_statement_begin__ = 18;
-            stan::math::assign(kappamu, (kappa / mu));
         } catch (const std::exception& e) {
             stan::lang::rethrow_located(e, current_statement_begin__, prog_reader__());
             // Next line prevents compiler griping about no return
@@ -2259,7 +3261,6 @@ public:
         for (int k_0__ = 0; k_0__ < J; ++k_0__) {
             vars__.push_back(lambda[k_0__]);
         }
-        vars__.push_back(kappamu);
 
         if (!include_gqs__) return;
         // declare and define generated quantities
@@ -2325,9 +3326,6 @@ public:
             param_name_stream__ << "lambda" << '.' << k_0__;
             param_names__.push_back(param_name_stream__.str());
         }
-        param_name_stream__.str(std::string());
-        param_name_stream__ << "kappamu";
-        param_names__.push_back(param_name_stream__.str());
 
         if (!include_gqs__) return;
     }
@@ -2358,9 +3356,6 @@ public:
             param_name_stream__ << "lambda" << '.' << k_0__;
             param_names__.push_back(param_name_stream__.str());
         }
-        param_name_stream__.str(std::string());
-        param_name_stream__ << "kappamu";
-        param_names__.push_back(param_name_stream__.str());
 
         if (!include_gqs__) return;
     }
@@ -2396,7 +3391,7 @@ static int current_statement_begin__;
 stan::io::program_reader prog_reader__() {
     stan::io::program_reader reader;
     reader.add_event(0, 0, "start", "model_zipaired");
-    reader.add_event(44, 44, "end", "model_zipaired");
+    reader.add_event(42, 42, "end", "model_zipaired");
     return reader;
 }
 
@@ -2673,24 +3668,17 @@ public:
         vector<T__> lambdab(J);
         stan::math::initialize(lambdab, DUMMY_VAR__);
         stan::math::fill(lambdab,DUMMY_VAR__);
-        T__ kappamu;
-        (void) kappamu;  // dummy to suppress unused var warning
-
-        stan::math::initialize(kappamu, DUMMY_VAR__);
-        stan::math::fill(kappamu,DUMMY_VAR__);
 
 
         try {
-            current_statement_begin__ = 19;
+            current_statement_begin__ = 18;
             for (int i = 1; i <= J; ++i) {
 
-                current_statement_begin__ = 20;
+                current_statement_begin__ = 19;
                 stan::math::assign(get_base1_lhs(lambdab,i,"lambdab",1), (get_base1(mub,i,"mub",1) / get_base1(fpre,i,"fpre",1)));
-                current_statement_begin__ = 21;
+                current_statement_begin__ = 20;
                 stan::math::assign(get_base1_lhs(lambdaa,i,"lambdaa",1), ((delta * get_base1(mub,i,"mub",1)) / get_base1(fpost,i,"fpost",1)));
             }
-            current_statement_begin__ = 23;
-            stan::math::assign(kappamu, (kappa / mu));
         } catch (const std::exception& e) {
             stan::lang::rethrow_located(e, current_statement_begin__, prog_reader__());
             // Next line prevents compiler griping about no return
@@ -2712,11 +3700,6 @@ public:
                 throw std::runtime_error(msg__.str());
             }
         }
-        if (stan::math::is_uninitialized(kappamu)) {
-            std::stringstream msg__;
-            msg__ << "Undefined transformed parameter: kappamu";
-            throw std::runtime_error(msg__.str());
-        }
 
         const char* function__ = "validate transformed params";
         (void) function__;  // dummy to suppress unused var warning
@@ -2724,37 +3707,37 @@ public:
         // model body
         try {
 
-            current_statement_begin__ = 26;
+            current_statement_begin__ = 24;
             lp_accum__.add(gamma_log<propto__>(mu, 1, 0.001));
-            current_statement_begin__ = 27;
+            current_statement_begin__ = 25;
             lp_accum__.add(gamma_log<propto__>(kappa, 1, 0.69999999999999996));
-            current_statement_begin__ = 28;
+            current_statement_begin__ = 26;
             lp_accum__.add(beta_log<propto__>(delta, 1, 1));
-            current_statement_begin__ = 29;
+            current_statement_begin__ = 27;
             lp_accum__.add(beta_log<propto__>(phi, 1, 1));
-            current_statement_begin__ = 30;
-            lp_accum__.add(gamma_log<propto__>(mub, kappa, kappamu));
-            current_statement_begin__ = 31;
+            current_statement_begin__ = 28;
+            lp_accum__.add(gamma_log<propto__>(mub, kappa, (kappa / mu)));
+            current_statement_begin__ = 29;
             for (int n = 1; n <= J; ++n) {
 
-                current_statement_begin__ = 32;
+                current_statement_begin__ = 30;
                 if (as_bool(logical_eq(get_base1(ystarbraw,n,"ystarbraw",1),0))) {
-                    current_statement_begin__ = 33;
+                    current_statement_begin__ = 31;
                     lp_accum__.add(log_sum_exp(bernoulli_log(1,phi),(bernoulli_log(0,phi) + poisson_log(get_base1(ystarbraw,n,"ystarbraw",1),get_base1(lambdab,n,"lambdab",1)))));
                 } else {
-                    current_statement_begin__ = 35;
+                    current_statement_begin__ = 33;
                     lp_accum__.add((bernoulli_log(0,phi) + poisson_log(get_base1(ystarbraw,n,"ystarbraw",1),get_base1(lambdab,n,"lambdab",1))));
                 }
             }
-            current_statement_begin__ = 37;
+            current_statement_begin__ = 35;
             for (int n = 1; n <= J; ++n) {
 
-                current_statement_begin__ = 38;
+                current_statement_begin__ = 36;
                 if (as_bool(logical_eq(get_base1(ystararaw,n,"ystararaw",1),0))) {
-                    current_statement_begin__ = 39;
+                    current_statement_begin__ = 37;
                     lp_accum__.add(log_sum_exp(bernoulli_log(1,phi),(bernoulli_log(0,phi) + poisson_log(get_base1(ystararaw,n,"ystararaw",1),get_base1(lambdaa,n,"lambdaa",1)))));
                 } else {
-                    current_statement_begin__ = 41;
+                    current_statement_begin__ = 39;
                     lp_accum__.add((bernoulli_log(0,phi) + poisson_log(get_base1(ystararaw,n,"ystararaw",1),get_base1(lambdaa,n,"lambdaa",1))));
                 }
             }
@@ -2790,7 +3773,6 @@ public:
         names__.push_back("phi");
         names__.push_back("lambdaa");
         names__.push_back("lambdab");
-        names__.push_back("kappamu");
     }
 
 
@@ -2813,8 +3795,6 @@ public:
         dimss__.push_back(dims__);
         dims__.resize(0);
         dims__.push_back(J);
-        dimss__.push_back(dims__);
-        dims__.resize(0);
         dimss__.push_back(dims__);
     }
 
@@ -2865,24 +3845,17 @@ public:
         vector<double> lambdab(J, 0.0);
         stan::math::initialize(lambdab, std::numeric_limits<double>::quiet_NaN());
         stan::math::fill(lambdab,DUMMY_VAR__);
-        double kappamu(0.0);
-        (void) kappamu;  // dummy to suppress unused var warning
-
-        stan::math::initialize(kappamu, std::numeric_limits<double>::quiet_NaN());
-        stan::math::fill(kappamu,DUMMY_VAR__);
 
 
         try {
-            current_statement_begin__ = 19;
+            current_statement_begin__ = 18;
             for (int i = 1; i <= J; ++i) {
 
-                current_statement_begin__ = 20;
+                current_statement_begin__ = 19;
                 stan::math::assign(get_base1_lhs(lambdab,i,"lambdab",1), (get_base1(mub,i,"mub",1) / get_base1(fpre,i,"fpre",1)));
-                current_statement_begin__ = 21;
+                current_statement_begin__ = 20;
                 stan::math::assign(get_base1_lhs(lambdaa,i,"lambdaa",1), ((delta * get_base1(mub,i,"mub",1)) / get_base1(fpost,i,"fpost",1)));
             }
-            current_statement_begin__ = 23;
-            stan::math::assign(kappamu, (kappa / mu));
         } catch (const std::exception& e) {
             stan::lang::rethrow_located(e, current_statement_begin__, prog_reader__());
             // Next line prevents compiler griping about no return
@@ -2898,7 +3871,6 @@ public:
         for (int k_0__ = 0; k_0__ < J; ++k_0__) {
             vars__.push_back(lambdab[k_0__]);
         }
-        vars__.push_back(kappamu);
 
         if (!include_gqs__) return;
         // declare and define generated quantities
@@ -2972,9 +3944,6 @@ public:
             param_name_stream__ << "lambdab" << '.' << k_0__;
             param_names__.push_back(param_name_stream__.str());
         }
-        param_name_stream__.str(std::string());
-        param_name_stream__ << "kappamu";
-        param_names__.push_back(param_name_stream__.str());
 
         if (!include_gqs__) return;
     }
@@ -3013,9 +3982,6 @@ public:
             param_name_stream__ << "lambdab" << '.' << k_0__;
             param_names__.push_back(param_name_stream__.str());
         }
-        param_name_stream__.str(std::string());
-        param_name_stream__ << "kappamu";
-        param_names__.push_back(param_name_stream__.str());
 
         if (!include_gqs__) return;
     }
@@ -3051,7 +4017,7 @@ static int current_statement_begin__;
 stan::io::program_reader prog_reader__() {
     stan::io::program_reader reader;
     reader.add_event(0, 0, "start", "model_ziunpaired");
-    reader.add_event(64, 64, "end", "model_ziunpaired");
+    reader.add_event(47, 47, "end", "model_ziunpaired");
     return reader;
 }
 
@@ -3363,28 +4329,21 @@ public:
         vector<T__> lambdab(Jb);
         stan::math::initialize(lambdab, DUMMY_VAR__);
         stan::math::fill(lambdab,DUMMY_VAR__);
-        T__ kappamu;
-        (void) kappamu;  // dummy to suppress unused var warning
-
-        stan::math::initialize(kappamu, DUMMY_VAR__);
-        stan::math::fill(kappamu,DUMMY_VAR__);
 
 
         try {
-            current_statement_begin__ = 21;
+            current_statement_begin__ = 20;
             for (int i = 1; i <= Jb; ++i) {
 
-                current_statement_begin__ = 22;
+                current_statement_begin__ = 21;
                 stan::math::assign(get_base1_lhs(lambdab,i,"lambdab",1), (get_base1(mub,i,"mub",1) / get_base1(fpre,i,"fpre",1)));
             }
-            current_statement_begin__ = 24;
+            current_statement_begin__ = 23;
             for (int i = 1; i <= Ja; ++i) {
 
-                current_statement_begin__ = 25;
+                current_statement_begin__ = 24;
                 stan::math::assign(get_base1_lhs(lambdaa,i,"lambdaa",1), ((delta * get_base1(mua,i,"mua",1)) / get_base1(fpost,i,"fpost",1)));
             }
-            current_statement_begin__ = 27;
-            stan::math::assign(kappamu, (kappa / mu));
         } catch (const std::exception& e) {
             stan::lang::rethrow_located(e, current_statement_begin__, prog_reader__());
             // Next line prevents compiler griping about no return
@@ -3406,11 +4365,6 @@ public:
                 throw std::runtime_error(msg__.str());
             }
         }
-        if (stan::math::is_uninitialized(kappamu)) {
-            std::stringstream msg__;
-            msg__ << "Undefined transformed parameter: kappamu";
-            throw std::runtime_error(msg__.str());
-        }
 
         const char* function__ = "validate transformed params";
         (void) function__;  // dummy to suppress unused var warning
@@ -3418,39 +4372,39 @@ public:
         // model body
         try {
 
-            current_statement_begin__ = 30;
+            current_statement_begin__ = 28;
             lp_accum__.add(gamma_log<propto__>(mu, 1, 0.001));
-            current_statement_begin__ = 31;
+            current_statement_begin__ = 29;
             lp_accum__.add(gamma_log<propto__>(kappa, 1, 0.69999999999999996));
-            current_statement_begin__ = 32;
+            current_statement_begin__ = 30;
             lp_accum__.add(beta_log<propto__>(delta, 1, 1));
-            current_statement_begin__ = 33;
+            current_statement_begin__ = 31;
             lp_accum__.add(beta_log<propto__>(phi, 1, 1));
-            current_statement_begin__ = 50;
-            lp_accum__.add(gamma_log<propto__>(mub, kappa, kappamu));
-            current_statement_begin__ = 51;
-            lp_accum__.add(gamma_log<propto__>(mua, kappa, kappamu));
-            current_statement_begin__ = 52;
+            current_statement_begin__ = 33;
+            lp_accum__.add(gamma_log<propto__>(mub, kappa, (kappa / mu)));
+            current_statement_begin__ = 34;
+            lp_accum__.add(gamma_log<propto__>(mua, kappa, (kappa / mu)));
+            current_statement_begin__ = 35;
             for (int n = 1; n <= Jb; ++n) {
 
-                current_statement_begin__ = 53;
+                current_statement_begin__ = 36;
                 if (as_bool(logical_eq(get_base1(ystarbraw,n,"ystarbraw",1),0))) {
-                    current_statement_begin__ = 54;
+                    current_statement_begin__ = 37;
                     lp_accum__.add(log_sum_exp(bernoulli_log(1,phi),(bernoulli_log(0,phi) + poisson_log(get_base1(ystarbraw,n,"ystarbraw",1),get_base1(lambdab,n,"lambdab",1)))));
                 } else {
-                    current_statement_begin__ = 56;
+                    current_statement_begin__ = 39;
                     lp_accum__.add((bernoulli_log(0,phi) + poisson_log(get_base1(ystarbraw,n,"ystarbraw",1),get_base1(lambdab,n,"lambdab",1))));
                 }
             }
-            current_statement_begin__ = 58;
+            current_statement_begin__ = 41;
             for (int n = 1; n <= Ja; ++n) {
 
-                current_statement_begin__ = 59;
+                current_statement_begin__ = 42;
                 if (as_bool(logical_eq(get_base1(ystararaw,n,"ystararaw",1),0))) {
-                    current_statement_begin__ = 60;
+                    current_statement_begin__ = 43;
                     lp_accum__.add(log_sum_exp(bernoulli_log(1,phi),(bernoulli_log(0,phi) + poisson_log(get_base1(ystararaw,n,"ystararaw",1),get_base1(lambdaa,n,"lambdaa",1)))));
                 } else {
-                    current_statement_begin__ = 62;
+                    current_statement_begin__ = 45;
                     lp_accum__.add((bernoulli_log(0,phi) + poisson_log(get_base1(ystararaw,n,"ystararaw",1),get_base1(lambdaa,n,"lambdaa",1))));
                 }
             }
@@ -3487,7 +4441,6 @@ public:
         names__.push_back("phi");
         names__.push_back("lambdaa");
         names__.push_back("lambdab");
-        names__.push_back("kappamu");
     }
 
 
@@ -3513,8 +4466,6 @@ public:
         dimss__.push_back(dims__);
         dims__.resize(0);
         dims__.push_back(Jb);
-        dimss__.push_back(dims__);
-        dims__.resize(0);
         dimss__.push_back(dims__);
     }
 
@@ -3573,28 +4524,21 @@ public:
         vector<double> lambdab(Jb, 0.0);
         stan::math::initialize(lambdab, std::numeric_limits<double>::quiet_NaN());
         stan::math::fill(lambdab,DUMMY_VAR__);
-        double kappamu(0.0);
-        (void) kappamu;  // dummy to suppress unused var warning
-
-        stan::math::initialize(kappamu, std::numeric_limits<double>::quiet_NaN());
-        stan::math::fill(kappamu,DUMMY_VAR__);
 
 
         try {
-            current_statement_begin__ = 21;
+            current_statement_begin__ = 20;
             for (int i = 1; i <= Jb; ++i) {
 
-                current_statement_begin__ = 22;
+                current_statement_begin__ = 21;
                 stan::math::assign(get_base1_lhs(lambdab,i,"lambdab",1), (get_base1(mub,i,"mub",1) / get_base1(fpre,i,"fpre",1)));
             }
-            current_statement_begin__ = 24;
+            current_statement_begin__ = 23;
             for (int i = 1; i <= Ja; ++i) {
 
-                current_statement_begin__ = 25;
+                current_statement_begin__ = 24;
                 stan::math::assign(get_base1_lhs(lambdaa,i,"lambdaa",1), ((delta * get_base1(mua,i,"mua",1)) / get_base1(fpost,i,"fpost",1)));
             }
-            current_statement_begin__ = 27;
-            stan::math::assign(kappamu, (kappa / mu));
         } catch (const std::exception& e) {
             stan::lang::rethrow_located(e, current_statement_begin__, prog_reader__());
             // Next line prevents compiler griping about no return
@@ -3610,7 +4554,6 @@ public:
         for (int k_0__ = 0; k_0__ < Jb; ++k_0__) {
             vars__.push_back(lambdab[k_0__]);
         }
-        vars__.push_back(kappamu);
 
         if (!include_gqs__) return;
         // declare and define generated quantities
@@ -3689,9 +4632,6 @@ public:
             param_name_stream__ << "lambdab" << '.' << k_0__;
             param_names__.push_back(param_name_stream__.str());
         }
-        param_name_stream__.str(std::string());
-        param_name_stream__ << "kappamu";
-        param_names__.push_back(param_name_stream__.str());
 
         if (!include_gqs__) return;
     }
@@ -3735,9 +4675,6 @@ public:
             param_name_stream__ << "lambdab" << '.' << k_0__;
             param_names__.push_back(param_name_stream__.str());
         }
-        param_name_stream__.str(std::string());
-        param_name_stream__ << "kappamu";
-        param_names__.push_back(param_name_stream__.str());
 
         if (!include_gqs__) return;
     }

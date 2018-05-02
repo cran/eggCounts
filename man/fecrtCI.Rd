@@ -9,30 +9,28 @@ fecrtCI(epg1, epg2, paired = FALSE, alpha = 0.05, R = 1999)
 
 \item{epg2}{faecal egg counts in treated animals}
 
-\item{paired}{logical. If true, indicates the samples are paired. Otherwise they are unpaired.}
+\item{paired}{logical. If TRUE, indicates the samples are paired. Otherwise they are unpaired.}
 
-\item{alpha}{confidence level of the intervals}
+\item{alpha}{confidence level of the interval}
 
 \item{R}{number of bootstrap replicates}
 
 }
 \value{
 A list with
-\item{estimate}{the estimated percentage reduction in mean epg rate}
-\item{bootCI}{corresponding percentile bootstrap confidence interval}
+\item{estimate}{the estimated percentage reduction in mean epg}
+\item{bootCI}{corresponding bootstrap confidence interval}
 \item{approxCI}{corresponding approximate confidence interval}
 }
 \description{
-Computes the standard Faecal Egg Count Reduction test together with approximate
-confidence intervals according to the WAAVP guidelines
-(Coles et al., 1992, 2006). The function also returns bootstrap percentile
-confidence intervals.
+Computes the standard Faecal Egg Count Reduction Test together with approximate
+confidence interval according to the WAAVP guidelines
+(Coles et al., 1992, 2006). The function also returns bootstrap confidence intervals.
 }
 \examples{
-\dontrun{
 data(epgs)
 fecrtCI(epgs$before, epgs$after, paired=TRUE)
-}}
+}
 \author{
 Michaela Paul
 }
@@ -47,4 +45,4 @@ Silvestre A, Taylor MA,  Vercruysse J (2006).
 The detection of anthelmintic resistance in nematodes of veterinary	importance,
 VeterinaryParasitology, 136:167-185.
 }
-
+\keyword{modelling}

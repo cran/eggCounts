@@ -1,9 +1,9 @@
 \name{plotCounts}
 \alias{plotCounts}
-\title{Plot eggCounts data}
+\title{Plot faecal egg count data}
 \usage{
 plotCounts(data, paired=TRUE, points=TRUE, points.method="jitter", 
-           xlabel="", ylabel="Faecal egg counts", ...)
+           xlabel="", ylabel="Faecal egg counts [epg]", ...)
 }
 \arguments{
 \item{data}{a data frame with two columns, the first column is before treatment counts, the second column is after treatment counts.}
@@ -18,7 +18,7 @@ plotCounts(data, paired=TRUE, points=TRUE, points.method="jitter",
 
 \item{ylabel}{label of y-axis.}
 
-\item{...}{Additional argument for function \code{xyplot} if paired is TRUE, for function \code{boxplot} otherwise.}
+\item{...}{Additional arguments for function \code{\link{xyplot}} if paired is TRUE, for function \code{\link{boxplot}} otherwise.}
 }
 \value{
 A plot is returned based on the arguments.
@@ -27,13 +27,13 @@ A plot is returned based on the arguments.
 Plot egg count data to reflect changes between before and after treatment.
 }
 \author{
-Craig Wang \email{craig.wang@uzh.ch} \cr
+Craig Wang
 }
 \details{
 For paired data, a xyplot is used. For unpiared data, a grouped boxplot is used.
 }
 \examples{
 data(epgs)
-plotCounts(epgs)
+plotCounts(epgs, paired = TRUE)
 }
 

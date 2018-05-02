@@ -10,16 +10,14 @@ parameters {
 }
 transformed parameters{
   real lambda[J];
-  real kappamu;
   for (i in 1:J){
     lambda[i] = mui[i]/CF[i];
   }
-  kappamu = kappa/mu;
 }
 model {
-  mu ~ gamma(1,0.001);    // prior
-  kappa ~ gamma(1,0.7);
-  mui ~ gamma(kappa,kappamu);       // likelihoods
+  mu ~ gamma(1, 0.001);    // priors
+  kappa ~ gamma(1, 0.7);
+  mui ~ gamma(kappa, kappa/mu);       // likelihoods, gamma(shape, rate)
   ystarraw ~ poisson(lambda);
 }
 

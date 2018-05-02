@@ -11,20 +11,18 @@ parameters {
 }
 transformed parameters{
   real lambda[J];
-  real kappamu;
   for (i in 1:J){
     lambda[i] = mui[i]/CF[i];
   }
-  kappamu = kappa/mu;
 }
 model {
-  mu ~ gamma(1,0.001);    // prior
+  mu ~ gamma(1,0.001);    // priors
   kappa ~ gamma(1,0.7);
   phi ~ beta(1,1);
-  mui ~ gamma(kappa,kappamu); 
+  mui ~ gamma(kappa, kappa/mu); 
   for (n in 1:J) {             // likelihoods
     if (ystarraw[n] == 0)
-      target += log_sum_exp(bernoulli_lpmf(1 | phi), bernoulli_lpmf(0 | phi)+poisson_lpmf(ystarraw[n] | lambda[n]));
+      target += log_sum_exp(bernoulli_lpmf(1 | phi), bernoulli_lpmf(0 | phi)+ poisson_lpmf(ystarraw[n] | lambda[n]));
     else
       target += bernoulli_lpmf(0 | phi) + poisson_lpmf(ystarraw[n] | lambda[n]);
   }

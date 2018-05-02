@@ -1,0 +1,91 @@
+\name{fecr_stanExtra}
+\alias{fecr_stanExtra}
+\title{Modelling the reduction of faecal egg count data using custom models}
+\usage{
+fecr_stanExtra(preFEC, postFEC, rawCounts = FALSE, preCF = 50, postCF = preCF, 
+  modelName = NULL, modelCode = NULL, modelFile = NULL, modelData = NULL,
+  nsamples = 2000, nburnin = 1000, thinning = 1, nchain = 2, 
+  ncore = 1, adaptDelta = 0.95, saveAll = FALSE, verbose = FALSE)
+}
+\arguments{
+\item{preFEC}{vector of pre-treatment faecal egg counts}
+
+\item{postFEC}{vector of post-treatment faecal egg counts}
+
+\item{rawCounts}{logical. If TRUE, \code{preFEC} and \code{postFEC} correspond to raw counts
+(as counted on equipment). Otherwise they correspond to calculated epgs (raw counts times correction factor).
+Defaults to \code{FALSE}.}
+
+\item{preCF}{a positive integer or a vector of positive integers. Pre-treatment correction factor(s)}
+
+\item{postCF}{a positive integer or a vector of positive integers. Post-treatment correction factor(s)}
+
+\item{modelName}{string. One of four availale models ("Po", "UPo", "ZIPo", "ZIUPo") from \strong{eggCountsExtra} package, which corresponds to outlier-adjusted version of paired, unpaired, paired with zero inflation and unpaired with zero inflation models. Not required if custom \code{modelCode} is supplied.}
+
+\item{modelCode}{stan model code. Not required when a \code{modelName} from \strong{eggCountsExtra} pacakge or a \code{modelFile} is supplied.}
+
+\item{modelFile}{stan model file with file extension '*.stan'. Not required when a \code{modelName} from \strong{eggCountsExtra} pacakge or a \code{modelCode} is supplied.}
+
+\item{modelData}{stan data list. A named list or environment providing the data for the model, or a character vector for all the names of objects used as data. Not required when a \code{modelName} from \strong{eggCountsExtra} pacakge is supplied.}
+
+\item{nsamples}{a positive integer specifying the number of samples for each chain (including burn-in samples)}
+
+\item{nburnin}{a positive integer specifying the number of burn-in samples}
+
+\item{thinning}{a positive integer specifying the thinning parameter, the period for saving samples}
+
+\item{nchain}{a positive integer specifying the number of chains}
+
+\item{ncore}{a positive integer specifying the number of cores to use when executing the chains in parallel}
+
+\item{adaptDelta}{the target acceptance rate, a numeric value between 0 and 1}
+
+\item{saveAll}{logical. If TRUE, posterior samples for all parameters are saved in the \code{stanfit} object. If FALSE, only samples for \eqn{\delta}, \eqn{\mu}, \eqn{\kappa} and \eqn{\phi} are saved. Default to FALSE.}
+
+\item{verbose}{logical. If TRUE, prints progress and debugging information}
+
+}
+\value{
+Prints out the posterior summary of \code{FECR} as the reduction, \code{meanEPG.untreated} as the mean pre-treatment epg, and \code{meanEPG.treated} as the mean after-treatment epg. The posterior summary contains the mean, standard deviation (sd), 2.5\%,  50\% and 97.5\% percentiles, the 95\% highest posterior density interval (HPDLow95 and HPDHigh95) and the posterior mode. 
+
+The returned value is a list that consists of:
+\item{stan.samples}{An object of S4 class \code{stanfit} representing the fitted results. For more information, please see the \href{https://cran.r-project.org/package=rstan}{\code{stanfit-class}} in \code{rstan} reference manual.}
+
+\item{posterior.summary}{A data frame that is the same as the printed posterior summary.}
+}
+\description{
+Models the reduction in faecal egg counts data with custom model formulation using Stan modelling language. 
+
+It is computationally several-fold faster compared to conventional MCMC techniques. For the installation instruction of Stan, please read \href{https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started}{https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started}.
+}
+\details{
+If  \code{modelName} is one of c("Po", "UPo", "ZIPo", "ZIUPo"), then outlier-adjusted models are used. 
+
+\itemize{
+\item In paired models, outliers are those counts with postFEC > preFEC. Outlier weights are assigned as the inverse of postFEC/preFEC,
+\item In unpaired models, outliers are those counts with postFEC greater than the 95th percentile of a Poisson distribution, where the Poisson mean is computed based on the mean of postFEC excluding postFEC > Q3 + 1.5*IQR. Q3 is the 75th percentile and IQR is the interquartile range. The lowest outlier weight is assigned as 0.01, and other outliers assigned proportionally.
+\item In both cases, non-outliers are assigned with outlier weight = 1.
+} 
+
+The first time each model is applied, it can take up to 20 seconds for Stan to compile the model. 
+
+The default number of samples per chain is 2000, with 1000 burn-in samples. Normally this is sufficient in Stan. If the chains do not converge, one should tune the MCMC parameters until convergence is reached to ensure reliable results.
+}
+
+\author{
+Craig Wang
+}
+
+\examples{
+\dontrun{
+library(eggCountsExtra)
+data(epgs) ## load sample data
+
+## apply paired model with outliers
+model <- fecr_stanExtra(epgs$before, epgs$after, rawCounts=FALSE, 
+         preCF=10, modelName = "Po")
+samples <- stan2mcmc(model$stan.samples)
+fecr_probs(model$stan.samples, threshold = 0.99)
+}}
+\keyword{modelling}
+

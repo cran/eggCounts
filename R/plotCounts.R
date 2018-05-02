@@ -1,4 +1,4 @@
-plotCounts <- function(data, paired=TRUE, points=TRUE, points.method="jitter", xlabel="", ylabel="Faecal egg counts", ...){
+plotCounts <- function(data, paired=TRUE, points=TRUE, points.method="jitter", xlabel="", ylabel="Faecal egg counts [epg]", ...){
   epgsL <- reshape(data, direction="long",varying=list(names(data)))
   epgsL$time <- factor(epgsL$time, levels=1:2, labels=c("before treatment","after treatment"))
   if (paired){

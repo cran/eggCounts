@@ -9,6 +9,6 @@
 #  builddate <- gsub(';.*$', '', pkgdesc$Packaged)
 #  packageStartupMessage(paste("eggCounts (Version ", pkgdesc$Version, ")", sep = ""))
   packageStartupMessage("- The compilation time for the first time using non-default priors can be up to 20s.
-- For a shiny implmentation of the package graphical user interface, please visit: http://shiny.math.uzh.ch/user/furrer/shinyas/shiny-eggCounts/" )
+- For a graphical user interface of the package implmented in Shiny, please visit: http://shiny.math.uzh.ch/user/furrer/shinyas/shiny-eggCounts/" )
 }
 

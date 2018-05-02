@@ -10,9 +10,11 @@ fecrtCI <- function(epg1, epg2, paired=FALSE, alpha=0.05, R=1999){
   if ((alpha<0)||(alpha>1))
     stop("alpha must be between 0 and 1", call.=FALSE)
   if (R > 9999)      cat("NOTE: 'R' seems high\n")
-  
+  if (sum(epg2, na.rm = TRUE) == 0) message(cat("NOTE: Confidence interval cannot be computed when all of post-treatment counts are 0. \nPlease use Bayesian models when interval estimates are required.\n"))
+  if (any(is.na(c(epg1,epg2)))) message(cat("NA values were removed upon evaluation.\n"))
+    
    conf.level <- 1-alpha
-
+   
    if(paired){
       nas <- is.na(epg1) | is.na(epg2)
       epg1 <- epg1[!nas]

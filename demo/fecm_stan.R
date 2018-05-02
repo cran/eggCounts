@@ -1,61 +1,31 @@
 ##################################################################
-## Illustrate faecal egg count modelling
+## Illustrate faecal egg count reduction modelling
 ##################################################################
 # load libraries
 library('eggCounts')
 require('coda',quietly = TRUE)
 require('rstan',quietly = TRUE)
-##################################################
-##  1-sample situation
-##################################################
+
 # simulate faecal egg counts
-set.seed(123)
-counts <- simData1s(n = 20,  # number of samples samples
-                    mean = 500, # mean 
-                    kappa = 1, # overdispersion parameter
-                    phi=1,   # prevalence
-                    f=50)    # correction factor
+set.seed(1)
+counts <- simData2s(n = 15, preMean = 500, delta = 0.07, kappa = 1, 
+                   f = 15, paired = TRUE)
 
-# look at simulated counts: matrix with columns 
-# (obs = raw counts*correction factor, master= raw counts ,true = true EpG)
-head(counts,3)
+# look at simulated counts: dataframe with columns 
+head(counts, 5)
 
-# run a Stan model
-resultsP <- fec_stan(counts[,"obs"],zeroInflation = FALSE)
-
-# get samples and covert them to mcmc-objects, so that the functionality 
-# of the R-package coda (summary, plot,...) can be used
-# get samples 
-
-result_mcmc<-stan2mcmc(resultsP$stan.samples)
-# this is a list with
-#  fec  - mean(EpG rate)
-
-# for instance
-plot(result_mcmc)
-
-##################################################
-##  2-sample situation
-##################################################
-# load epgs data before and after treatment
-data(epgs)
 # plot FECs
-epgsL <- reshape(epgs, direction="long",varying=list(c("before","after")))
-epgsL$time <- factor(epgsL$time, levels=1:2, labels=c("untreated","after treatment"))
+plotCounts(counts[,c("obsPre","obsPost")])
 
-if (require('lattice'))
-  xyplot(before/50 ~ time, group=id, data=epgsL, type=c("p","l"), col=1,
-         xlab="", ylab="Faecal egg counts")
+# run a paired model with individual efficacy
+model <- fecr_stan(counts$obsPre, counts$obsPost, rawCounts = FALSE, preCF = 15, 
+                   paired = TRUE, zeroInflation = FALSE, indEfficacy = TRUE)
 
-# run a paired zero-inflation model
-result2 <- fecr_stan(epgs$before, epgs$after, preCF=10, paired = TRUE, zeroInflation = TRUE)
+# compute the probability that the reduction is below 95%
+fecr_probs(model$stan.samples, threshold = 0.95, plot = TRUE)
 
-# get samples 
-result_mcmc2<-stan2mcmc(result2$stan.samples)
-# this is a list with
-#  fecr=reduction in means),
-#  mean(EpG rate in untreated animals) and
-#  mean(EpG rate in treated animals).
+# extract posterior samples 
+model_mcmc <- stan2mcmc(model$stan.samples)
 
-# plot samples
-plot(result_mcmc2[,1:3])
+# check the traceplots and densities of posterior samples
+plot(model_mcmc[,c("kappa","delta_mu","delta_shape")])

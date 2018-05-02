@@ -1,3 +1,40 @@
+version 2.0:
+
+* Added individual efficacy model for paired design (submitted publication)
+
+* Added vignette
+
+* Added functions for selecting priors in small sample size (<10) settings
+
+* Added simplified model for small sample sizes in paired design
+
+* Added fecr_stanExtra() to import external models hosted on gitHub
+
+* Improved function documentations
+
+* Modified default arguments: nsamples, nburnin, nchain, zeroInflation
+
+* Fixed parameter sampling issue in using the unpaired model without zero inflation
+
+* Added simple MCMC convergence diagnostic output based on split chain potential scale reduction factors
+
+* Added possibility to not save all model parameters in fec_stan() and fecr_stan()
+
+* Added possibility to simulate with different efficacy in simData2s()
+
+* Re-named function fecr_probability() to fecr_probs()
+
+* Added 'plot' argument in fecr_probs() to plot posterior density of reduction 
+
+* Added warnings in using fecrtCI() when all of post-treatment counts are zero
+
+* Added warnings in using fec_stan() and fecr_stan() when divergent transitions occur
+
+* Cleaned Stan models code
+
+* Removed un-used dataset
+
+
 version 1.4: 
 
 * Modified default arguments for fec_stan and fecr_stan
@@ -6,9 +43,10 @@ version 1.4:
 
 * Added plotCounts function
 
-* Correct fec_stan help file examples (thanks to Ivailo)
+* Corrected fec_stan help file examples (thanks to Ivailo)
 
 * Corrected coding error with non-default prior for ziunpaired model (thanks to Anja)
+
 
 version 1.3:
 
@@ -36,19 +74,13 @@ version 1.2:
 * Updated citation information
 
 
-version 1.1-2:  
+version 1.1, 1.1-1, 1.1-2:  
 
 * Updated documentation
 
 * Removed redundant functions 
 
-
-version 1.1-1:  
-
 * Updated LinkingTo version requirements
-
-
-version 1.1:  
 
 * Updated Stan program syntax 
 
@@ -66,7 +98,6 @@ version 1.0:
 * Full-support on zero-inflation models.
 
 
-
 version 0.4, 0.4-1:  
 
 * Bug fixes introduced since version 0.1.
@@ -80,7 +111,9 @@ version 0.4, 0.4-1:
 * Improved help and added tests.
 
 
-version 0.3:  
+version 0.2, 0.3:  
+
+* stable release on CRAN
 
 * Updated package structure: NEWS, ChangeLog and CITATION files.
 
@@ -88,7 +121,3 @@ version 0.3:
     set to `minrgamma=.Machine$double.eps`.
     Thus numerical results are likely to change.
 
-
-version 0.2:  
-
-* stable release on CRAN
