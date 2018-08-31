@@ -3,7 +3,7 @@ data {
   int ystarraw[J]; // McMaster count
   int CF[J];
 }
-parameters {
+parameters{
   real<lower=0> kappa;
   real<lower=0> mu;
   real<lower=0> mui[J];
@@ -14,7 +14,7 @@ transformed parameters{
     lambda[i] = mui[i]/CF[i];
   }
 }
-model {
+model{
   mu ~ gamma(1, 0.001);    // priors
   kappa ~ gamma(1, 0.7);
   mui ~ gamma(kappa, kappa/mu);       // likelihoods, gamma(shape, rate)

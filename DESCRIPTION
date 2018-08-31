@@ -4,13 +4,14 @@ Depends: R (>= 3.2.0), Rcpp (>= 0.12.0), rstan (>= 2.16.1), methods
 Suggests: R.rsp, eggCountsExtra
 VignetteBuilder: R.rsp
 Title: Hierarchical Modelling of Faecal Egg Counts
-Version: 2.0
-Date: 2018-04-30
-Author: Craig Wang [aut, cre] (0000-0003-1804-2463),
-    Michaela Paul [aut],
-    Tea Isler [ctb],
-    Reinhard Furrer [ctb] (0000-0002-6319-2332),
-    Trustees of Columbia University [cph]
+Version: 2.1
+Date: 2018-08-31
+Authors@R: c(
+    person("Craig", "Wang", email = "craig.wang@uzh.ch", role = c("aut","cre"),comment = c(ORCID = "0000-0003-1804-2463")),
+    person("Michaela", "Paul", role = "aut"),
+    person("Tea", "Isler", role = "ctb"),
+    person("Reinhard", "Furrer", email = "reinhard.furrer@math.uzh.ch", role = "ctb",comment = c(ORCID = "0000-0002-6319-2332")),
+    person("Trustees of Columbia University", role = "cph"))
 Maintainer: Craig Wang <craig.wang@uzh.ch>
 Description: An implementation of Bayesian hierarchical models
     for faecal egg count data to assess anthelmintic
@@ -29,6 +30,11 @@ RcppModules: stan_fit4paired_mod, stan_fit4unpaired_mod,
         stan_fit4nb_mod, stan_fit4zinb_mod, stan_fit4indefficacy_mod,
         stan_fit4simple_mod
 RoxygenNote: 6.0.1
-Packaged: 2018-05-02 10:39:12 UTC; crwang
+Packaged: 2018-08-31 16:59:07 UTC; crwang
+Author: Craig Wang [aut, cre] (<https://orcid.org/0000-0003-1804-2463>),
+  Michaela Paul [aut],
+  Tea Isler [ctb],
+  Reinhard Furrer [ctb] (<https://orcid.org/0000-0002-6319-2332>),
+  Trustees of Columbia University [cph]
 Repository: CRAN
-Date/Publication: 2018-05-02 12:26:45 UTC
+Date/Publication: 2018-08-31 17:40:14 UTC

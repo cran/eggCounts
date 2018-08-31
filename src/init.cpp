@@ -6,7 +6,11 @@
 #include <R_ext/Visibility.h>
 #include <Rversion.h>
 
+static const R_CallMethodDef CallEntries[] = {
+  {NULL, NULL, 0}
+};
+
 void R_init_eggCounts(DllInfo* info) {
-  R_registerRoutines(info, NULL, NULL, NULL, NULL);
+  R_registerRoutines(info, NULL, CallEntries, NULL, NULL);
   R_useDynamicSymbols(info, TRUE);
 }

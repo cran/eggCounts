@@ -7,10 +7,13 @@ citEntry(entry = "Article",
       as.person("Ray M. Kaplan"), as.person("Melissa M. George"), as.person("Reinhard Furrer")),
   journal      = "International Journal for Parasitology: Drugs and Drug Resistance",
   year         = "2018",
-  note         = "Submitted",
+  volume       = "8",
+  doi          = "doi.org/10.1016/j.ijpddr.2018.07.003",
+  issn         = "2211-3207",
+  pages        = "386--393",
 
   textVersion  =
-  paste("Wang, C., Torgerson, P. R., Kaplan, R.M., George, M.M., and Furrer, R. (2018). Modelling anthelmintic resistance by extending eggCounts package to allow individual efficacy, International Journal for Parasitology: Drugs and Drug Resistance, Submitted."),
+  paste("Wang, C., Torgerson, P. R., Kaplan, R.M., George, M.M., and Furrer, R. (2018). Modelling anthelmintic resistance by extending eggCounts package to allow individual efficacy, International Journal for Parasitology: Drugs and Drug Resistance, 8(3), 386--393."),
 )
 
 citEntry(entry = "Article",

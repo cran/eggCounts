@@ -5,28 +5,28 @@
 fecr_stanExtra(preFEC, postFEC, rawCounts = FALSE, preCF = 50, postCF = preCF, 
   modelName = NULL, modelCode = NULL, modelFile = NULL, modelData = NULL,
   nsamples = 2000, nburnin = 1000, thinning = 1, nchain = 2, 
-  ncore = 1, adaptDelta = 0.95, saveAll = FALSE, verbose = FALSE)
+  ncore = 1, adaptDelta = 0.95, verbose = FALSE)
 }
 \arguments{
-\item{preFEC}{vector of pre-treatment faecal egg counts}
+\item{preFEC}{vector of pre-treatment faecal egg counts. Not required if \code{modelCode} or \code{modelFile} is supplied.}
 
-\item{postFEC}{vector of post-treatment faecal egg counts}
+\item{postFEC}{vector of post-treatment faecal egg counts. Not required if \code{modelCode} or \code{modelFile} is supplied.}
 
 \item{rawCounts}{logical. If TRUE, \code{preFEC} and \code{postFEC} correspond to raw counts
 (as counted on equipment). Otherwise they correspond to calculated epgs (raw counts times correction factor).
-Defaults to \code{FALSE}.}
+Defaults to \code{FALSE}. Not required if \code{modelCode} or \code{modelFile} is supplied.}
 
-\item{preCF}{a positive integer or a vector of positive integers. Pre-treatment correction factor(s)}
+\item{preCF}{a positive integer or a vector of positive integers. Pre-treatment correction factor(s). Not required if \code{modelCode} or \code{modelFile} is supplied.}
 
-\item{postCF}{a positive integer or a vector of positive integers. Post-treatment correction factor(s)}
+\item{postCF}{a positive integer or a vector of positive integers. Post-treatment correction factor(s). Not required if \code{modelCode} or \code{modelFile} is supplied.}
 
-\item{modelName}{string. One of four availale models ("Po", "UPo", "ZIPo", "ZIUPo") from \strong{eggCountsExtra} package, which corresponds to outlier-adjusted version of paired, unpaired, paired with zero inflation and unpaired with zero inflation models. Not required if custom \code{modelCode} is supplied.}
+\item{modelName}{string. One of four availale models ("Po", "UPo", "ZIPo", "ZIUPo") from \strong{eggCountsExtra} package, which corresponds to outlier-adjusted version of paired, unpaired, paired with zero inflation and unpaired with zero inflation models. Not required if \code{modelCode} or \code{modelFile} is supplied.}
 
-\item{modelCode}{stan model code. Not required when a \code{modelName} from \strong{eggCountsExtra} pacakge or a \code{modelFile} is supplied.}
+\item{modelCode}{stan model code. Not required when \code{modelName} or \code{modelFile} is supplied.}
 
-\item{modelFile}{stan model file with file extension '*.stan'. Not required when a \code{modelName} from \strong{eggCountsExtra} pacakge or a \code{modelCode} is supplied.}
+\item{modelFile}{stan model file with file extension '*.stan'. Not required when \code{modelName} or \code{modelCode} is supplied.}
 
-\item{modelData}{stan data list. A named list or environment providing the data for the model, or a character vector for all the names of objects used as data. Not required when a \code{modelName} from \strong{eggCountsExtra} pacakge is supplied.}
+\item{modelData}{stan data list. A named list or environment providing the data for the model, or a character vector for all the names of objects used as data. Not required when \code{modelName} is supplied.}
 
 \item{nsamples}{a positive integer specifying the number of samples for each chain (including burn-in samples)}
 
@@ -40,8 +40,6 @@ Defaults to \code{FALSE}.}
 
 \item{adaptDelta}{the target acceptance rate, a numeric value between 0 and 1}
 
-\item{saveAll}{logical. If TRUE, posterior samples for all parameters are saved in the \code{stanfit} object. If FALSE, only samples for \eqn{\delta}, \eqn{\mu}, \eqn{\kappa} and \eqn{\phi} are saved. Default to FALSE.}
-
 \item{verbose}{logical. If TRUE, prints progress and debugging information}
 
 }
@@ -49,9 +47,10 @@ Defaults to \code{FALSE}.}
 Prints out the posterior summary of \code{FECR} as the reduction, \code{meanEPG.untreated} as the mean pre-treatment epg, and \code{meanEPG.treated} as the mean after-treatment epg. The posterior summary contains the mean, standard deviation (sd), 2.5\%,  50\% and 97.5\% percentiles, the 95\% highest posterior density interval (HPDLow95 and HPDHigh95) and the posterior mode. 
 
 The returned value is a list that consists of:
+\item{stan.model}{A object of class \code{stanmodel} that was used.}
 \item{stan.samples}{An object of S4 class \code{stanfit} representing the fitted results. For more information, please see the \href{https://cran.r-project.org/package=rstan}{\code{stanfit-class}} in \code{rstan} reference manual.}
 
-\item{posterior.summary}{A data frame that is the same as the printed posterior summary.}
+\item{posterior.summary}{A data frame that is the same as the printed posterior summary, not available for custom models.}
 }
 \description{
 Models the reduction in faecal egg counts data with custom model formulation using Stan modelling language. 
@@ -81,11 +80,32 @@ Craig Wang
 library(eggCountsExtra)
 data(epgs) ## load sample data
 
-## apply paired model with outliers
-model <- fecr_stanExtra(epgs$before, epgs$after, rawCounts=FALSE, 
+## apply paired model with outliers 
+model1 <- fecr_stanExtra(epgs$before, epgs$after, rawCounts=FALSE, 
          preCF=10, modelName = "Po")
-samples <- stan2mcmc(model$stan.samples)
-fecr_probs(model$stan.samples, threshold = 0.99)
+samples <- stan2mcmc(model1$stan.samples)
+fecr_probs(model1$stan.samples, threshold = 0.99)
+
+## apply a very simple custom model
+code <- "data{
+  int J; // number of animals
+  int y_before[J]; // after treatment McMaster count
+  int y_after[J]; // before treatment McMaster count
+}
+parameters{
+  real<lower=0> mu;
+  real<lower=0,upper=1> delta;
+}
+model{
+  mu ~ gamma(1,0.001);
+  delta ~ beta(1,1);
+  y_before ~ poisson(mu);
+  y_after ~ poisson(mu*delta);
+}"
+
+dat <- list(J = nrow(epgs), y_before = epgs$before,
+            y_after = epgs$after)
+model2 <- fecr_stanExtra(modelCode = code, modelData = dat)
 }}
 \keyword{modelling}
 

@@ -22,7 +22,7 @@ The output can be analyzed as a typical MCMC object with the functions from the 
 data(epgs)
 
 ## apply zero-infation model for the paired design 
-model <- fecr_stan(epgs$before, epgs$after, rawCounts = FALSE, 
+model <- fecr_stan(epgs$before, epgs$after, rawCounts = FALSE, indEfficacy = FALSE,
                    preCF = 10, paired = TRUE, zeroInflation = TRUE)
 samples <- stan2mcmc(model$stan.samples)
 summary(samples)

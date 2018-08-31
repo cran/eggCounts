@@ -130,7 +130,7 @@ fecr_stan<-function(preFEC, postFEC, rawCounts = FALSE, preCF = 50, postCF = pre
   
   if (indEfficacy == TRUE){
     if (paired == FALSE | zeroInflation == TRUE){
-      stop(paste(c("the individual efficacy model only works with 'paired = TRUE, zeroInflation = FALSE' at the moment.\n")))
+      stop(paste(c("the individual efficacy model only works in combination with 'paired = TRUE, zeroInflation = FALSE'.\n")))
     }
   }
   

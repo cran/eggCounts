@@ -34,8 +34,8 @@ expect_that(t9,is_a("stanfit"))
 t10<-fecr_stan(counts[,"masterPre"],counts[,"masterPost"],rawCounts=TRUE,paired=TRUE,zeroInflation = FALSE, indEfficacy = TRUE, nsamples=1000, nburnin=500)$stan.samples
 expect_that(t10,is_a("stanfit"))
 
-expect_that(fecr_probs(t6), is_a("numeric")) 
-expect_that(fecr_probs(t10), is_a("numeric")) 
+expect_that(fecr_probs(t6, plot = FALSE), is_a("numeric")) 
+expect_that(fecr_probs(t10, plot = FALSE), is_a("numeric")) 
 
 # warning checks
 expect_warning(fecr_stan(counts[,"masterPre"],counts[,"masterPost"],rawCounts=TRUE,paired=TRUE,zeroInflation = FALSE, indEfficacy = FALSE, nsamples=600, nburnin=300))

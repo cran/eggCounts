@@ -1,6 +1,15 @@
+version 2.1:
+
+* Improved usability of fecr_stanExtra() 
+
+* Fixed a minor bug in stan2mcmc() for paired model
+
+* Updated citation information
+
+
 version 2.0:
 
-* Added individual efficacy model for paired design (submitted publication)
+* Added individual efficacy model for paired design
 
 * Added vignette
 

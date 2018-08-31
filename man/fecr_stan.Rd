@@ -78,17 +78,17 @@ The default number of samples per chain is 2000, with 1000 burn-in samples. Norm
 
 \references{
 \strong{Individual efficacy models:}
-Craig Wang, Paul R. Torgerson, Kaplan, M. Ray, George, M. Melissa, Reinhard Furrer, (2018)
+Craig Wang, Paul R. Torgerson, Ray M. Kaplan, Melissa M. George, Reinhard Furrer. (2018)
 Modelling anthelmintic resistance by extending eggCounts package to allow individual efficacy,
-International Journal for Parasitology: Drugs and Drug Resistance, \emph{Submitted}. 
+International Journal for Parasitology: Drugs and Drug Resistance, Volume 8, Pages 386-393. \href{https://doi.org/10.1016/j.ijpddr.2018.07.003}{https://doi.org/10.1016/j.ijpddr.2018.07.003}
 
 \strong{Zero-inflation models:}
-Craig Wang, Paul R. Torgerson, Johan Hoglund, Reinhard Furrer, (2017)
+Craig Wang, Paul R. Torgerson, Johan Hoglund, Reinhard Furrer. (2017)
 Zero-inflated hierarchical models for faecal egg counts to assess anthelmintic efficacy,
 Veterinary Parasitology, Volume 235, Pages 20-28. \href{http://dx.doi.org/10.1016/j.vetpar.2016.12.007}{http://dx.doi.org/10.1016/j.vetpar.2016.12.007}
 
 \strong{Other models:}
-Paul R. Torgerson, Michaela Paul, Reinhard Furrer (2014)
+Paul R. Torgerson, Michaela Paul, Reinhard Furrer. (2014)
 Evaluating faecal egg count reduction using a specifically designed package 'eggCounts' in {R} and a user friendly web interface,
 International Journal for Parasitology, Volume 44, Pages 299-303. \href{http://dx.doi.org/10.1016/j.ijpara.2014.01.005}{http://dx.doi.org/10.1016/j.ijpara.2014.01.005}
 }

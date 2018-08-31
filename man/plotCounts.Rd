@@ -8,7 +8,7 @@ plotCounts(data, paired=TRUE, points=TRUE, points.method="jitter",
 \arguments{
 \item{data}{a data frame with two columns, the first column is before treatment counts, the second column is after treatment counts.}
 
-\item{paired}{logical. If true, uses the plot for the paired design. Otherwise uses the plot for the unpaired design}
+\item{paired}{logical. If true, uses the plot for the paired design. Otherwise uses the plot for the unpaired design.}
 
 \item{points}{logical. If true, add individual points for unpaired plot. Omitted if paired is TRUE.}
 
@@ -34,6 +34,6 @@ For paired data, a xyplot is used. For unpiared data, a grouped boxplot is used.
 }
 \examples{
 data(epgs)
-plotCounts(epgs, paired = TRUE)
+plotCounts(epgs[,c("before","after")], paired = TRUE)
 }
 

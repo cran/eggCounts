@@ -1,4 +1,4 @@
-data {
+data{
   int Ja; // number of animals
   int Jb;
   int ystararaw[Ja]; // after treatment McMaster count
@@ -6,7 +6,7 @@ data {
   int fpre[Ja];
   int fpost[Jb];
 }
-parameters {
+parameters{
   real<lower=0> kappa;
   real<lower=0> mu;
   real<lower=0,upper=1> delta;
@@ -23,7 +23,7 @@ transformed parameters{
     lambdaa[i] = delta*mua[i]/fpost[i];
   }
 }
-model {
+model{
   mu ~ gamma(1,0.001);    // priors
   kappa ~ gamma(1,0.7);
   delta ~ beta(1,1);

@@ -31,7 +31,7 @@ stan2mcmc <- function(stanFit){
            output<-cbind(result,as.data.frame(extract(stanFit,c("kappa","phi","delta"))))
          },
          "Bayesian model without zero-inflation for paired design"=,
-         "paired",
+         "paired"=,
          "Po"={
            meanEPG.untreated<-extract(stanFit,"mu")[[1]]
            meanEPG.treated<-extract(stanFit,"mu")[[1]]*extract(stanFit,"delta")$delta
