@@ -1,13 +1,15 @@
-version 2.1:
+## eggCounts 2.1, 2.1-1:
 
 * Improved usability of fecr_stanExtra() 
 
 * Fixed a minor bug in stan2mcmc() for paired model
 
-* Updated citation information
+* Updated citation information, URL
+
+* Updated Stan version requirement
 
 
-version 2.0:
+## eggCounts 2.0:
 
 * Added individual efficacy model for paired design
 
@@ -44,7 +46,7 @@ version 2.0:
 * Removed un-used dataset
 
 
-version 1.4: 
+## eggCounts 1.4: 
 
 * Modified default arguments for fec_stan and fecr_stan
 
@@ -57,7 +59,7 @@ version 1.4:
 * Corrected coding error with non-default prior for ziunpaired model (thanks to Anja)
 
 
-version 1.3:
+## eggCounts 1.3:
 
 * Fixed bug in printing MCMC summaries for meanEPG
 
@@ -72,7 +74,7 @@ version 1.3:
 * Updated citation information 
 
 
-version 1.2:
+## eggCounts 1.2:
 
 * Allowed direct extraction of summary output
 
@@ -83,7 +85,7 @@ version 1.2:
 * Updated citation information
 
 
-version 1.1, 1.1-1, 1.1-2:  
+## eggCounts 1.1, 1.1-1, 1.1-2:  
 
 * Updated documentation
 
@@ -96,7 +98,7 @@ version 1.1, 1.1-1, 1.1-2:
 * Fixed minor bug in the mcmc output of the 1-sample zero-inflation model
 
 
-version 1.0:  
+## eggCounts 1.0:  
 
 * MCMC inference migrated from Metropolis-Hastlings algorithm and Gibbs sampler to Stan modelling language.
 
@@ -107,7 +109,7 @@ version 1.0:
 * Full-support on zero-inflation models.
 
 
-version 0.4, 0.4-1:  
+## eggCounts 0.4, 0.4-1:  
 
 * Bug fixes introduced since version 0.1.
 
@@ -120,7 +122,7 @@ version 0.4, 0.4-1:
 * Improved help and added tests.
 
 
-version 0.2, 0.3:  
+## eggCounts 0.2, 0.3:  
 
 * stable release on CRAN
 
@@ -129,4 +131,3 @@ version 0.2, 0.3:
 * Bug fix: all "zero" draws from rgamma are captured and
     set to `minrgamma=.Machine$double.eps`.
     Thus numerical results are likely to change.
-

@@ -1,5 +1,6 @@
-c1c4337676e0065d3ae14469f937ccd5 *DESCRIPTION
+99076e57f443bd066324e37d31bc2e1c *DESCRIPTION
 e958972746b3287da6a8655f816049fd *NAMESPACE
+6f91387c5e32955a1900558e3687e556 *NEWS.md
 78e0172e958543f0a0cee026700c1bc4 *R/fec_models_stan.R
 b6dc2330d8a3ec2f557ac5015d46506f *R/fec_stan.R
 3811156d9a05f65dd7c2126d9c21b647 *R/fecr_models_stan.R
@@ -30,13 +31,12 @@ c47232a50b611735e0f9c5634c94c495 *exec/unpaired.stan
 b8dc97952b6af51331c00349b9cfcec3 *exec/zinb.stan
 0e354c692dcaeb0e1c7b9d50ad166488 *exec/zipaired.stan
 745c1fcd5990c520d8c65cde9e7c7ee8 *exec/ziunpaired.stan
-8c5d8b0a29a0f78990f7e0cfe90a44fa *inst/CITATION
-594bb80902c57ecd28dd8335acb9905c *inst/NEWS
+a4271a24e7b1bb6c70a647096c932e18 *inst/CITATION
 d32239bcb673463ab874e80d47fae504 *inst/chunks/gpl.txt
 75f528da4a081f93b8ae8a6909fbb719 *inst/chunks/license.stan
 6a5c1dc2b460f0cee764cadd7d468fb1 *inst/doc/eggCounts_vignettes.pdf
 980bb8aeff861d46b9e15e3f62faf3f2 *inst/doc/eggCounts_vignettes.pdf.asis
-f2309667b12c07bd1b2de2d8cdc52f9a *man/eggCounts-package.Rd
+643d33627a601c5ca7b6c8b2b6ddd2e1 *man/eggCounts-package.Rd
 c8f5a57cc73e0e600e26fd7498518cb8 *man/epgs.Rd
 ab238660fcc1a0b22b824c3d450da5a5 *man/fec_stan.Rd
 0d0803b22ea328d44774186010d4fc44 *man/fecr_probability.Rd
@@ -50,10 +50,10 @@ f407017869c9ef30d7dc9acf742a83eb *man/plotCounts.Rd
 c04b317fbf018c4560098472e0a61dd9 *man/simData1s.Rd
 ff682dbcd25681f4be26a7c3290ea2d8 *man/simData2s.Rd
 c4dfe0154b8c1920bbf64f2d08360d1f *man/stan2mcmc.Rd
-56a54ddd007a3c4ff003c308d29308e3 *src/Makevars
-56a54ddd007a3c4ff003c308d29308e3 *src/Makevars.win
+4a6c8070e163fdd487d2a880e552247c *src/Makevars
+4a6c8070e163fdd487d2a880e552247c *src/Makevars.win
 21b00383596a797e665b36253023bc53 *src/Modules.cpp
-c827da0f33cc12a384411d89b547567d *src/include/models.hpp
+4ab9722cf25eeedf099519ac3598fad6 *src/include/models.hpp
 2fcf69de6c3fc49f5bbb8a4fcd276377 *src/init.cpp
 553d35d97d853b2a7bb43cf39fac77d2 *tests/testthat/test.R
 52bbf33e179a1d352ade177a77bb9faf *tools/make_cpp.R

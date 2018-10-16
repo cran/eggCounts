@@ -8,7 +8,7 @@ citEntry(entry = "Article",
   journal      = "International Journal for Parasitology: Drugs and Drug Resistance",
   year         = "2018",
   volume       = "8",
-  doi          = "doi.org/10.1016/j.ijpddr.2018.07.003",
+  doi          = "10.1016/j.ijpddr.2018.07.003",
   issn         = "2211-3207",
   pages        = "386--393",
 
