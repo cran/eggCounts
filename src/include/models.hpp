@@ -86,11 +86,13 @@ public:
 
         // initialize member variables
         try {
+            current_statement_begin__ = 2;
             context__.validate_dims("data initialization", "J", "int", context__.to_vec());
             J = int(0);
             vals_i__ = context__.vals_i("J");
             pos__ = 0;
             J = vals_i__[pos__++];
+            current_statement_begin__ = 3;
             validate_non_negative_index("ystararaw", "J", J);
             context__.validate_dims("data initialization", "ystararaw", "int", context__.to_vec(J));
             validate_non_negative_index("ystararaw", "J", J);
@@ -101,6 +103,7 @@ public:
             for (size_t i_0__ = 0; i_0__ < ystararaw_limit_0__; ++i_0__) {
                 ystararaw[i_0__] = vals_i__[pos__++];
             }
+            current_statement_begin__ = 4;
             validate_non_negative_index("ystarbraw", "J", J);
             context__.validate_dims("data initialization", "ystarbraw", "int", context__.to_vec(J));
             validate_non_negative_index("ystarbraw", "J", J);
@@ -111,6 +114,7 @@ public:
             for (size_t i_0__ = 0; i_0__ < ystarbraw_limit_0__; ++i_0__) {
                 ystarbraw[i_0__] = vals_i__[pos__++];
             }
+            current_statement_begin__ = 5;
             validate_non_negative_index("fpre", "J", J);
             context__.validate_dims("data initialization", "fpre", "int", context__.to_vec(J));
             validate_non_negative_index("fpre", "J", J);
@@ -121,6 +125,7 @@ public:
             for (size_t i_0__ = 0; i_0__ < fpre_limit_0__; ++i_0__) {
                 fpre[i_0__] = vals_i__[pos__++];
             }
+            current_statement_begin__ = 6;
             validate_non_negative_index("fpost", "J", J);
             context__.validate_dims("data initialization", "fpost", "int", context__.to_vec(J));
             validate_non_negative_index("fpost", "J", J);
@@ -133,6 +138,11 @@ public:
             }
 
             // validate, data variables
+            current_statement_begin__ = 2;
+            current_statement_begin__ = 3;
+            current_statement_begin__ = 4;
+            current_statement_begin__ = 5;
+            current_statement_begin__ = 6;
             // initialize data variables
 
 
@@ -141,12 +151,18 @@ public:
             // validate, set parameter ranges
             num_params_r__ = 0U;
             param_ranges_i__.clear();
+            current_statement_begin__ = 9;
             ++num_params_r__;
+            current_statement_begin__ = 10;
             ++num_params_r__;
+            current_statement_begin__ = 11;
             validate_non_negative_index("delta", "J", J);
             num_params_r__ += J;
+            current_statement_begin__ = 12;
             ++num_params_r__;
+            current_statement_begin__ = 13;
             ++num_params_r__;
+            current_statement_begin__ = 14;
             validate_non_negative_index("mub", "J", J);
             num_params_r__ += J;
         } catch (const std::exception& e) {
@@ -336,22 +352,27 @@ public:
 
 
             // transformed parameters
+            current_statement_begin__ = 17;
             validate_non_negative_index("lambdaa", "J", J);
             vector<local_scalar_t__> lambdaa(J);
             stan::math::initialize(lambdaa, DUMMY_VAR__);
             stan::math::fill(lambdaa,DUMMY_VAR__);
+            current_statement_begin__ = 18;
             validate_non_negative_index("lambdab", "J", J);
             vector<local_scalar_t__> lambdab(J);
             stan::math::initialize(lambdab, DUMMY_VAR__);
             stan::math::fill(lambdab,DUMMY_VAR__);
 
 
+            current_statement_begin__ = 19;
             for (int i = 1; i <= J; ++i) {
 
+                current_statement_begin__ = 20;
                 stan::model::assign(lambdab, 
                             stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
                             (get_base1(mub,i,"mub",1) / get_base1(fpre,i,"fpre",1)), 
                             "assigning variable lambdab");
+                current_statement_begin__ = 21;
                 stan::model::assign(lambdaa, 
                             stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
                             ((get_base1(delta,i,"delta",1) * get_base1(mub,i,"mub",1)) / get_base1(fpost,i,"fpost",1)), 
@@ -376,16 +397,26 @@ public:
 
             const char* function__ = "validate transformed params";
             (void) function__;  // dummy to suppress unused var warning
+            current_statement_begin__ = 17;
+            current_statement_begin__ = 18;
 
             // model body
 
+            current_statement_begin__ = 25;
             lp_accum__.add(gamma_log<propto__>(mu, 1, 0.001));
+            current_statement_begin__ = 26;
             lp_accum__.add(gamma_log<propto__>(kappa, 1, 0.69999999999999996));
+            current_statement_begin__ = 27;
             lp_accum__.add(gamma_log<propto__>(delta, delta_shape, (delta_shape / delta_mu)));
+            current_statement_begin__ = 28;
             lp_accum__.add(normal_log<propto__>(delta_shape, 2, 1));
+            current_statement_begin__ = 29;
             lp_accum__.add(beta_log<propto__>(delta_mu, 1, 1));
+            current_statement_begin__ = 30;
             lp_accum__.add(gamma_log<propto__>(mub, kappa, (kappa / mu)));
+            current_statement_begin__ = 31;
             lp_accum__.add(poisson_log<propto__>(ystararaw, lambdaa));
+            current_statement_begin__ = 32;
             lp_accum__.add(poisson_log<propto__>(ystarbraw, lambdab));
 
         } catch (const std::exception& e) {
@@ -498,22 +529,27 @@ public:
         (void) DUMMY_VAR__;  // suppress unused var warning
 
         try {
+            current_statement_begin__ = 17;
             validate_non_negative_index("lambdaa", "J", J);
             vector<local_scalar_t__> lambdaa(J);
             stan::math::initialize(lambdaa, DUMMY_VAR__);
             stan::math::fill(lambdaa,DUMMY_VAR__);
+            current_statement_begin__ = 18;
             validate_non_negative_index("lambdab", "J", J);
             vector<local_scalar_t__> lambdab(J);
             stan::math::initialize(lambdab, DUMMY_VAR__);
             stan::math::fill(lambdab,DUMMY_VAR__);
 
 
+            current_statement_begin__ = 19;
             for (int i = 1; i <= J; ++i) {
 
+                current_statement_begin__ = 20;
                 stan::model::assign(lambdab, 
                             stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
                             (get_base1(mub,i,"mub",1) / get_base1(fpre,i,"fpre",1)), 
                             "assigning variable lambdab");
+                current_statement_begin__ = 21;
                 stan::model::assign(lambdaa, 
                             stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
                             ((get_base1(delta,i,"delta",1) * get_base1(mub,i,"mub",1)) / get_base1(fpost,i,"fpost",1)), 
@@ -521,6 +557,8 @@ public:
             }
 
             // validate transformed parameters
+            current_statement_begin__ = 17;
+            current_statement_begin__ = 18;
 
             // write transformed parameters
             if (include_tparams__) {
@@ -734,11 +772,13 @@ public:
 
         // initialize member variables
         try {
+            current_statement_begin__ = 2;
             context__.validate_dims("data initialization", "J", "int", context__.to_vec());
             J = int(0);
             vals_i__ = context__.vals_i("J");
             pos__ = 0;
             J = vals_i__[pos__++];
+            current_statement_begin__ = 3;
             validate_non_negative_index("ystarraw", "J", J);
             context__.validate_dims("data initialization", "ystarraw", "int", context__.to_vec(J));
             validate_non_negative_index("ystarraw", "J", J);
@@ -749,6 +789,7 @@ public:
             for (size_t i_0__ = 0; i_0__ < ystarraw_limit_0__; ++i_0__) {
                 ystarraw[i_0__] = vals_i__[pos__++];
             }
+            current_statement_begin__ = 4;
             validate_non_negative_index("CF", "J", J);
             context__.validate_dims("data initialization", "CF", "int", context__.to_vec(J));
             validate_non_negative_index("CF", "J", J);
@@ -761,6 +802,9 @@ public:
             }
 
             // validate, data variables
+            current_statement_begin__ = 2;
+            current_statement_begin__ = 3;
+            current_statement_begin__ = 4;
             // initialize data variables
 
 
@@ -769,8 +813,11 @@ public:
             // validate, set parameter ranges
             num_params_r__ = 0U;
             param_ranges_i__.clear();
+            current_statement_begin__ = 7;
             ++num_params_r__;
+            current_statement_begin__ = 8;
             ++num_params_r__;
+            current_statement_begin__ = 9;
             validate_non_negative_index("mui", "J", J);
             num_params_r__ += J;
         } catch (const std::exception& e) {
@@ -894,14 +941,17 @@ public:
 
 
             // transformed parameters
+            current_statement_begin__ = 12;
             validate_non_negative_index("lambda", "J", J);
             vector<local_scalar_t__> lambda(J);
             stan::math::initialize(lambda, DUMMY_VAR__);
             stan::math::fill(lambda,DUMMY_VAR__);
 
 
+            current_statement_begin__ = 13;
             for (int i = 1; i <= J; ++i) {
 
+                current_statement_begin__ = 14;
                 stan::model::assign(lambda, 
                             stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
                             (get_base1(mui,i,"mui",1) / get_base1(CF,i,"CF",1)), 
@@ -919,12 +969,17 @@ public:
 
             const char* function__ = "validate transformed params";
             (void) function__;  // dummy to suppress unused var warning
+            current_statement_begin__ = 12;
 
             // model body
 
+            current_statement_begin__ = 18;
             lp_accum__.add(gamma_log<propto__>(mu, 1, 0.001));
+            current_statement_begin__ = 19;
             lp_accum__.add(gamma_log<propto__>(kappa, 1, 0.69999999999999996));
+            current_statement_begin__ = 20;
             lp_accum__.add(gamma_log<propto__>(mui, kappa, (kappa / mu)));
+            current_statement_begin__ = 21;
             lp_accum__.add(poisson_log<propto__>(ystarraw, lambda));
 
         } catch (const std::exception& e) {
@@ -1011,14 +1066,17 @@ public:
         (void) DUMMY_VAR__;  // suppress unused var warning
 
         try {
+            current_statement_begin__ = 12;
             validate_non_negative_index("lambda", "J", J);
             vector<local_scalar_t__> lambda(J);
             stan::math::initialize(lambda, DUMMY_VAR__);
             stan::math::fill(lambda,DUMMY_VAR__);
 
 
+            current_statement_begin__ = 13;
             for (int i = 1; i <= J; ++i) {
 
+                current_statement_begin__ = 14;
                 stan::model::assign(lambda, 
                             stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
                             (get_base1(mui,i,"mui",1) / get_base1(CF,i,"CF",1)), 
@@ -1026,6 +1084,7 @@ public:
             }
 
             // validate transformed parameters
+            current_statement_begin__ = 12;
 
             // write transformed parameters
             if (include_tparams__) {
@@ -1206,11 +1265,13 @@ public:
 
         // initialize member variables
         try {
+            current_statement_begin__ = 2;
             context__.validate_dims("data initialization", "J", "int", context__.to_vec());
             J = int(0);
             vals_i__ = context__.vals_i("J");
             pos__ = 0;
             J = vals_i__[pos__++];
+            current_statement_begin__ = 3;
             validate_non_negative_index("ystararaw", "J", J);
             context__.validate_dims("data initialization", "ystararaw", "int", context__.to_vec(J));
             validate_non_negative_index("ystararaw", "J", J);
@@ -1221,6 +1282,7 @@ public:
             for (size_t i_0__ = 0; i_0__ < ystararaw_limit_0__; ++i_0__) {
                 ystararaw[i_0__] = vals_i__[pos__++];
             }
+            current_statement_begin__ = 4;
             validate_non_negative_index("ystarbraw", "J", J);
             context__.validate_dims("data initialization", "ystarbraw", "int", context__.to_vec(J));
             validate_non_negative_index("ystarbraw", "J", J);
@@ -1231,6 +1293,7 @@ public:
             for (size_t i_0__ = 0; i_0__ < ystarbraw_limit_0__; ++i_0__) {
                 ystarbraw[i_0__] = vals_i__[pos__++];
             }
+            current_statement_begin__ = 5;
             validate_non_negative_index("fpre", "J", J);
             context__.validate_dims("data initialization", "fpre", "int", context__.to_vec(J));
             validate_non_negative_index("fpre", "J", J);
@@ -1241,6 +1304,7 @@ public:
             for (size_t i_0__ = 0; i_0__ < fpre_limit_0__; ++i_0__) {
                 fpre[i_0__] = vals_i__[pos__++];
             }
+            current_statement_begin__ = 6;
             validate_non_negative_index("fpost", "J", J);
             context__.validate_dims("data initialization", "fpost", "int", context__.to_vec(J));
             validate_non_negative_index("fpost", "J", J);
@@ -1253,6 +1317,11 @@ public:
             }
 
             // validate, data variables
+            current_statement_begin__ = 2;
+            current_statement_begin__ = 3;
+            current_statement_begin__ = 4;
+            current_statement_begin__ = 5;
+            current_statement_begin__ = 6;
             // initialize data variables
 
 
@@ -1261,9 +1330,13 @@ public:
             // validate, set parameter ranges
             num_params_r__ = 0U;
             param_ranges_i__.clear();
+            current_statement_begin__ = 9;
             ++num_params_r__;
+            current_statement_begin__ = 10;
             ++num_params_r__;
+            current_statement_begin__ = 11;
             ++num_params_r__;
+            current_statement_begin__ = 12;
             validate_non_negative_index("mub", "J", J);
             num_params_r__ += J;
         } catch (const std::exception& e) {
@@ -1407,22 +1480,27 @@ public:
 
 
             // transformed parameters
+            current_statement_begin__ = 15;
             validate_non_negative_index("lambdaa", "J", J);
             vector<local_scalar_t__> lambdaa(J);
             stan::math::initialize(lambdaa, DUMMY_VAR__);
             stan::math::fill(lambdaa,DUMMY_VAR__);
+            current_statement_begin__ = 16;
             validate_non_negative_index("lambdab", "J", J);
             vector<local_scalar_t__> lambdab(J);
             stan::math::initialize(lambdab, DUMMY_VAR__);
             stan::math::fill(lambdab,DUMMY_VAR__);
 
 
+            current_statement_begin__ = 17;
             for (int i = 1; i <= J; ++i) {
 
+                current_statement_begin__ = 18;
                 stan::model::assign(lambdab, 
                             stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
                             (get_base1(mub,i,"mub",1) / get_base1(fpre,i,"fpre",1)), 
                             "assigning variable lambdab");
+                current_statement_begin__ = 19;
                 stan::model::assign(lambdaa, 
                             stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
                             ((delta * get_base1(mub,i,"mub",1)) / get_base1(fpost,i,"fpost",1)), 
@@ -1447,14 +1525,22 @@ public:
 
             const char* function__ = "validate transformed params";
             (void) function__;  // dummy to suppress unused var warning
+            current_statement_begin__ = 15;
+            current_statement_begin__ = 16;
 
             // model body
 
+            current_statement_begin__ = 23;
             lp_accum__.add(gamma_log<propto__>(mu, 1, 0.001));
+            current_statement_begin__ = 24;
             lp_accum__.add(gamma_log<propto__>(kappa, 1, 0.69999999999999996));
+            current_statement_begin__ = 25;
             lp_accum__.add(beta_log<propto__>(delta, 1, 1));
+            current_statement_begin__ = 26;
             lp_accum__.add(gamma_log<propto__>(mub, kappa, (kappa / mu)));
+            current_statement_begin__ = 27;
             lp_accum__.add(poisson_log<propto__>(ystararaw, lambdaa));
+            current_statement_begin__ = 28;
             lp_accum__.add(poisson_log<propto__>(ystarbraw, lambdab));
 
         } catch (const std::exception& e) {
@@ -1550,22 +1636,27 @@ public:
         (void) DUMMY_VAR__;  // suppress unused var warning
 
         try {
+            current_statement_begin__ = 15;
             validate_non_negative_index("lambdaa", "J", J);
             vector<local_scalar_t__> lambdaa(J);
             stan::math::initialize(lambdaa, DUMMY_VAR__);
             stan::math::fill(lambdaa,DUMMY_VAR__);
+            current_statement_begin__ = 16;
             validate_non_negative_index("lambdab", "J", J);
             vector<local_scalar_t__> lambdab(J);
             stan::math::initialize(lambdab, DUMMY_VAR__);
             stan::math::fill(lambdab,DUMMY_VAR__);
 
 
+            current_statement_begin__ = 17;
             for (int i = 1; i <= J; ++i) {
 
+                current_statement_begin__ = 18;
                 stan::model::assign(lambdab, 
                             stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
                             (get_base1(mub,i,"mub",1) / get_base1(fpre,i,"fpre",1)), 
                             "assigning variable lambdab");
+                current_statement_begin__ = 19;
                 stan::model::assign(lambdaa, 
                             stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
                             ((delta * get_base1(mub,i,"mub",1)) / get_base1(fpost,i,"fpost",1)), 
@@ -1573,6 +1664,8 @@ public:
             }
 
             // validate transformed parameters
+            current_statement_begin__ = 15;
+            current_statement_begin__ = 16;
 
             // write transformed parameters
             if (include_tparams__) {
@@ -1772,11 +1865,13 @@ public:
 
         // initialize member variables
         try {
+            current_statement_begin__ = 2;
             context__.validate_dims("data initialization", "J", "int", context__.to_vec());
             J = int(0);
             vals_i__ = context__.vals_i("J");
             pos__ = 0;
             J = vals_i__[pos__++];
+            current_statement_begin__ = 3;
             validate_non_negative_index("ystararaw", "J", J);
             context__.validate_dims("data initialization", "ystararaw", "int", context__.to_vec(J));
             validate_non_negative_index("ystararaw", "J", J);
@@ -1787,6 +1882,7 @@ public:
             for (size_t i_0__ = 0; i_0__ < ystararaw_limit_0__; ++i_0__) {
                 ystararaw[i_0__] = vals_i__[pos__++];
             }
+            current_statement_begin__ = 4;
             validate_non_negative_index("ystarbraw", "J", J);
             context__.validate_dims("data initialization", "ystarbraw", "int", context__.to_vec(J));
             validate_non_negative_index("ystarbraw", "J", J);
@@ -1797,6 +1893,7 @@ public:
             for (size_t i_0__ = 0; i_0__ < ystarbraw_limit_0__; ++i_0__) {
                 ystarbraw[i_0__] = vals_i__[pos__++];
             }
+            current_statement_begin__ = 5;
             validate_non_negative_index("fpre", "J", J);
             context__.validate_dims("data initialization", "fpre", "int", context__.to_vec(J));
             validate_non_negative_index("fpre", "J", J);
@@ -1807,6 +1904,7 @@ public:
             for (size_t i_0__ = 0; i_0__ < fpre_limit_0__; ++i_0__) {
                 fpre[i_0__] = vals_i__[pos__++];
             }
+            current_statement_begin__ = 6;
             validate_non_negative_index("fpost", "J", J);
             context__.validate_dims("data initialization", "fpost", "int", context__.to_vec(J));
             validate_non_negative_index("fpost", "J", J);
@@ -1819,6 +1917,11 @@ public:
             }
 
             // validate, data variables
+            current_statement_begin__ = 2;
+            current_statement_begin__ = 3;
+            current_statement_begin__ = 4;
+            current_statement_begin__ = 5;
+            current_statement_begin__ = 6;
             // initialize data variables
 
 
@@ -1827,7 +1930,9 @@ public:
             // validate, set parameter ranges
             num_params_r__ = 0U;
             param_ranges_i__.clear();
+            current_statement_begin__ = 10;
             ++num_params_r__;
+            current_statement_begin__ = 11;
             ++num_params_r__;
         } catch (const std::exception& e) {
             stan::lang::rethrow_located(e, current_statement_begin__, prog_reader__());
@@ -1924,22 +2029,27 @@ public:
 
 
             // transformed parameters
+            current_statement_begin__ = 15;
             validate_non_negative_index("lambdaa", "J", J);
             vector<local_scalar_t__> lambdaa(J);
             stan::math::initialize(lambdaa, DUMMY_VAR__);
             stan::math::fill(lambdaa,DUMMY_VAR__);
+            current_statement_begin__ = 16;
             validate_non_negative_index("lambdab", "J", J);
             vector<local_scalar_t__> lambdab(J);
             stan::math::initialize(lambdab, DUMMY_VAR__);
             stan::math::fill(lambdab,DUMMY_VAR__);
 
 
+            current_statement_begin__ = 17;
             for (int i = 1; i <= J; ++i) {
 
+                current_statement_begin__ = 18;
                 stan::model::assign(lambdab, 
                             stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
                             (mu / get_base1(fpre,i,"fpre",1)), 
                             "assigning variable lambdab");
+                current_statement_begin__ = 19;
                 stan::model::assign(lambdaa, 
                             stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
                             ((delta * mu) / get_base1(fpost,i,"fpost",1)), 
@@ -1964,12 +2074,18 @@ public:
 
             const char* function__ = "validate transformed params";
             (void) function__;  // dummy to suppress unused var warning
+            current_statement_begin__ = 15;
+            current_statement_begin__ = 16;
 
             // model body
 
+            current_statement_begin__ = 24;
             lp_accum__.add(gamma_log<propto__>(mu, 1, 0.001));
+            current_statement_begin__ = 25;
             lp_accum__.add(beta_log<propto__>(delta, 1, 1));
+            current_statement_begin__ = 26;
             lp_accum__.add(poisson_log<propto__>(ystararaw, lambdaa));
+            current_statement_begin__ = 27;
             lp_accum__.add(poisson_log<propto__>(ystarbraw, lambdab));
 
         } catch (const std::exception& e) {
@@ -2048,22 +2164,27 @@ public:
         (void) DUMMY_VAR__;  // suppress unused var warning
 
         try {
+            current_statement_begin__ = 15;
             validate_non_negative_index("lambdaa", "J", J);
             vector<local_scalar_t__> lambdaa(J);
             stan::math::initialize(lambdaa, DUMMY_VAR__);
             stan::math::fill(lambdaa,DUMMY_VAR__);
+            current_statement_begin__ = 16;
             validate_non_negative_index("lambdab", "J", J);
             vector<local_scalar_t__> lambdab(J);
             stan::math::initialize(lambdab, DUMMY_VAR__);
             stan::math::fill(lambdab,DUMMY_VAR__);
 
 
+            current_statement_begin__ = 17;
             for (int i = 1; i <= J; ++i) {
 
+                current_statement_begin__ = 18;
                 stan::model::assign(lambdab, 
                             stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
                             (mu / get_base1(fpre,i,"fpre",1)), 
                             "assigning variable lambdab");
+                current_statement_begin__ = 19;
                 stan::model::assign(lambdaa, 
                             stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
                             ((delta * mu) / get_base1(fpost,i,"fpost",1)), 
@@ -2071,6 +2192,8 @@ public:
             }
 
             // validate transformed parameters
+            current_statement_begin__ = 15;
+            current_statement_begin__ = 16;
 
             // write transformed parameters
             if (include_tparams__) {
@@ -2255,16 +2378,19 @@ public:
 
         // initialize member variables
         try {
+            current_statement_begin__ = 2;
             context__.validate_dims("data initialization", "Ja", "int", context__.to_vec());
             Ja = int(0);
             vals_i__ = context__.vals_i("Ja");
             pos__ = 0;
             Ja = vals_i__[pos__++];
+            current_statement_begin__ = 3;
             context__.validate_dims("data initialization", "Jb", "int", context__.to_vec());
             Jb = int(0);
             vals_i__ = context__.vals_i("Jb");
             pos__ = 0;
             Jb = vals_i__[pos__++];
+            current_statement_begin__ = 4;
             validate_non_negative_index("ystararaw", "Ja", Ja);
             context__.validate_dims("data initialization", "ystararaw", "int", context__.to_vec(Ja));
             validate_non_negative_index("ystararaw", "Ja", Ja);
@@ -2275,6 +2401,7 @@ public:
             for (size_t i_0__ = 0; i_0__ < ystararaw_limit_0__; ++i_0__) {
                 ystararaw[i_0__] = vals_i__[pos__++];
             }
+            current_statement_begin__ = 5;
             validate_non_negative_index("ystarbraw", "Jb", Jb);
             context__.validate_dims("data initialization", "ystarbraw", "int", context__.to_vec(Jb));
             validate_non_negative_index("ystarbraw", "Jb", Jb);
@@ -2285,6 +2412,7 @@ public:
             for (size_t i_0__ = 0; i_0__ < ystarbraw_limit_0__; ++i_0__) {
                 ystarbraw[i_0__] = vals_i__[pos__++];
             }
+            current_statement_begin__ = 6;
             validate_non_negative_index("fpre", "Ja", Ja);
             context__.validate_dims("data initialization", "fpre", "int", context__.to_vec(Ja));
             validate_non_negative_index("fpre", "Ja", Ja);
@@ -2295,6 +2423,7 @@ public:
             for (size_t i_0__ = 0; i_0__ < fpre_limit_0__; ++i_0__) {
                 fpre[i_0__] = vals_i__[pos__++];
             }
+            current_statement_begin__ = 7;
             validate_non_negative_index("fpost", "Jb", Jb);
             context__.validate_dims("data initialization", "fpost", "int", context__.to_vec(Jb));
             validate_non_negative_index("fpost", "Jb", Jb);
@@ -2307,6 +2436,12 @@ public:
             }
 
             // validate, data variables
+            current_statement_begin__ = 2;
+            current_statement_begin__ = 3;
+            current_statement_begin__ = 4;
+            current_statement_begin__ = 5;
+            current_statement_begin__ = 6;
+            current_statement_begin__ = 7;
             // initialize data variables
 
 
@@ -2315,11 +2450,16 @@ public:
             // validate, set parameter ranges
             num_params_r__ = 0U;
             param_ranges_i__.clear();
+            current_statement_begin__ = 10;
             ++num_params_r__;
+            current_statement_begin__ = 11;
             ++num_params_r__;
+            current_statement_begin__ = 12;
             ++num_params_r__;
+            current_statement_begin__ = 13;
             validate_non_negative_index("mub", "Jb", Jb);
             num_params_r__ += Jb;
+            current_statement_begin__ = 14;
             validate_non_negative_index("mua", "Ja", Ja);
             num_params_r__ += Ja;
         } catch (const std::exception& e) {
@@ -2489,25 +2629,31 @@ public:
 
 
             // transformed parameters
+            current_statement_begin__ = 17;
             validate_non_negative_index("lambdaa", "Ja", Ja);
             vector<local_scalar_t__> lambdaa(Ja);
             stan::math::initialize(lambdaa, DUMMY_VAR__);
             stan::math::fill(lambdaa,DUMMY_VAR__);
+            current_statement_begin__ = 18;
             validate_non_negative_index("lambdab", "Jb", Jb);
             vector<local_scalar_t__> lambdab(Jb);
             stan::math::initialize(lambdab, DUMMY_VAR__);
             stan::math::fill(lambdab,DUMMY_VAR__);
 
 
+            current_statement_begin__ = 19;
             for (int i = 1; i <= Jb; ++i) {
 
+                current_statement_begin__ = 20;
                 stan::model::assign(lambdab, 
                             stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
                             (get_base1(mub,i,"mub",1) / get_base1(fpre,i,"fpre",1)), 
                             "assigning variable lambdab");
             }
+            current_statement_begin__ = 22;
             for (int i = 1; i <= Ja; ++i) {
 
+                current_statement_begin__ = 23;
                 stan::model::assign(lambdaa, 
                             stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
                             ((delta * get_base1(mua,i,"mua",1)) / get_base1(fpost,i,"fpost",1)), 
@@ -2532,15 +2678,24 @@ public:
 
             const char* function__ = "validate transformed params";
             (void) function__;  // dummy to suppress unused var warning
+            current_statement_begin__ = 17;
+            current_statement_begin__ = 18;
 
             // model body
 
+            current_statement_begin__ = 27;
             lp_accum__.add(gamma_log<propto__>(mu, 1, 0.001));
+            current_statement_begin__ = 28;
             lp_accum__.add(gamma_log<propto__>(kappa, 1, 0.69999999999999996));
+            current_statement_begin__ = 29;
             lp_accum__.add(beta_log<propto__>(delta, 1, 1));
+            current_statement_begin__ = 30;
             lp_accum__.add(gamma_log<propto__>(mub, kappa, (kappa / mu)));
+            current_statement_begin__ = 31;
             lp_accum__.add(gamma_log<propto__>(mua, kappa, (kappa / mu)));
+            current_statement_begin__ = 32;
             lp_accum__.add(poisson_log<propto__>(ystarbraw, lambdab));
+            current_statement_begin__ = 33;
             lp_accum__.add(poisson_log<propto__>(ystararaw, lambdaa));
 
         } catch (const std::exception& e) {
@@ -2648,25 +2803,31 @@ public:
         (void) DUMMY_VAR__;  // suppress unused var warning
 
         try {
+            current_statement_begin__ = 17;
             validate_non_negative_index("lambdaa", "Ja", Ja);
             vector<local_scalar_t__> lambdaa(Ja);
             stan::math::initialize(lambdaa, DUMMY_VAR__);
             stan::math::fill(lambdaa,DUMMY_VAR__);
+            current_statement_begin__ = 18;
             validate_non_negative_index("lambdab", "Jb", Jb);
             vector<local_scalar_t__> lambdab(Jb);
             stan::math::initialize(lambdab, DUMMY_VAR__);
             stan::math::fill(lambdab,DUMMY_VAR__);
 
 
+            current_statement_begin__ = 19;
             for (int i = 1; i <= Jb; ++i) {
 
+                current_statement_begin__ = 20;
                 stan::model::assign(lambdab, 
                             stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
                             (get_base1(mub,i,"mub",1) / get_base1(fpre,i,"fpre",1)), 
                             "assigning variable lambdab");
             }
+            current_statement_begin__ = 22;
             for (int i = 1; i <= Ja; ++i) {
 
+                current_statement_begin__ = 23;
                 stan::model::assign(lambdaa, 
                             stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
                             ((delta * get_base1(mua,i,"mua",1)) / get_base1(fpost,i,"fpost",1)), 
@@ -2674,6 +2835,8 @@ public:
             }
 
             // validate transformed parameters
+            current_statement_begin__ = 17;
+            current_statement_begin__ = 18;
 
             // write transformed parameters
             if (include_tparams__) {
@@ -2881,11 +3044,13 @@ public:
 
         // initialize member variables
         try {
+            current_statement_begin__ = 2;
             context__.validate_dims("data initialization", "J", "int", context__.to_vec());
             J = int(0);
             vals_i__ = context__.vals_i("J");
             pos__ = 0;
             J = vals_i__[pos__++];
+            current_statement_begin__ = 3;
             validate_non_negative_index("ystarraw", "J", J);
             context__.validate_dims("data initialization", "ystarraw", "int", context__.to_vec(J));
             validate_non_negative_index("ystarraw", "J", J);
@@ -2896,6 +3061,7 @@ public:
             for (size_t i_0__ = 0; i_0__ < ystarraw_limit_0__; ++i_0__) {
                 ystarraw[i_0__] = vals_i__[pos__++];
             }
+            current_statement_begin__ = 4;
             validate_non_negative_index("CF", "J", J);
             context__.validate_dims("data initialization", "CF", "int", context__.to_vec(J));
             validate_non_negative_index("CF", "J", J);
@@ -2908,6 +3074,9 @@ public:
             }
 
             // validate, data variables
+            current_statement_begin__ = 2;
+            current_statement_begin__ = 3;
+            current_statement_begin__ = 4;
             // initialize data variables
 
 
@@ -2916,10 +3085,14 @@ public:
             // validate, set parameter ranges
             num_params_r__ = 0U;
             param_ranges_i__.clear();
+            current_statement_begin__ = 7;
             ++num_params_r__;
+            current_statement_begin__ = 8;
             ++num_params_r__;
+            current_statement_begin__ = 9;
             validate_non_negative_index("mui", "J", J);
             num_params_r__ += J;
+            current_statement_begin__ = 10;
             ++num_params_r__;
         } catch (const std::exception& e) {
             stan::lang::rethrow_located(e, current_statement_begin__, prog_reader__());
@@ -3062,14 +3235,17 @@ public:
 
 
             // transformed parameters
+            current_statement_begin__ = 13;
             validate_non_negative_index("lambda", "J", J);
             vector<local_scalar_t__> lambda(J);
             stan::math::initialize(lambda, DUMMY_VAR__);
             stan::math::fill(lambda,DUMMY_VAR__);
 
 
+            current_statement_begin__ = 14;
             for (int i = 1; i <= J; ++i) {
 
+                current_statement_begin__ = 15;
                 stan::model::assign(lambda, 
                             stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
                             (get_base1(mui,i,"mui",1) / get_base1(CF,i,"CF",1)), 
@@ -3087,18 +3263,27 @@ public:
 
             const char* function__ = "validate transformed params";
             (void) function__;  // dummy to suppress unused var warning
+            current_statement_begin__ = 13;
 
             // model body
 
+            current_statement_begin__ = 19;
             lp_accum__.add(gamma_log<propto__>(mu, 1, 0.001));
+            current_statement_begin__ = 20;
             lp_accum__.add(gamma_log<propto__>(kappa, 1, 0.69999999999999996));
+            current_statement_begin__ = 21;
             lp_accum__.add(beta_log<propto__>(phi, 1, 1));
+            current_statement_begin__ = 22;
             lp_accum__.add(gamma_log<propto__>(mui, kappa, (kappa / mu)));
+            current_statement_begin__ = 23;
             for (int n = 1; n <= J; ++n) {
 
+                current_statement_begin__ = 24;
                 if (as_bool(logical_eq(get_base1(ystarraw,n,"ystarraw",1),0))) {
+                    current_statement_begin__ = 25;
                     lp_accum__.add(log_sum_exp(bernoulli_log(1,phi),(bernoulli_log(0,phi) + poisson_log(get_base1(ystarraw,n,"ystarraw",1),get_base1(lambda,n,"lambda",1)))));
                 } else {
+                    current_statement_begin__ = 27;
                     lp_accum__.add((bernoulli_log(0,phi) + poisson_log(get_base1(ystarraw,n,"ystarraw",1),get_base1(lambda,n,"lambda",1))));
                 }
             }
@@ -3192,14 +3377,17 @@ public:
         (void) DUMMY_VAR__;  // suppress unused var warning
 
         try {
+            current_statement_begin__ = 13;
             validate_non_negative_index("lambda", "J", J);
             vector<local_scalar_t__> lambda(J);
             stan::math::initialize(lambda, DUMMY_VAR__);
             stan::math::fill(lambda,DUMMY_VAR__);
 
 
+            current_statement_begin__ = 14;
             for (int i = 1; i <= J; ++i) {
 
+                current_statement_begin__ = 15;
                 stan::model::assign(lambda, 
                             stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
                             (get_base1(mui,i,"mui",1) / get_base1(CF,i,"CF",1)), 
@@ -3207,6 +3395,7 @@ public:
             }
 
             // validate transformed parameters
+            current_statement_begin__ = 13;
 
             // write transformed parameters
             if (include_tparams__) {
@@ -3393,11 +3582,13 @@ public:
 
         // initialize member variables
         try {
+            current_statement_begin__ = 2;
             context__.validate_dims("data initialization", "J", "int", context__.to_vec());
             J = int(0);
             vals_i__ = context__.vals_i("J");
             pos__ = 0;
             J = vals_i__[pos__++];
+            current_statement_begin__ = 3;
             validate_non_negative_index("ystararaw", "J", J);
             context__.validate_dims("data initialization", "ystararaw", "int", context__.to_vec(J));
             validate_non_negative_index("ystararaw", "J", J);
@@ -3408,6 +3599,7 @@ public:
             for (size_t i_0__ = 0; i_0__ < ystararaw_limit_0__; ++i_0__) {
                 ystararaw[i_0__] = vals_i__[pos__++];
             }
+            current_statement_begin__ = 4;
             validate_non_negative_index("ystarbraw", "J", J);
             context__.validate_dims("data initialization", "ystarbraw", "int", context__.to_vec(J));
             validate_non_negative_index("ystarbraw", "J", J);
@@ -3418,6 +3610,7 @@ public:
             for (size_t i_0__ = 0; i_0__ < ystarbraw_limit_0__; ++i_0__) {
                 ystarbraw[i_0__] = vals_i__[pos__++];
             }
+            current_statement_begin__ = 5;
             validate_non_negative_index("fpre", "J", J);
             context__.validate_dims("data initialization", "fpre", "int", context__.to_vec(J));
             validate_non_negative_index("fpre", "J", J);
@@ -3428,6 +3621,7 @@ public:
             for (size_t i_0__ = 0; i_0__ < fpre_limit_0__; ++i_0__) {
                 fpre[i_0__] = vals_i__[pos__++];
             }
+            current_statement_begin__ = 6;
             validate_non_negative_index("fpost", "J", J);
             context__.validate_dims("data initialization", "fpost", "int", context__.to_vec(J));
             validate_non_negative_index("fpost", "J", J);
@@ -3440,6 +3634,11 @@ public:
             }
 
             // validate, data variables
+            current_statement_begin__ = 2;
+            current_statement_begin__ = 3;
+            current_statement_begin__ = 4;
+            current_statement_begin__ = 5;
+            current_statement_begin__ = 6;
             // initialize data variables
 
 
@@ -3448,11 +3647,16 @@ public:
             // validate, set parameter ranges
             num_params_r__ = 0U;
             param_ranges_i__.clear();
+            current_statement_begin__ = 9;
             ++num_params_r__;
+            current_statement_begin__ = 10;
             ++num_params_r__;
+            current_statement_begin__ = 11;
             ++num_params_r__;
+            current_statement_begin__ = 12;
             validate_non_negative_index("mub", "J", J);
             num_params_r__ += J;
+            current_statement_begin__ = 13;
             ++num_params_r__;
         } catch (const std::exception& e) {
             stan::lang::rethrow_located(e, current_statement_begin__, prog_reader__());
@@ -3615,22 +3819,27 @@ public:
 
 
             // transformed parameters
+            current_statement_begin__ = 16;
             validate_non_negative_index("lambdaa", "J", J);
             vector<local_scalar_t__> lambdaa(J);
             stan::math::initialize(lambdaa, DUMMY_VAR__);
             stan::math::fill(lambdaa,DUMMY_VAR__);
+            current_statement_begin__ = 17;
             validate_non_negative_index("lambdab", "J", J);
             vector<local_scalar_t__> lambdab(J);
             stan::math::initialize(lambdab, DUMMY_VAR__);
             stan::math::fill(lambdab,DUMMY_VAR__);
 
 
+            current_statement_begin__ = 18;
             for (int i = 1; i <= J; ++i) {
 
+                current_statement_begin__ = 19;
                 stan::model::assign(lambdab, 
                             stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
                             (get_base1(mub,i,"mub",1) / get_base1(fpre,i,"fpre",1)), 
                             "assigning variable lambdab");
+                current_statement_begin__ = 20;
                 stan::model::assign(lambdaa, 
                             stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
                             ((delta * get_base1(mub,i,"mub",1)) / get_base1(fpost,i,"fpost",1)), 
@@ -3655,27 +3864,42 @@ public:
 
             const char* function__ = "validate transformed params";
             (void) function__;  // dummy to suppress unused var warning
+            current_statement_begin__ = 16;
+            current_statement_begin__ = 17;
 
             // model body
 
+            current_statement_begin__ = 24;
             lp_accum__.add(gamma_log<propto__>(mu, 1, 0.001));
+            current_statement_begin__ = 25;
             lp_accum__.add(gamma_log<propto__>(kappa, 1, 0.69999999999999996));
+            current_statement_begin__ = 26;
             lp_accum__.add(beta_log<propto__>(delta, 1, 1));
+            current_statement_begin__ = 27;
             lp_accum__.add(beta_log<propto__>(phi, 1, 1));
+            current_statement_begin__ = 28;
             lp_accum__.add(gamma_log<propto__>(mub, kappa, (kappa / mu)));
+            current_statement_begin__ = 29;
             for (int n = 1; n <= J; ++n) {
 
+                current_statement_begin__ = 30;
                 if (as_bool(logical_eq(get_base1(ystarbraw,n,"ystarbraw",1),0))) {
+                    current_statement_begin__ = 31;
                     lp_accum__.add(log_sum_exp(bernoulli_log(1,phi),(bernoulli_log(0,phi) + poisson_log(get_base1(ystarbraw,n,"ystarbraw",1),get_base1(lambdab,n,"lambdab",1)))));
                 } else {
+                    current_statement_begin__ = 33;
                     lp_accum__.add((bernoulli_log(0,phi) + poisson_log(get_base1(ystarbraw,n,"ystarbraw",1),get_base1(lambdab,n,"lambdab",1))));
                 }
             }
+            current_statement_begin__ = 35;
             for (int n = 1; n <= J; ++n) {
 
+                current_statement_begin__ = 36;
                 if (as_bool(logical_eq(get_base1(ystararaw,n,"ystararaw",1),0))) {
+                    current_statement_begin__ = 37;
                     lp_accum__.add(log_sum_exp(bernoulli_log(1,phi),(bernoulli_log(0,phi) + poisson_log(get_base1(ystararaw,n,"ystararaw",1),get_base1(lambdaa,n,"lambdaa",1)))));
                 } else {
+                    current_statement_begin__ = 39;
                     lp_accum__.add((bernoulli_log(0,phi) + poisson_log(get_base1(ystararaw,n,"ystararaw",1),get_base1(lambdaa,n,"lambdaa",1))));
                 }
             }
@@ -3778,22 +4002,27 @@ public:
         (void) DUMMY_VAR__;  // suppress unused var warning
 
         try {
+            current_statement_begin__ = 16;
             validate_non_negative_index("lambdaa", "J", J);
             vector<local_scalar_t__> lambdaa(J);
             stan::math::initialize(lambdaa, DUMMY_VAR__);
             stan::math::fill(lambdaa,DUMMY_VAR__);
+            current_statement_begin__ = 17;
             validate_non_negative_index("lambdab", "J", J);
             vector<local_scalar_t__> lambdab(J);
             stan::math::initialize(lambdab, DUMMY_VAR__);
             stan::math::fill(lambdab,DUMMY_VAR__);
 
 
+            current_statement_begin__ = 18;
             for (int i = 1; i <= J; ++i) {
 
+                current_statement_begin__ = 19;
                 stan::model::assign(lambdab, 
                             stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
                             (get_base1(mub,i,"mub",1) / get_base1(fpre,i,"fpre",1)), 
                             "assigning variable lambdab");
+                current_statement_begin__ = 20;
                 stan::model::assign(lambdaa, 
                             stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
                             ((delta * get_base1(mub,i,"mub",1)) / get_base1(fpost,i,"fpost",1)), 
@@ -3801,6 +4030,8 @@ public:
             }
 
             // validate transformed parameters
+            current_statement_begin__ = 16;
+            current_statement_begin__ = 17;
 
             // write transformed parameters
             if (include_tparams__) {
@@ -4007,16 +4238,19 @@ public:
 
         // initialize member variables
         try {
+            current_statement_begin__ = 2;
             context__.validate_dims("data initialization", "Ja", "int", context__.to_vec());
             Ja = int(0);
             vals_i__ = context__.vals_i("Ja");
             pos__ = 0;
             Ja = vals_i__[pos__++];
+            current_statement_begin__ = 3;
             context__.validate_dims("data initialization", "Jb", "int", context__.to_vec());
             Jb = int(0);
             vals_i__ = context__.vals_i("Jb");
             pos__ = 0;
             Jb = vals_i__[pos__++];
+            current_statement_begin__ = 4;
             validate_non_negative_index("ystararaw", "Ja", Ja);
             context__.validate_dims("data initialization", "ystararaw", "int", context__.to_vec(Ja));
             validate_non_negative_index("ystararaw", "Ja", Ja);
@@ -4027,6 +4261,7 @@ public:
             for (size_t i_0__ = 0; i_0__ < ystararaw_limit_0__; ++i_0__) {
                 ystararaw[i_0__] = vals_i__[pos__++];
             }
+            current_statement_begin__ = 5;
             validate_non_negative_index("ystarbraw", "Jb", Jb);
             context__.validate_dims("data initialization", "ystarbraw", "int", context__.to_vec(Jb));
             validate_non_negative_index("ystarbraw", "Jb", Jb);
@@ -4037,6 +4272,7 @@ public:
             for (size_t i_0__ = 0; i_0__ < ystarbraw_limit_0__; ++i_0__) {
                 ystarbraw[i_0__] = vals_i__[pos__++];
             }
+            current_statement_begin__ = 6;
             validate_non_negative_index("fpost", "Ja", Ja);
             context__.validate_dims("data initialization", "fpost", "int", context__.to_vec(Ja));
             validate_non_negative_index("fpost", "Ja", Ja);
@@ -4047,6 +4283,7 @@ public:
             for (size_t i_0__ = 0; i_0__ < fpost_limit_0__; ++i_0__) {
                 fpost[i_0__] = vals_i__[pos__++];
             }
+            current_statement_begin__ = 7;
             validate_non_negative_index("fpre", "Jb", Jb);
             context__.validate_dims("data initialization", "fpre", "int", context__.to_vec(Jb));
             validate_non_negative_index("fpre", "Jb", Jb);
@@ -4059,6 +4296,12 @@ public:
             }
 
             // validate, data variables
+            current_statement_begin__ = 2;
+            current_statement_begin__ = 3;
+            current_statement_begin__ = 4;
+            current_statement_begin__ = 5;
+            current_statement_begin__ = 6;
+            current_statement_begin__ = 7;
             // initialize data variables
 
 
@@ -4067,13 +4310,19 @@ public:
             // validate, set parameter ranges
             num_params_r__ = 0U;
             param_ranges_i__.clear();
+            current_statement_begin__ = 10;
             ++num_params_r__;
+            current_statement_begin__ = 11;
             ++num_params_r__;
+            current_statement_begin__ = 12;
             ++num_params_r__;
+            current_statement_begin__ = 13;
             validate_non_negative_index("mua", "Ja", Ja);
             num_params_r__ += Ja;
+            current_statement_begin__ = 14;
             validate_non_negative_index("mub", "Jb", Jb);
             num_params_r__ += Jb;
+            current_statement_begin__ = 15;
             ++num_params_r__;
         } catch (const std::exception& e) {
             stan::lang::rethrow_located(e, current_statement_begin__, prog_reader__());
@@ -4262,25 +4511,31 @@ public:
 
 
             // transformed parameters
+            current_statement_begin__ = 18;
             validate_non_negative_index("lambdaa", "Ja", Ja);
             vector<local_scalar_t__> lambdaa(Ja);
             stan::math::initialize(lambdaa, DUMMY_VAR__);
             stan::math::fill(lambdaa,DUMMY_VAR__);
+            current_statement_begin__ = 19;
             validate_non_negative_index("lambdab", "Jb", Jb);
             vector<local_scalar_t__> lambdab(Jb);
             stan::math::initialize(lambdab, DUMMY_VAR__);
             stan::math::fill(lambdab,DUMMY_VAR__);
 
 
+            current_statement_begin__ = 20;
             for (int i = 1; i <= Jb; ++i) {
 
+                current_statement_begin__ = 21;
                 stan::model::assign(lambdab, 
                             stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
                             (get_base1(mub,i,"mub",1) / get_base1(fpre,i,"fpre",1)), 
                             "assigning variable lambdab");
             }
+            current_statement_begin__ = 23;
             for (int i = 1; i <= Ja; ++i) {
 
+                current_statement_begin__ = 24;
                 stan::model::assign(lambdaa, 
                             stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
                             ((delta * get_base1(mua,i,"mua",1)) / get_base1(fpost,i,"fpost",1)), 
@@ -4305,28 +4560,44 @@ public:
 
             const char* function__ = "validate transformed params";
             (void) function__;  // dummy to suppress unused var warning
+            current_statement_begin__ = 18;
+            current_statement_begin__ = 19;
 
             // model body
 
+            current_statement_begin__ = 28;
             lp_accum__.add(gamma_log<propto__>(mu, 1, 0.001));
+            current_statement_begin__ = 29;
             lp_accum__.add(gamma_log<propto__>(kappa, 1, 0.69999999999999996));
+            current_statement_begin__ = 30;
             lp_accum__.add(beta_log<propto__>(delta, 1, 1));
+            current_statement_begin__ = 31;
             lp_accum__.add(beta_log<propto__>(phi, 1, 1));
+            current_statement_begin__ = 33;
             lp_accum__.add(gamma_log<propto__>(mub, kappa, (kappa / mu)));
+            current_statement_begin__ = 34;
             lp_accum__.add(gamma_log<propto__>(mua, kappa, (kappa / mu)));
+            current_statement_begin__ = 35;
             for (int n = 1; n <= Jb; ++n) {
 
+                current_statement_begin__ = 36;
                 if (as_bool(logical_eq(get_base1(ystarbraw,n,"ystarbraw",1),0))) {
+                    current_statement_begin__ = 37;
                     lp_accum__.add(log_sum_exp(bernoulli_log(1,phi),(bernoulli_log(0,phi) + poisson_log(get_base1(ystarbraw,n,"ystarbraw",1),get_base1(lambdab,n,"lambdab",1)))));
                 } else {
+                    current_statement_begin__ = 39;
                     lp_accum__.add((bernoulli_log(0,phi) + poisson_log(get_base1(ystarbraw,n,"ystarbraw",1),get_base1(lambdab,n,"lambdab",1))));
                 }
             }
+            current_statement_begin__ = 41;
             for (int n = 1; n <= Ja; ++n) {
 
+                current_statement_begin__ = 42;
                 if (as_bool(logical_eq(get_base1(ystararaw,n,"ystararaw",1),0))) {
+                    current_statement_begin__ = 43;
                     lp_accum__.add(log_sum_exp(bernoulli_log(1,phi),(bernoulli_log(0,phi) + poisson_log(get_base1(ystararaw,n,"ystararaw",1),get_base1(lambdaa,n,"lambdaa",1)))));
                 } else {
+                    current_statement_begin__ = 45;
                     lp_accum__.add((bernoulli_log(0,phi) + poisson_log(get_base1(ystararaw,n,"ystararaw",1),get_base1(lambdaa,n,"lambdaa",1))));
                 }
             }
@@ -4441,25 +4712,31 @@ public:
         (void) DUMMY_VAR__;  // suppress unused var warning
 
         try {
+            current_statement_begin__ = 18;
             validate_non_negative_index("lambdaa", "Ja", Ja);
             vector<local_scalar_t__> lambdaa(Ja);
             stan::math::initialize(lambdaa, DUMMY_VAR__);
             stan::math::fill(lambdaa,DUMMY_VAR__);
+            current_statement_begin__ = 19;
             validate_non_negative_index("lambdab", "Jb", Jb);
             vector<local_scalar_t__> lambdab(Jb);
             stan::math::initialize(lambdab, DUMMY_VAR__);
             stan::math::fill(lambdab,DUMMY_VAR__);
 
 
+            current_statement_begin__ = 20;
             for (int i = 1; i <= Jb; ++i) {
 
+                current_statement_begin__ = 21;
                 stan::model::assign(lambdab, 
                             stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
                             (get_base1(mub,i,"mub",1) / get_base1(fpre,i,"fpre",1)), 
                             "assigning variable lambdab");
             }
+            current_statement_begin__ = 23;
             for (int i = 1; i <= Ja; ++i) {
 
+                current_statement_begin__ = 24;
                 stan::model::assign(lambdaa, 
                             stan::model::cons_list(stan::model::index_uni(i), stan::model::nil_index_list()), 
                             ((delta * get_base1(mua,i,"mua",1)) / get_base1(fpost,i,"fpost",1)), 
@@ -4467,6 +4744,8 @@ public:
             }
 
             // validate transformed parameters
+            current_statement_begin__ = 18;
+            current_statement_begin__ = 19;
 
             // write transformed parameters
             if (include_tparams__) {

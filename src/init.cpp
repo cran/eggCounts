@@ -10,7 +10,8 @@ static const R_CallMethodDef CallEntries[] = {
   {NULL, NULL, 0}
 };
 
-void R_init_eggCounts(DllInfo* info) {
-  R_registerRoutines(info, NULL, CallEntries, NULL, NULL);
-  R_useDynamicSymbols(info, TRUE);
+void attribute_visible R_init_eggCounts(DllInfo *dll) {
+  // next line is necessary to avoid a NOTE from R CMD check
+  R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
+  R_useDynamicSymbols(dll, TRUE); // necessary for .onLoad() to work
 }

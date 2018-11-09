@@ -1,10 +1,9 @@
  .onLoad <- function(libname, pkgname) { # nocov start
-   if (!("methods" %in% .packages())) suppressPackageStartupMessages(attachNamespace("methods"))
-     modules <- paste0("stan_fit4", names(stanmodels), "_mod")
-     for (m in modules) loadModule(m, what = TRUE)
+  modules <- paste0("stan_fit4", names(stanmodels), "_mod")
+  for (m in modules)
+      loadModule(m, what = TRUE)
    } 
 .onAttach <- function(...) {
-  rstanarmLib <- dirname(system.file(package = "eggCounts"))
 #  pkgdesc <- utils::packageDescription("eggCounts", lib.loc = eggCountsLib)
 #  builddate <- gsub(';.*$', '', pkgdesc$Packaged)
 #  packageStartupMessage(paste("eggCounts (Version ", pkgdesc$Version, ")", sep = ""))
