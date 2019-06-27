@@ -3,11 +3,9 @@
   for (m in modules)
       loadModule(m, what = TRUE)
    } 
-.onAttach <- function(...) {
-#  pkgdesc <- utils::packageDescription("eggCounts", lib.loc = eggCountsLib)
-#  builddate <- gsub(';.*$', '', pkgdesc$Packaged)
-#  packageStartupMessage(paste("eggCounts (Version ", pkgdesc$Version, ")", sep = ""))
-  packageStartupMessage("- The compilation time for the first time using non-default priors can be up to 20s.
-- For a graphical user interface of the package implmented in Shiny, please visit: http://shiny.math.uzh.ch/user/furrer/shinyas/shiny-eggCounts/" )
+.onAttach <- function(...){
+  packageStartupMessage(paste0("Loading eggCounts (version ", utils::packageVersion("eggCounts"),"):
+- The compilation time for the first time using non-default priors can be up to 20s.
+- For a graphical user interface of the package implemented in R Shiny, visit: http://shiny.math.uzh.ch/user/furrer/shinyas/shiny-eggCounts/" ))
 }
 

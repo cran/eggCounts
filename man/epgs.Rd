@@ -6,11 +6,11 @@
 data(epgs)
 }
 \description{
-This is an example data set containing 14 eggs per gram (epg) values in sheep
+This is an example dataset containing 14 eggs per gram (epg) values in sheep
 before and after anthelmintic treatment of benzimidazole.
 The correction factor of the diagnostic technique was 50.
 }
-\format{A dataframe containing 14 observations.}
+\format{A data.frame containing 14 observations.}
 \references{
 Craig Wang, Paul R. Torgerson, Johan Hoglund, Reinhard Furrer,
 Zero-inflated hierarchical models for faecal egg counts to assess anthelmintic efficacy,

@@ -19,7 +19,8 @@ getPrior_mu <- function(x, px, y, py, s1=1, s2=0.001, plot=TRUE){
     polygon(c( 0, musx[musx<=x]),  c(musy[musx<=x],0 ), col="snow4")
     polygon(c( x, musx[musx<=y & musx>=x],x),  c(musy[musx<=y & musx>=x],0,0 ), col="snow3")
   }
-  return(param)
+  print(paste0("muPrior = list(priorDist = 'gamma', hyperpars = c(", round(param[1],3), ", ", round(param[2],3), "))"))
+  return(invisible(param))
 }
 
 ########### to find shapes of Beta distribution using confidence intervals #############
@@ -46,8 +47,12 @@ getPrior_delta <- function(lower, upper, p = 0.7, mode, conc, plot = TRUE){
   }
   colnames(param) <- c("alpha", "beta")
   denbeta <- function(x) dbeta(x, param[1], param[2])
-  if (plot) curve(denbeta, ylab = "Density", xlab = bquote(delta))
-  return(param)
+  if (plot) {
+    curve(denbeta, ylab = "Density", xlab = bquote(delta))
+    polygon(c( lower, seq(lower, upper, length.out  = 101),lower), c(denbeta(seq(lower, upper, length.out  = 101)),0,0 ), col="snow4") 
+  }
+  print(paste0("deltaPrior = list(priorDist = 'beta', hyperpars = c(", round(param[1],3), ", ", round(param[2],3), "))"))
+  return(invisible(param))
 }
 # shape and rate parameter for beta distribution where I believe 70% of the distribution lies between 0.5 and 0.85
 # probability can be changed if practitioners are very sure or less sure about their CIs (default is 70%)

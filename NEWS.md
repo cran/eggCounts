@@ -1,4 +1,13 @@
-## eggCounts 2.1, 2.1-1:
+## eggCounts 2.2:
+
+* Improved documentation
+
+* Improved examples
+
+* Improved printing of warning messages
+
+
+## eggCounts 2.1, 2.1-1, 2.1-2:
 
 * Improved usability of fecr_stanExtra() 
 

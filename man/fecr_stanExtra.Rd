@@ -1,6 +1,6 @@
 \name{fecr_stanExtra}
 \alias{fecr_stanExtra}
-\title{Modelling the reduction of faecal egg count data using custom models}
+\title{Model the reduction of faecal egg count using custom models}
 \usage{
 fecr_stanExtra(preFEC, postFEC, rawCounts = FALSE, preCF = 50, postCF = preCF, 
   modelName = NULL, modelCode = NULL, modelFile = NULL, modelData = NULL,
@@ -8,9 +8,9 @@ fecr_stanExtra(preFEC, postFEC, rawCounts = FALSE, preCF = 50, postCF = preCF,
   ncore = 1, adaptDelta = 0.95, verbose = FALSE)
 }
 \arguments{
-\item{preFEC}{vector of pre-treatment faecal egg counts. Not required if \code{modelCode} or \code{modelFile} is supplied.}
+\item{preFEC}{numeric vector. Pre-treatment faecal egg counts. Not required if \code{modelData} is supplied.}
 
-\item{postFEC}{vector of post-treatment faecal egg counts. Not required if \code{modelCode} or \code{modelFile} is supplied.}
+\item{postFEC}{numeric vector. Post-treatment faecal egg counts. Not required if \code{modelData} is supplied.}
 
 \item{rawCounts}{logical. If TRUE, \code{preFEC} and \code{postFEC} correspond to raw counts
 (as counted on equipment). Otherwise they correspond to calculated epgs (raw counts times correction factor).
@@ -24,38 +24,35 @@ Defaults to \code{FALSE}. Not required if \code{modelCode} or \code{modelFile} i
 
 \item{modelCode}{stan model code. Not required when \code{modelName} or \code{modelFile} is supplied.}
 
-\item{modelFile}{stan model file with file extension '*.stan'. Not required when \code{modelName} or \code{modelCode} is supplied.}
+\item{modelFile}{stan model file with file extension \sQuote{*.stan}. Not required when \code{modelName} or \code{modelCode} is supplied.}
 
-\item{modelData}{stan data list. A named list or environment providing the data for the model, or a character vector for all the names of objects used as data. Not required when \code{modelName} is supplied.}
+\item{modelData}{stan data list. A named list or environment providing the data for the model, or a character vector for all the names of objects in the current enviroment used as data. Not required when \code{modelName} is supplied.}
 
-\item{nsamples}{a positive integer specifying the number of samples for each chain (including burn-in samples)}
+\item{nsamples}{a positive integer. Number of samples for each chain (including burn-in samples).}
 
-\item{nburnin}{a positive integer specifying the number of burn-in samples}
+\item{nburnin}{a positive integer. Number of burn-in samples.}
 
-\item{thinning}{a positive integer specifying the thinning parameter, the period for saving samples}
+\item{thinning}{a positive integer. Thinning parameter, i.e. the period for saving samples.}
 
-\item{nchain}{a positive integer specifying the number of chains}
+\item{nchain}{a positive integer. Number of chains.}
 
-\item{ncore}{a positive integer specifying the number of cores to use when executing the chains in parallel}
+\item{ncore}{a positive integer. Number of cores to use when executing the chains in parallel.}
 
-\item{adaptDelta}{the target acceptance rate, a numeric value between 0 and 1}
+\item{adaptDelta}{numeric. The target acceptance rate, a numeric value between 0 and 1.}
 
-\item{verbose}{logical. If TRUE, prints progress and debugging information}
+\item{verbose}{logical. If TRUE, prints progress and debugging information.}
 
 }
 \value{
 Prints out the posterior summary of \code{FECR} as the reduction, \code{meanEPG.untreated} as the mean pre-treatment epg, and \code{meanEPG.treated} as the mean after-treatment epg. The posterior summary contains the mean, standard deviation (sd), 2.5\%,  50\% and 97.5\% percentiles, the 95\% highest posterior density interval (HPDLow95 and HPDHigh95) and the posterior mode. 
 
 The returned value is a list that consists of:
-\item{stan.model}{A object of class \code{stanmodel} that was used.}
-\item{stan.samples}{An object of S4 class \code{stanfit} representing the fitted results. For more information, please see the \href{https://cran.r-project.org/package=rstan}{\code{stanfit-class}} in \code{rstan} reference manual.}
-
-\item{posterior.summary}{A data frame that is the same as the printed posterior summary, not available for custom models.}
+\item{stan.model}{an object of class \code{\link[rstan]{stanmodel-class}} that was used}
+\item{stan.samples}{an object of S4 class \code{\link[rstan]{stanfit}} representing the fitted results}
+\item{posterior.summary}{a data.frame that is the same as the printed posterior summary. Not available for custom models.}
 }
 \description{
-Models the reduction in faecal egg counts data with custom model formulation using Stan modelling language. 
-
-It is computationally several-fold faster compared to conventional MCMC techniques. For the installation instruction of Stan, please read \href{https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started}{https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started}.
+Models the reduction in faecal egg counts with custom model formulation using Stan modelling language (for advanced users).
 }
 \details{
 If  \code{modelName} is one of c("Po", "UPo", "ZIPo", "ZIUPo"), then outlier-adjusted models are used. 
@@ -86,7 +83,7 @@ model1 <- fecr_stanExtra(epgs$before, epgs$after, rawCounts=FALSE,
 samples <- stan2mcmc(model1$stan.samples)
 fecr_probs(model1$stan.samples, threshold = 0.99)
 
-## apply a very simple custom model
+## apply a simple custom model
 code <- "data{
   int J; // number of animals
   int y_before[J]; // after treatment McMaster count
@@ -107,5 +104,5 @@ dat <- list(J = nrow(epgs), y_before = epgs$before,
             y_after = epgs$after)
 model2 <- fecr_stanExtra(modelCode = code, modelData = dat)
 }}
-\keyword{modelling}
+\keyword{models}
 

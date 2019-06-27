@@ -77,9 +77,9 @@ checkConvergence <- function(samples){
   rhatPar <- rownames(rhats)[which(rhats$Rhat > 1.1)]
   
   if (length(rhatPar) > 0){
-    warning("there are evidence of non-convergence for parameter: ", rhatPar, " since their potential scale reduction factors (Brooks and Gelman, 1998) are greater than 1.1.")
+    warning("there are evidence of non-convergence for parameter: ", rhatPar, " since their potential scale reduction factors (Brooks and Gelman, 1998) are greater than 1.1.\n")
   } else {
-    cat("\nNOTE: there are no evidence of non-convergence since all parameters have potential scale reduction factors (Brooks and Gelman, 1998) less than 1.1.")
+    cat("\nNOTE: there is no evidence of non-convergence since all parameters have potential scale reduction factors (Brooks and Gelman, 1998) less than 1.1.\n")
   }
 }
 
@@ -90,7 +90,7 @@ checkDivergence <- function(samples, adaptDelta){
   }))
   if (n_d > 0) {
     warning("there were ", n_d, " divergent transitions after warmup, the joint posterior distribution is not sufficiently explored.\n", 
-            " Re-run the model with adaptDelta > ", adaptDelta, " may help, or results can be unreliable.", call. = FALSE)}
+            " Re-run the model with adaptDelta > ", adaptDelta, " may help, or results can be unreliable.\n", call. = FALSE)}
 }
 
 

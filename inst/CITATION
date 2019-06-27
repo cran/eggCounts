@@ -50,10 +50,10 @@ citEntry(entry = "Manual",
     author = personList(as.person("Craig Wang"),
       as.person("Michaela Paul")),
     year = "2018",
-    note = "R package version 2.0",
+    note = "R package version 2.2",
     url = "https://CRAN.R-project.org/package=eggCounts",
 
   textVersion  =
-  paste("Wang, C. and Paul, M. (2018). eggCounts: Hierarchical Modelling of Faecal Egg Counts. R package version 2.0.
+  paste("Wang, C. and Paul, M. (2019). eggCounts: Hierarchical Modelling of Faecal Egg Counts. R package version 2.2.
   https://CRAN.R-project.org/package=eggCounts"),
 )
