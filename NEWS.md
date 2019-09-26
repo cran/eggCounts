@@ -1,4 +1,8 @@
-## eggCounts 2.2:
+## eggCounts 2.2, 2.2-1:
+
+* Updated makevars files
+
+* Fixed a bug in the unpaired model (thanks to Paul)
 
 * Improved documentation
 

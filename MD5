@@ -1,6 +1,6 @@
-12a8820510b272bf78dfb3b0bee9b239 *DESCRIPTION
+48821c77848f9ed46d329099e94ced07 *DESCRIPTION
 b557c9348b560f0b9cc678b5cecdb36c *NAMESPACE
-b2ac07f1bf96d1f4bc5bb2451f2b3fa3 *NEWS.md
+0e77757c57482e72c306f666731921c1 *NEWS.md
 78e0172e958543f0a0cee026700c1bc4 *R/fec_models_stan.R
 b6dc2330d8a3ec2f557ac5015d46506f *R/fec_stan.R
 3811156d9a05f65dd7c2126d9c21b647 *R/fecr_models_stan.R
@@ -18,6 +18,8 @@ cd5b7ef67eccc562b7e7552994264f37 *R/stanmodels.R
 0c83bffc24ff5010059233e5178c4ade *R/waavpMethods.R
 cdc8734ee0283c6b10a0f7d4e650fa77 *R/zzz.R
 3fa144096bcc2f18955206d499994e08 *build/vignette.rds
+c5e2f5a689b0bad3a05b39d37b9042f1 *cleanup
+c7af529e4b42845142c21cedcb83bba3 *cleanup.win
 e0003fa4c80c94350bc7ffe3a284a68c *data/epgs.csv.gz
 c67bd997300f0863fc4fe2a788b11954 *demo/00Index
 ca644b9926c91ac7e5426629a5892d44 *demo/fecm_stan.R
@@ -26,7 +28,7 @@ d32239bcb673463ab874e80d47fae504 *inst/chunks/gpl.txt
 8217be7a03ab999f51110871b9d3a9cd *inst/doc/eggCounts_vignettes.pdf
 980bb8aeff861d46b9e15e3f62faf3f2 *inst/doc/eggCounts_vignettes.pdf.asis
 855c064dbf8deaff96c8dc8a87169109 *inst/include/meta_header.hpp
-d79bb921bddfa09f92a183a25f3c9f4d *man/eggCounts-package.Rd
+0874c2ae56e6ad2535d456b4ed93e7ea *man/eggCounts-package.Rd
 be4c539065a17e34ee453ed83bc51344 *man/epgs.Rd
 658fc84dada5e265b786b3371fa795d9 *man/fec_stan.Rd
 ad6d4f6ae86feb89a2205815830a3357 *man/fecr_probability.Rd
@@ -40,8 +42,8 @@ dcd24457a443a1c49199209c43285aad *man/getPrior_delta.Rd
 a4cfe42f68f8698789b801c8f466b294 *man/simData1s.Rd
 0b634ef510810660d91c937555c9cce4 *man/simData2s.Rd
 b5f1d421f84e2377f80931e2b5e991dc *man/stan2mcmc.Rd
-75a335ded8bfd4255e8792b51e7dc70b *src/Makevars
-4f8b5ea5eff4dcaec8aa164b31a94a0f *src/Makevars.win
+e385b69646bcc4555858feb68eb1f52e *src/Makevars
+a0b74bb05d003faf2d33bf9a60f95f9d *src/Makevars.win
 21b00383596a797e665b36253023bc53 *src/Modules.cpp
 33a4e6f9f6822de9c6c8b0f04210d245 *src/include/models.hpp
 064d04a31e4b33c1ecfeca32585da749 *src/init.cpp
@@ -50,7 +52,7 @@ b5f1d421f84e2377f80931e2b5e991dc *man/stan2mcmc.Rd
 1d770f5ea529c26362520687fef133b5 *src/stan_files/nb.stan
 7f8c6b97e70b4b8033214b8b10491947 *src/stan_files/paired.stan
 8ba9ebd99051bd7c9884155fc2e6fe75 *src/stan_files/simple.stan
-c47232a50b611735e0f9c5634c94c495 *src/stan_files/unpaired.stan
+1e6d947723becc47bc524b7c9d393224 *src/stan_files/unpaired.stan
 b8dc97952b6af51331c00349b9cfcec3 *src/stan_files/zinb.stan
 0e354c692dcaeb0e1c7b9d50ad166488 *src/stan_files/zipaired.stan
 745c1fcd5990c520d8c65cde9e7c7ee8 *src/stan_files/ziunpaired.stan
