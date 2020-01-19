@@ -35,9 +35,9 @@ checkData <- function(preFEC, postFEC, rawCounts, preCF, postCF){
   postN <- length(postFEC)
   
   # check correction factors
-  checkCF <- function(CF){(CF < 0)|(ceiling(CF)!=floor(CF))}
-  if (any(sapply(preCF,checkCF)))    stop("correction factor(s) should be a positive integer", call.=FALSE)
-  if (any(sapply(postCF,checkCF)))     stop("correction factor(s) should be a positive integer", call.=FALSE)
+#  checkCF <- function(CF){(CF < 0)|(ceiling(CF)!=floor(CF))}
+#  if (any(sapply(preCF,checkCF)))    stop("correction factor(s) should be a positive integer", call.=FALSE)
+#  if (any(sapply(postCF,checkCF)))     stop("correction factor(s) should be a positive integer", call.=FALSE)
   if(length(preCF)>1 && length(preCF)!=preN) stop("Lengths of the vectors preCF and preFEC do not match\n")
   if(length(postCF)>1 && length(postCF)!=postN) stop("Lengths of the vectors postCF and postFEC do not match\n")
   
@@ -48,11 +48,9 @@ checkData <- function(preFEC, postFEC, rawCounts, preCF, postCF){
   }
   
   # divide data by correction factor
-  if(any(preFEC %% preDilution !=0)) stop(paste(c("Correction factor preCF does not match the given pre-treatment faecal egg counts. \n
-  A possible correction factor (the largest common divisor) is"),mGCD(preFEC)))
+  if(any(sapply(preFEC, function(x) min(abs(c(x %% preDilution, x %% preDilution - preDilution)))) > 0.001)) stop(paste(c("Correction factor preCF does not match the given pre-treatment faecal egg counts. Non-integer detected.")))
   preFEC <- preFEC/preDilution
-  if(any(postFEC %% postDilution !=0)) stop(paste(c("Correction factor postCF does not match the given post-treatment faecal egg counts. \n
-  A possible correction factor (the largest common divisor) is"),mGCD(postFEC)))
+  if(any(sapply(postFEC, function(x) min(abs(c(x %% postDilution, x %% postDilution - postDilution)))) > 0.001))  stop(paste(c("Correction factor postCF does not match the given post-treatment faecal egg counts. Non-integer detected.")))
   postFEC <- postFEC/postDilution
   
   if (!rawCounts){
@@ -161,9 +159,9 @@ fecr_stan<-function(preFEC, postFEC, rawCounts = FALSE, preCF = 50, postCF = pre
   
   # create data list for stan use
   epg_data <-if(paired){
-    list(J=preN, ystarbraw = preFEC, ystararaw = postFEC, fpre = preCF, fpost = postCF)
+    list(J=preN, ystarbraw = as.integer(preFEC), ystararaw = as.integer(postFEC), fpre = preCF, fpost = postCF)
   } else {
-      list(Jb=preN, Ja=postN, ystarbraw = preFEC, ystararaw = postFEC, fpre = preCF, fpost = postCF)}
+      list(Jb=preN, Ja=postN, ystarbraw = as.integer(preFEC), ystararaw = as.integer(postFEC), fpre = preCF, fpost = postCF)}
   
   if (saveAll){
     savePars <- NA

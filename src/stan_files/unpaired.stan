@@ -3,8 +3,8 @@ data{
   int Jb;
   int ystararaw[Ja]; // after treatment McMaster count
   int ystarbraw[Jb]; // before treatment McMaster count
-  int fpost[Ja];
-  int fpre[Jb];
+  real fpost[Ja];
+  real fpre[Jb];
 }
 parameters{
   real<lower=0> kappa;

@@ -28,7 +28,7 @@ t8<-fecr_stan(counts[,"masterPre"],counts[,"masterPost"],rawCounts=TRUE,paired=T
               nburnin=500)$stan.samples
 expect_that(t8,is_a("stanfit"))
 
-t9<-fecr_stan(counts[,"masterPre"],counts[,"masterPost"],rawCounts=TRUE,paired=FALSE,zeroInflation = FALSE,indEfficacy = FALSE,nsamples=1000, nburnin=500)$stan.samples
+t9<-fecr_stan(counts[,"masterPre"],counts[,"masterPost"][-1],rawCounts=TRUE,paired=FALSE,zeroInflation = FALSE,indEfficacy = FALSE,nsamples=1000, nburnin=500)$stan.samples
 expect_that(t9,is_a("stanfit"))
 
 t10<-fecr_stan(counts[,"masterPre"],counts[,"masterPost"],rawCounts=TRUE,paired=TRUE,zeroInflation = FALSE, indEfficacy = TRUE, nsamples=1000, nburnin=500)$stan.samples
@@ -44,7 +44,7 @@ expect_warning(fecr_stan(counts[,"masterPre"],counts[,"masterPost"],rawCounts=TR
 
 # check incorrect inputs
 expect_that(fecr_stan(counts[,"masterPre"],counts[,"masterPost"],rawCounts=FALSE,preCF=50),throws_error())
-expect_that(fecr_stan(counts[,"obsPre"],counts[,"obsPost"],preCF=50.5), throws_error())
+# expect_that(fecr_stan(counts[,"obsPre"],counts[,"obsPost"],preCF=50.5), throws_error())
 expect_that(fecr_stan(counts[,"obsPre"],counts[,"obsPost"],preCF=50, paired=FALSE), throws_error())}
 
 # check functions as of version 2.0

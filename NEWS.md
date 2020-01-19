@@ -1,3 +1,8 @@
+## eggCounts 2.3
+
+* No longer requiring integer correction factors
+
+
 ## eggCounts 2.2, 2.2-1:
 
 * Updated makevars files

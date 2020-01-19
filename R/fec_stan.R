@@ -13,8 +13,8 @@ fec_stan<-function(fec, rawCounts=FALSE, CF=50,
   # number of faecal samples
   n <- length(fec)
   # check correction factors
-  checkCF <- function(CF){(CF < 0)|(ceiling(CF)!=floor(CF))}
-  if (any(sapply(CF,checkCF)))     stop("correction factor(s) should be a positive integer", call.=FALSE)
+  # checkCF <- function(CF){(CF < 0)|(ceiling(CF)!=floor(CF))}
+  # if (any(sapply(CF,checkCF)))     stop("correction factor(s) should be a positive integer", call.=FALSE)
   if(length(CF)>1 && length(CF)!=n) stop("lengths of the vectors for FEC and correction factors do not match\n")
   
   # raw counts or EpGs?
@@ -28,8 +28,7 @@ fec_stan<-function(fec, rawCounts=FALSE, CF=50,
   if (!is.logical(zeroInflation))
     stop("the zeroInflation argument must be a logical", call.=FALSE)
   # divide data by correction factor
-  if(any(fec %% dilution !=0)) stop(paste(c("correction factor preCF does not match the given pre-treatment faecal egg counts. \n
-  A possible correction factor (the largest common divisor) is"),mGCD(fec)))
+  if(any(sapply(fec, function(x) min(abs(c(x %% dilution, x %% dilution - dilution)))) > 0.001)) stop(paste(c("correction factor preCF does not match the given pre-treatment faecal egg counts. Non-integer detected.")))
   fec <- fec/dilution 
   
   # check model and set default values
@@ -41,7 +40,7 @@ fec_stan<-function(fec, rawCounts=FALSE, CF=50,
                  
   # create data for stan use
   if (length(CF)==1) CF<-rep(CF,n)
-  epg_data <-list(J=n, ystarraw = fec, CF=CF)
+  epg_data <-list(J=n, ystarraw = as.integer(fec), CF=CF)
   
   if (saveAll){
     savePars <- NA

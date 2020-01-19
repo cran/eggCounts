@@ -2,8 +2,8 @@ data{
   int J; // number of animals
   int ystararaw[J]; // after treatment McMaster count
   int ystarbraw[J]; // before treatment McMaster count
-  int fpre[J];
-  int fpost[J];
+  real fpre[J];
+  real fpost[J];
 }
 parameters{
   real<lower=0> kappa;

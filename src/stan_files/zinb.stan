@@ -1,7 +1,7 @@
 data {
   int J; // number of animals
   int ystarraw[J]; // McMaster count
-  int CF[J];
+  real CF[J];
 }
 parameters {
   real<lower=0> kappa;
