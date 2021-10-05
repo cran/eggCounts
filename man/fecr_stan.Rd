@@ -88,7 +88,7 @@ Two examples of useful non-default priors include:
 \item \code{list(priorDist = "beta", hyperpars = c(0, 5))} for allowing up to 4-fold increase of egg count after treatment.
 }}
 \subsection{Other information}{
-The first time each model with non-default priors is applied, it can take up to 20 seconds to compile the model. Currently the function only support prior distributions with two parameters. For a complete list of supported priors and their parameterization, please consult the list of distributions in \href{http://mc-stan.org/documentation/}{Stan}. 
+The first time each model with non-default priors is applied, it can take up to 20 seconds to compile the model. Currently the function only support prior distributions with two parameters. For a complete list of supported priors and their parameterization, please consult the list of distributions in \href{https://mc-stan.org/users/documentation/}{Stan User Guide}. 
 
 The default number of samples per chain is 2000, with 1000 burn-in samples. Normally this is sufficient in Stan. If the chains do not converge, one should tune the MCMC parameters until convergence is reached to ensure reliable results.
 }}
@@ -97,17 +97,17 @@ The default number of samples per chain is 2000, with 1000 burn-in samples. Norm
 \strong{Individual efficacy models:}
 Craig Wang, Paul R. Torgerson, Ray M. Kaplan, Melissa M. George, Reinhard Furrer. (2018)
 Modelling anthelmintic resistance by extending eggCounts package to allow individual efficacy,
-International Journal for Parasitology: Drugs and Drug Resistance, Volume 8, Pages 386-393. \href{https://doi.org/10.1016/j.ijpddr.2018.07.003}{https://doi.org/10.1016/j.ijpddr.2018.07.003}
+International Journal for Parasitology: Drugs and Drug Resistance, Volume 8, Pages 386-393. <\doi{10.1016/j.ijpddr.2018.07.003}>
 
 \strong{Zero-inflation models:}
 Craig Wang, Paul R. Torgerson, Johan Hoglund, Reinhard Furrer. (2017)
 Zero-inflated hierarchical models for faecal egg counts to assess anthelmintic efficacy,
-Veterinary Parasitology, Volume 235, Pages 20-28. \href{http://dx.doi.org/10.1016/j.vetpar.2016.12.007}{http://dx.doi.org/10.1016/j.vetpar.2016.12.007}
+Veterinary Parasitology, Volume 235, Pages 20-28. <\doi{10.1016/j.vetpar.2016.12.007}>
 
 \strong{Other models:}
 Paul R. Torgerson, Michaela Paul, Reinhard Furrer. (2014)
 Evaluating faecal egg count reduction using a specifically designed package 'eggCounts' in {R} and a user friendly web interface,
-International Journal for Parasitology, Volume 44, Pages 299-303. \href{http://dx.doi.org/10.1016/j.ijpara.2014.01.005}{http://dx.doi.org/10.1016/j.ijpara.2014.01.005}
+International Journal for Parasitology, Volume 44, Pages 299-303. <\doi{10.1016/j.ijpara.2014.01.005}>
 }
 
 \author{ 

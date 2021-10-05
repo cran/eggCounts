@@ -60,7 +60,7 @@ Models the mean of faecal egg counts with Bayesian hierarchical models. See Deta
 Note that this function only models the mean of egg counts, see \code{\link{fecr_stan}()} for modelling the reduction.
 }
 \subsection{Other information}{
-The first time each model with non-default priors is applied, it can take up to 20 seconds to compile the model. Currently the function only support prior distributions with two parameters. For a complete list of supported priors and their parameterization, please consult the list of distributions in \href{http://mc-stan.org/documentation/}{Stan}. 
+The first time each model with non-default priors is applied, it can take up to 20 seconds to compile the model. Currently the function only support prior distributions with two parameters. For a complete list of supported priors and their parameterization, please consult the list of distributions in \href{https://mc-stan.org/users/documentation/}{Stan User Guide}. 
 
 The default number of samples per chain is 2000, with 1000 burn-in samples. Normally this is sufficient in Stan. If the chains do not converge, one should tune the MCMC parameters until convergence is reached to ensure reliable results.
 }

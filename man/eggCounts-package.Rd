@@ -12,8 +12,8 @@ This package implements Bayesian hierarchical models for the analysis of faecal 
 \tabular{ll}{
 Package: \tab eggCounts\cr
 Type: \tab Package\cr
-Version: \tab 2.3\cr
-Date: \tab 2020-01-15\cr
+Version: \tab 2.3-1\cr
+Date: \tab 2021-10-02\cr
 License: \tab GPL (>= 3) \cr
 LazyLoad: \tab yes\cr
 }}
