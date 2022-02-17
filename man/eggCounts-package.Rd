@@ -12,14 +12,14 @@ This package implements Bayesian hierarchical models for the analysis of faecal 
 \tabular{ll}{
 Package: \tab eggCounts\cr
 Type: \tab Package\cr
-Version: \tab 2.3-1\cr
-Date: \tab 2021-10-02\cr
+Version: \tab 2.3-2\cr
+Date: \tab 2022-02-13\cr
 License: \tab GPL (>= 3) \cr
 LazyLoad: \tab yes\cr
 }}
 
 \author{
-Craig Wang \email{craig.wang@math.uzh.ch} \cr
+Craig Wang \email{craigwang247@gmail.com} \cr
 Michaela Paul 
 }
 

@@ -1,5 +1,5 @@
-a6aad58324c87b7e762aa0c7b93974fc *DESCRIPTION
-d4c9dcbf22217e3985380148c0bf8eed *NAMESPACE
+b04f68b80a63d98d6d730de012cbbd24 *DESCRIPTION
+76d64da07a8a4e50b05057931ca63a2d *NAMESPACE
 cfeca3ef038859c73aae0cff1481f308 *NEWS.md
 bfb94458e58b7857432c4ae45aafe83d *R/fec_models_stan.R
 08b58674218fd85f70238df73d38542b *R/fec_stan.R
@@ -17,7 +17,7 @@ b0376641699954187a2ff5a37b640363 *R/stan2mcmc.R
 8c80f65115ae50d8b3fac5243ce80ecf *R/stanmodels.R
 6e6a198a3750437fb86b58bbd1206aa3 *R/waavpMethods.R
 06f393454d377799bc81b7b19bf93393 *R/zzz.R
-88fd0b6522e5bbb9eb14ea34f31b5336 *build/partial.rdb
+a8a7824fb863930b02f6bd2ff3025ede *build/partial.rdb
 ea007806726012b2e4e891fa60719bb2 *build/vignette.rds
 c5e2f5a689b0bad3a05b39d37b9042f1 *cleanup
 e32e79fa65831d93d8eb40367eec1e55 *cleanup.win
@@ -28,10 +28,10 @@ b694bd567c719ca53137d76b8538924b *demo/00Index
 b2012c3064101d51879d95eb933182e6 *demo/fecm_stan.R
 fd65967d038feef315d6c335d417c76d *inst/CITATION
 3c34afdc3adf82d2448f12715a255122 *inst/chunks/gpl.txt
-daf3323d4442fb870ad595c2edadf4c8 *inst/doc/eggCounts_vignettes.pdf
+d4328bffe4d682ce6a2b3f888b491ec4 *inst/doc/eggCounts_vignettes.pdf
 520379b15789456c00a41874f9aab00f *inst/doc/eggCounts_vignettes.pdf.asis
 855c064dbf8deaff96c8dc8a87169109 *inst/include/meta_header.hpp
-befa21af353d44c4663812352f9c6b66 *man/eggCounts-package.Rd
+e65ab1b7a4cc3798a88ffb38fc5eb167 *man/eggCounts-package.Rd
 8a14daece89358201e8414fcec5a268f *man/epgs.Rd
 c05fa6c975d38817b6893072d1b29b05 *man/fec_stan.Rd
 bee64df4a6c7ab305ab8aa4a18c2da3f *man/fecr_probability.Rd
