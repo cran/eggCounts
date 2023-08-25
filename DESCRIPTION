@@ -5,8 +5,8 @@ Depends: R (>= 3.4.0), Rcpp (>= 0.12.0)
 Suggests: eggCountsExtra, R.rsp, testthat
 VignetteBuilder: R.rsp
 Title: Hierarchical Modelling of Faecal Egg Counts
-Version: 2.3-2
-Date: 2022-02-13
+Version: 2.3-3
+Date: 2023-08-20
 Authors@R: c(
     person("Craig", "Wang", email = "craigwang247@gmail.com", role = c("aut","cre"),comment = c(ORCID = "0000-0003-1804-2463")),
     person("Michaela", "Paul", role = "aut"),
@@ -34,7 +34,7 @@ RcppModules: stan_fit4paired_mod, stan_fit4unpaired_mod,
         stan_fit4zipaired_mod, stan_fit4ziunpaired_mod,
         stan_fit4nb_mod, stan_fit4zinb_mod, stan_fit4indefficacy_mod,
         stan_fit4simple_mod
-Packaged: 2022-02-15 21:30:16 UTC; wc641
+Packaged: 2023-08-25 20:52:55 UTC; crwang
 Author: Craig Wang [aut, cre] (<https://orcid.org/0000-0003-1804-2463>),
   Michaela Paul [aut],
   Tea Isler [ctb],
@@ -42,4 +42,4 @@ Author: Craig Wang [aut, cre] (<https://orcid.org/0000-0003-1804-2463>),
   Trustees of Columbia University [cph] (src/init.cpp, tools/make_cc.R,
     R/stanmodels.R)
 Repository: CRAN
-Date/Publication: 2022-02-17 11:52:03 UTC
+Date/Publication: 2023-08-25 22:40:06 UTC
