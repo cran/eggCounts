@@ -80,8 +80,8 @@ static int current_statement__= 0;
 static const std::vector<string> locations_array__ = {" (found before start of program)",
                                                       " (in 'nb', line 7, column 2 to column 22)",
                                                       " (in 'nb', line 8, column 2 to column 19)",
-                                                      " (in 'nb', line 9, column 2 to column 23)",
-                                                      " (in 'nb', line 12, column 2 to column 17)",
+                                                      " (in 'nb', line 9, column 2 to column 29)",
+                                                      " (in 'nb', line 12, column 2 to column 23)",
                                                       " (in 'nb', line 14, column 4 to column 29)",
                                                       " (in 'nb', line 13, column 16 to line 15, column 3)",
                                                       " (in 'nb', line 13, column 2 to line 15, column 3)",
@@ -90,12 +90,12 @@ static const std::vector<string> locations_array__ = {" (found before start of p
                                                       " (in 'nb', line 20, column 2 to column 31)",
                                                       " (in 'nb', line 21, column 2 to column 29)",
                                                       " (in 'nb', line 2, column 2 to column 8)",
-                                                      " (in 'nb', line 3, column 15 to column 16)",
-                                                      " (in 'nb', line 3, column 2 to column 18)",
-                                                      " (in 'nb', line 4, column 10 to column 11)",
-                                                      " (in 'nb', line 4, column 2 to column 13)",
-                                                      " (in 'nb', line 9, column 20 to column 21)",
-                                                      " (in 'nb', line 12, column 14 to column 15)"};
+                                                      " (in 'nb', line 3, column 8 to column 9)",
+                                                      " (in 'nb', line 3, column 2 to column 24)",
+                                                      " (in 'nb', line 4, column 8 to column 9)",
+                                                      " (in 'nb', line 4, column 2 to column 19)",
+                                                      " (in 'nb', line 9, column 8 to column 9)",
+                                                      " (in 'nb', line 12, column 8 to column 9)"};
 #include <stan_meta_header.hpp>
 class model_nb final : public model_base_crtp<model_nb> {
 private:

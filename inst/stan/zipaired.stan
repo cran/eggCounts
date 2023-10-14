@@ -1,20 +1,20 @@
 data {
   int J; // number of animals
-  int ystararaw[J]; // after treatment McMaster count
-  int ystarbraw[J]; // before treatment McMaster count
-  real fpre[J];
-  real fpost[J];
+  array[J] int ystararaw; // after treatment McMaster count
+  array[J] int ystarbraw; // before treatment McMaster count
+  array[J] real fpre;
+  array[J] real fpost;
 }
 parameters{
   real<lower=0> kappa;
   real<lower=0> mu;
   real<lower=0,upper=1> delta;
-  real<lower=0> mub[J];
+  array[J] real<lower=0> mub;
   real<lower=0,upper=1> phi;
 }
 transformed parameters{
-  real lambdaa[J];
-  real lambdab[J];
+  array[J] real lambdaa;
+  array[J] real lambdab;
   for (i in 1:J){
     lambdab[i] = mub[i]/fpre[i];
     lambdaa[i] = delta*mub[i]/fpost[i];

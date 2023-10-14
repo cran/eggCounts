@@ -39,20 +39,20 @@ paired_stan <- function(priors){
   dist.delta <- priors$delta$priorDist
   paste0('data {
            int J; // number of animals
-           int ystararaw[J]; // after treatment McMaster count
-           int ystarbraw[J]; // before treatment McMaster count
-           int fpre[J];
-           int fpost[J];
+           array[J] int ystararaw; // after treatment McMaster count
+           array[J] int ystarbraw; // before treatment McMaster count
+           array[J] int fpre;
+           array[J] int fpost;
            }
            parameters {
            real<lower=0> kappa;
            real<lower=0> mu;
            real<lower=0> delta;
-           real<lower=0> mub[J];
+           array[J] real<lower=0> mub;
            }
            transformed parameters{
-           real lambdaa[J];
-           real lambdab[J];
+           array[J] real lambdaa;
+           array[J] real lambdab;
            for (i in 1:J){
            lambdab[i] = mub[i]/fpre[i];
            lambdaa[i] = delta*mub[i]/fpost[i];
@@ -86,21 +86,21 @@ unpaired_stan <- function(priors){
   paste0('data {
            int Ja; // number of animals
            int Jb;
-           int ystararaw[Ja]; // after treatment McMaster count
-           int ystarbraw[Jb]; // before treatment McMaster count
-           int fpre[Ja];
-           int fpost[Jb];
+           array[Ja] int ystararaw; // after treatment McMaster count
+           array[Jb] int ystarbraw; // before treatment McMaster count
+           array[Ja] int fpost;
+           array[Jb] int fpre;
          }
            parameters {
              real<lower=0> kappa;
              real<lower=0> mu;
              real<lower=0> delta;
-             real<lower=0> mub[Jb]; # true epg before treatment
-             real<lower=0> mua[Ja]; # true epg after treatment
+             array[Jb] real<lower=0> mub; # true epg before treatment
+             array[Ja] real<lower=0> mua; # true epg after treatment
            }
            transformed parameters{
-             real lambdaa[Ja];
-             real lambdab[Jb];
+             array[Ja] real lambdaa;
+             array[Jb] real lambdab;
              real kappamu;
              for (i in 1:Jb){
              lambdab[i] = mub[i]/fpre[i];
@@ -144,22 +144,22 @@ ZI_unpaired_stan <- function(priors){
   paste0('data {
            int Ja; // number of animals
            int Jb;
-           int ystararaw[Ja]; // after treatment McMaster count
-           int ystarbraw[Jb]; // before treatment McMaster count
-           int fpost[Ja];
-           int fpre[Jb];
+           array[Ja] int ystararaw; // after treatment McMaster count
+           array[Jb] int ystarbraw; // before treatment McMaster count
+           array[Ja] int fpost;
+           array[Jb] int fpre;
         }
         parameters {
            real<lower=0> kappa;
            real<lower=0> mu;
            real<lower=0> delta;
-           real<lower=0> mua[Ja];
-           real<lower=0> mub[Jb];
+           array[Ja] real<lower=0> mua;
+           array[Jb] real<lower=0> mub;
            real<lower=0,upper=1> phi;
         }
         transformed parameters{
-          real lambdaa[Ja];
-          real lambdab[Jb];
+          array[Ja] real lambdaa;
+          array[Jb] real lambdab;
           for (i in 1:Jb){
             lambdab[i] = mub[i]/fpre[i];
           }
@@ -212,21 +212,21 @@ ZI_paired_stan <- function(priors){
   dist.phi <- priors$phi$priorDist
   paste0('data {
            int J; // number of animals
-           int ystararaw[J]; // after treatment McMaster count
-           int ystarbraw[J]; // before treatment McMaster count
-           int fpre[J];
-           int fpost[J];
+           array[J] int ystararaw; // after treatment McMaster count
+           array[J] int ystarbraw; // before treatment McMaster count
+           array[J] int fpre;
+           array[J] int fpost;
         }
          parameters {
            real<lower=0> kappa;
            real<lower=0> mu;
            real<lower=0> delta;
-           real<lower=0> mub[J];
+           array[J] real<lower=0> mub;
            real<lower=0,upper=1> phi;
          }
         transformed parameters{
-          real lambdaa[J];
-          real lambdab[J];
+          array[J] real lambdaa;
+          array[J] real lambdab;
           for (i in 1:J){
             lambdab[i] = mub[i]/fpre[i];
             lambdaa[i] = delta*mub[i]/fpost[i];
@@ -277,22 +277,22 @@ indeff_stan <- function(priors){
   
   paste0('data {
            int J; // number of animals
-           int ystararaw[J]; // after treatment McMaster count
-           int ystarbraw[J]; // before treatment McMaster count
-           int fpre[J];
-           int fpost[J];
+           array[J] int ystararaw; // after treatment McMaster count
+           array[J] int ystarbraw; // before treatment McMaster count
+           array[J] int fpre;
+           array[J] int fpost;
            }
            parameters {
            real<lower=0> kappa;
            real<lower=0> mu;
-           real<lower=0> delta[J];
+           array[J] real<lower=0> delta;
            real<lower=0> delta_shape;
            real<lower=0> delta_mu;
-           real<lower=0> mub[J];
+           array[J] real<lower=0> mub;
            }
            transformed parameters{
-           real lambdaa[J];
-           real lambdab[J];
+           array[J] real lambdaa;
+           array[J] real lambdab;
            for (i in 1:J){
            lambdab[i] = mub[i]/fpre[i];
            lambdaa[i] = delta[i]*mub[i]/fpost[i];
@@ -319,18 +319,18 @@ simple_paired_stan <- function(priors){
   dist.delta <- priors$delta$priorDist
   paste0('data {
          int J; // number of animals
-         int ystararaw[J]; // after treatment McMaster count
-         int ystarbraw[J]; // before treatment McMaster count
-         int fpre[J];
-         int fpost[J];
+         array[J] int ystararaw; // after treatment McMaster count
+         array[J] int ystarbraw; // before treatment McMaster count
+         array[J] int fpre;
+         array[J] int fpost;
 }
 parameters {
 real<lower=0> delta;
 real<lower=0> mu;
 }
 transformed parameters{
-real lambdaa[J];
-real lambdab[J];
+array[J] real lambdaa;
+array[J] real lambdab;
 for (i in 1:J){
 lambdab[i] = mu/fpre[i];
 lambdaa[i] = delta*mu/fpost[i];

@@ -80,9 +80,9 @@ static int current_statement__= 0;
 static const std::vector<string> locations_array__ = {" (found before start of program)",
                                                       " (in 'zinb', line 7, column 2 to column 22)",
                                                       " (in 'zinb', line 8, column 2 to column 19)",
-                                                      " (in 'zinb', line 9, column 2 to column 23)",
+                                                      " (in 'zinb', line 9, column 2 to column 29)",
                                                       " (in 'zinb', line 10, column 2 to column 28)",
-                                                      " (in 'zinb', line 13, column 2 to column 17)",
+                                                      " (in 'zinb', line 13, column 2 to column 23)",
                                                       " (in 'zinb', line 15, column 4 to column 29)",
                                                       " (in 'zinb', line 14, column 16 to line 16, column 3)",
                                                       " (in 'zinb', line 14, column 2 to line 16, column 3)",
@@ -96,12 +96,12 @@ static const std::vector<string> locations_array__ = {" (found before start of p
                                                       " (in 'zinb', line 23, column 17 to line 28, column 3)",
                                                       " (in 'zinb', line 23, column 2 to line 28, column 3)",
                                                       " (in 'zinb', line 2, column 2 to column 8)",
-                                                      " (in 'zinb', line 3, column 15 to column 16)",
-                                                      " (in 'zinb', line 3, column 2 to column 18)",
-                                                      " (in 'zinb', line 4, column 10 to column 11)",
-                                                      " (in 'zinb', line 4, column 2 to column 13)",
-                                                      " (in 'zinb', line 9, column 20 to column 21)",
-                                                      " (in 'zinb', line 13, column 14 to column 15)"};
+                                                      " (in 'zinb', line 3, column 8 to column 9)",
+                                                      " (in 'zinb', line 3, column 2 to column 24)",
+                                                      " (in 'zinb', line 4, column 8 to column 9)",
+                                                      " (in 'zinb', line 4, column 2 to column 19)",
+                                                      " (in 'zinb', line 9, column 8 to column 9)",
+                                                      " (in 'zinb', line 13, column 8 to column 9)"};
 #include <stan_meta_header.hpp>
 class model_zinb final : public model_base_crtp<model_zinb> {
 private:

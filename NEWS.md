@@ -1,3 +1,7 @@
+## eggCounts 2.4
+
+* Update to new rstan version for future compatibility
+
 ## eggCounts 2.3
 
 * No longer requiring integer correction factors

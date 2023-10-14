@@ -80,8 +80,8 @@ static int current_statement__= 0;
 static const std::vector<string> locations_array__ = {" (found before start of program)",
                                                       " (in 'simple', line 9, column 2 to column 30)",
                                                       " (in 'simple', line 10, column 2 to column 19)",
-                                                      " (in 'simple', line 13, column 2 to column 18)",
-                                                      " (in 'simple', line 14, column 2 to column 18)",
+                                                      " (in 'simple', line 13, column 2 to column 24)",
+                                                      " (in 'simple', line 14, column 2 to column 24)",
                                                       " (in 'simple', line 16, column 4 to column 28)",
                                                       " (in 'simple', line 17, column 4 to column 35)",
                                                       " (in 'simple', line 15, column 16 to line 18, column 5)",
@@ -91,16 +91,16 @@ static const std::vector<string> locations_array__ = {" (found before start of p
                                                       " (in 'simple', line 23, column 2 to column 31)",
                                                       " (in 'simple', line 24, column 2 to column 31)",
                                                       " (in 'simple', line 2, column 2 to column 8)",
-                                                      " (in 'simple', line 3, column 16 to column 17)",
-                                                      " (in 'simple', line 3, column 2 to column 19)",
-                                                      " (in 'simple', line 4, column 16 to column 17)",
-                                                      " (in 'simple', line 4, column 2 to column 19)",
-                                                      " (in 'simple', line 5, column 12 to column 13)",
-                                                      " (in 'simple', line 5, column 2 to column 15)",
-                                                      " (in 'simple', line 6, column 13 to column 14)",
-                                                      " (in 'simple', line 6, column 2 to column 16)",
-                                                      " (in 'simple', line 13, column 15 to column 16)",
-                                                      " (in 'simple', line 14, column 15 to column 16)"};
+                                                      " (in 'simple', line 3, column 8 to column 9)",
+                                                      " (in 'simple', line 3, column 2 to column 25)",
+                                                      " (in 'simple', line 4, column 8 to column 9)",
+                                                      " (in 'simple', line 4, column 2 to column 25)",
+                                                      " (in 'simple', line 5, column 8 to column 9)",
+                                                      " (in 'simple', line 5, column 2 to column 21)",
+                                                      " (in 'simple', line 6, column 8 to column 9)",
+                                                      " (in 'simple', line 6, column 2 to column 22)",
+                                                      " (in 'simple', line 13, column 8 to column 9)",
+                                                      " (in 'simple', line 14, column 8 to column 9)"};
 #include <stan_meta_header.hpp>
 class model_simple final : public model_base_crtp<model_simple> {
 private:

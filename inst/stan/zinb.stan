@@ -1,16 +1,16 @@
 data {
   int J; // number of animals
-  int ystarraw[J]; // McMaster count
-  real CF[J];
+  array[J] int ystarraw; // McMaster count
+  array[J] real CF;
 }
 parameters {
   real<lower=0> kappa;
   real<lower=0> mu;
-  real<lower=0> mui[J];
+  array[J] real<lower=0> mui;
   real<lower=0,upper=1> phi;
 }
 transformed parameters{
-  real lambda[J];
+  array[J] real lambda;
   for (i in 1:J){
     lambda[i] = mui[i]/CF[i];
   }
