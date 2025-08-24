@@ -1,3 +1,7 @@
+## eggCounts 2.5
+
+* new fecrtCI method based on Levecke B, et al. (2015).
+
 ## eggCounts 2.4
 
 * Update to new rstan version for future compatibility
@@ -5,7 +9,6 @@
 ## eggCounts 2.3
 
 * No longer requiring integer correction factors
-
 
 ## eggCounts 2.2, 2.2-1:
 

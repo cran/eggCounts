@@ -19,7 +19,7 @@ plotCounts(data, paired = TRUE, points = TRUE,
 
 \item{ylabel}{String. Label of y-axis.}
 
-\item{...}{Additional arguments for function \code{\link{xyplot}} if paired is TRUE, for function \code{\link{boxplot}} otherwise.}
+\item{...}{Additional arguments for function \link[lattice]{xyplot} if paired is TRUE, for function \link{boxplot} otherwise.}
 }
 \value{
 A plot is drawn.
